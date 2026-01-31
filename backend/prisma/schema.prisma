@@ -1,0 +1,172 @@
+generator client {
+  provider = "prisma-client"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+enum UserRole {
+  ADMIN
+  CUSTOMER
+}
+
+enum AuthMethod {
+  CREDENTIALS
+  GOOGLE
+  GITHUB
+}
+
+enum TokenType {
+  VERIFICATION
+  TWO_FACTOR
+  PASSWORD_RESET
+}
+
+enum FilterType {
+  SELECT
+  CHECKBOX
+  RANGE
+  RADIO
+  TOGGLE
+  COLOR
+  SIZE
+  RATING
+  DATE_RANGE
+  TEXT_SEARCH
+}
+
+model User {
+  id                 String     @id @default(uuid())
+  email              String     @unique
+  password           String
+  fullName           String
+  avatar             String?
+  role               UserRole   @default(CUSTOMER)
+  isVerified         Boolean    @default(false)
+  isTwoFactorEnabled Boolean    @default(false)
+  method             AuthMethod
+  accounts           Account[]
+  createdAt          DateTime   @default(now())
+  updatedAt          DateTime   @updatedAt
+}
+
+model Account {
+  id           String    @id @default(uuid())
+  type         String
+  provider     String
+  accessToken  String?
+  refreshToken String?
+  expiresAt    DateTime?
+  userId       String?
+  user         User?     @relation(fields: [userId], references: [id])
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+}
+
+model Token {
+  id        String    @id @default(uuid())
+  email     String
+  token     String    @unique
+  type      TokenType
+  expiresAt DateTime
+}
+
+model Product {
+  id             String           @id @default(uuid())
+  slug           String           @unique
+  name           String
+  description    String?          @db.Text
+  price          Decimal          @db.Decimal(10, 2)
+  compareAtPrice Decimal?         @db.Decimal(10, 2)
+  inStock        Boolean          @default(true)
+  isFeatured     Boolean          @default(false)
+  thumbnail      String
+  images         String[]
+  subcategoryId  String
+  subcategory    Subcategory      @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  filterValues   Json?
+  specifications Json?
+  variants       ProductVariant[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
+
+  @@index([subcategoryId])
+  @@index([isFeatured])
+  @@index([slug])
+  @@index([subcategoryId, isFeatured])
+  @@index([subcategoryId, inStock])
+}
+
+model ProductVariant {
+  id         String   @id @default(uuid())
+  sku        String   @unique
+  attributes Json
+  stock      Int      @default(0)
+  price      Decimal? @db.Decimal(10, 2)
+  productId  String
+  product    Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+
+  @@index([productId])
+  @@index([sku])
+}
+
+model Category {
+  id            String        @id @default(uuid())
+  slug          String        @unique
+  name          String
+  description   String?       @db.Text
+  image         String?
+  subcategories Subcategory[]
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([slug])
+}
+
+model Subcategory {
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String
+  description String?   @db.Text
+  image       String?
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products    Product[]
+  filters     Filter[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@index([slug])
+}
+
+model Filter {
+  id            String         @id @default(uuid())
+  name          String
+  type          FilterType
+  subcategoryId String
+  subcategory   Subcategory    @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  options       FilterOption[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@index([subcategoryId])
+  @@index([subcategoryId, type])
+}
+
+model FilterOption {
+  id        String   @id @default(uuid())
+  value     String
+  label     String
+  position  Int      @default(0)
+  filterId  String
+  filter    Filter   @relation(fields: [filterId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+
+  @@index([filterId])
+  @@index([filterId, position])
+}

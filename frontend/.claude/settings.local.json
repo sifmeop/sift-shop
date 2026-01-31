@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(for file in *.tsx)",
+      "Bash(do if grep -q \"from ''../../utils/cn''\" \"$file\")",
+      "Bash(then echo \"$file\")",
+      "Bash(fi)",
+      "Bash(done)"
+    ]
+  }
+}
