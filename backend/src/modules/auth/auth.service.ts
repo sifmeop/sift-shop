@@ -43,13 +43,17 @@ export class AuthService {
     const user = await this.userService.findByEmail(body.email)
 
     if (!user) {
-      throw new HttpException('User not found', 404)
+      throw new HttpException('User not found', 404, {
+        cause: 'USER_NOT_FOUND'
+      })
     }
 
     const isValidPassword = await verify(user.password, body.password)
 
     if (!isValidPassword) {
-      throw new HttpException('Invalid password', 401)
+      throw new HttpException('Invalid password', 401, {
+        cause: 'INVALID_PASSWORD'
+      })
     }
 
     return this.saveSession(req, user)
@@ -57,9 +61,9 @@ export class AuthService {
 
   async signOut(req: Request, res: Response): Promise<LogoutEntity> {
     return new Promise((resolve, reject) => {
-      req.session.destroy((err) => {
-        if (err) {
-          Logger.error(`Failed to sign out: ${err}`)
+      req.session.destroy((error) => {
+        if (error) {
+          Logger.error(`Failed to sign out: ${error}`)
           return reject(new HttpException('Failed to sign out', 500))
         }
 
@@ -73,9 +77,9 @@ export class AuthService {
     return new Promise((resolve, reject) => {
       req.session.userId = user.id
 
-      req.session.save((err) => {
-        if (err) {
-          Logger.error(`Failed to save session: ${err}`)
+      req.session.save((error) => {
+        if (error) {
+          Logger.error(`Failed to save session: ${error}`)
           return reject(new HttpException('Failed to save session', 500))
         }
 

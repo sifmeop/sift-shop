@@ -1,3 +1,5 @@
+import { SignUpPage } from '~/screens/auth/sign-up'
+
 export default function Page() {
-  return <div>Page</div>
+  return <SignUpPage />
 }

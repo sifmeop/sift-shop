@@ -1,12 +1,13 @@
 import type { Metadata } from 'next'
-import { Noto_Sans } from 'next/font/google'
+import { Inter } from 'next/font/google'
 
 import { cn } from '~/common/utils/cn'
 
+import { Layout } from './_layout/Layout'
 import { Providers } from './_providers/Providers'
 import './globals.css'
 
-const notoSans = Noto_Sans({ variable: '--font-sans' })
+const inter = Inter({ variable: '--font-sans' })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
@@ -20,8 +21,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang='en'>
-      <body className={cn(notoSans.variable, 'antialiased')}>
-        <Providers>{children}</Providers>
+      <body className={cn(inter.variable, 'antialiased')}>
+        <Providers>
+          <Layout>{children}</Layout>
+        </Providers>
       </body>
     </html>
   )

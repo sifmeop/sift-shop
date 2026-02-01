@@ -4,8 +4,10 @@ import { useMemo } from 'react'
 
 import { cva, type VariantProps } from 'class-variance-authority'
 
-import { Label, Separator } from '~/common/ui'
 import { cn } from '~/common/utils/cn'
+
+import { Label } from './label'
+import { Separator } from './separator'
 
 const FieldSet = ({
   className,
@@ -32,10 +34,7 @@ const FieldLegend = ({
     <legend
       data-slot='field-legend'
       data-variant={variant}
-      className={cn(
-        'mb-3 font-medium data-[variant=label]:text-sm data-[variant=legend]:text-base',
-        className
-      )}
+      className={cn('mb-3 font-medium', className)}
       {...props}
     />
   )
@@ -46,7 +45,7 @@ const FieldGroup = ({ className, ...props }: React.ComponentProps<'div'>) => {
     <div
       data-slot='field-group'
       className={cn(
-        'gap-7 data-[slot=checkbox-group]:gap-3 [&>[data-slot=field-group]]:gap-4 group/field-group @container/field-group flex w-full flex-col',
+        'gap-7 data-[slot=checkbox-group]:gap-3 *:data-[slot=field-group]:gap-4 group/field-group @container/field-group flex w-full flex-col',
         className
       )}
       {...props}
@@ -55,7 +54,7 @@ const FieldGroup = ({ className, ...props }: React.ComponentProps<'div'>) => {
 }
 
 const fieldVariants = cva(
-  'data-[invalid=true]:text-destructive gap-3 group/field flex w-full',
+  'data-[invalid=true]:text-destructive gap-1 group/field flex w-full',
   {
     variants: {
       orientation: {
@@ -109,7 +108,7 @@ const FieldLabel = ({
     <Label
       data-slot='field-label'
       className={cn(
-        'has-data-checked:bg-primary/5 has-data-checked:border-primary dark:has-data-checked:bg-primary/10 gap-2 group-data-[disabled=true]/field:opacity-50 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border [&>*]:data-[slot=field]:p-3 group/field-label peer/field-label flex w-fit leading-snug',
+        'has-data-checked:bg-primary/5 has-data-checked:border-primary dark:has-data-checked:bg-primary/10 gap-2 group-data-[disabled=true]/field:opacity-50 has-[>[data-slot=field]]:rounded-md has-[>[data-slot=field]]:border *:data-[slot=field]:p-3 group/field-label peer/field-label flex w-fit',
         'has-[>[data-slot=field]]:w-full has-[>[data-slot=field]]:flex-col',
         className
       )}
@@ -123,7 +122,7 @@ const FieldTitle = ({ className, ...props }: React.ComponentProps<'div'>) => {
     <div
       data-slot='field-label'
       className={cn(
-        'gap-2 text-sm font-medium group-data-[disabled=true]/field:opacity-50 flex w-fit items-center leading-snug',
+        'gap-2 font-medium group-data-[disabled=true]/field:opacity-50 flex w-fit items-center leading-snug',
         className
       )}
       {...props}
@@ -139,7 +138,7 @@ const FieldDescription = ({
     <p
       data-slot='field-description'
       className={cn(
-        'text-muted-foreground text-left text-sm [[data-variant=legend]+&]:-mt-1.5 leading-normal font-normal group-has-[[data-orientation=horizontal]]/field:text-balance',
+        'text-muted-foreground text-left [[data-variant=legend]+&]:-mt-1.5 leading-normal font-normal group-has-data-[orientation=horizontal]/field:text-balance',
         'last:mt-0 nth-last-2:-mt-1',
         '[&>a:hover]:text-primary [&>a]:underline [&>a]:underline-offset-4',
         className
@@ -161,7 +160,7 @@ const FieldSeparator = ({
       data-slot='field-separator'
       data-content={!!children}
       className={cn(
-        '-my-2 h-5 text-sm group-data-[variant=outline]/field-group:-mb-2 relative',
+        '-my-2 h-5 group-data-[variant=outline]/field-group:-mb-2 relative',
         className
       )}
       {...props}>
@@ -220,7 +219,7 @@ const FieldError = ({
     <div
       role='alert'
       data-slot='field-error'
-      className={cn('text-destructive text-sm font-normal', className)}
+      className={cn('text-destructive font-normal', className)}
       {...props}>
       {content}
     </div>

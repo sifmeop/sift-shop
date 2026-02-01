@@ -21,7 +21,7 @@ export class AuthResolver {
   @Mutation(() => AuthEntity)
   async signUp(
     @Context('req') req: Request,
-    @Args('body') body: SignUpInput
+    @Args('input') body: SignUpInput
   ): Promise<AuthEntity> {
     return await this.authService.signUp(req, body)
   }
@@ -29,7 +29,7 @@ export class AuthResolver {
   @Mutation(() => AuthEntity)
   async signIn(
     @Context('req') req: Request,
-    @Args('body') body: SignInInput
+    @Args('input') body: SignInInput
   ): Promise<AuthEntity> {
     return await this.authService.signIn(req, body)
   }

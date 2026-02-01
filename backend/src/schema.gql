@@ -32,9 +32,9 @@ type LogoutEntity {
 }
 
 type Mutation {
-  signIn(body: SignInInput!): AuthEntity!
+  signIn(input: SignInInput!): AuthEntity!
   signOut: LogoutEntity!
-  signUp(body: SignUpInput!): AuthEntity!
+  signUp(input: SignUpInput!): AuthEntity!
 }
 
 type Query {
