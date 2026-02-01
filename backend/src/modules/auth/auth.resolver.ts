@@ -19,18 +19,24 @@ export class AuthResolver {
   async me() {}
 
   @Mutation(() => AuthEntity)
-  async signUp(@Context('req') req: Request, @Args('body') body: SignUpInput) {
+  async signUp(
+    @Context('req') req: Request,
+    @Args('body') body: SignUpInput
+  ): Promise<AuthEntity> {
     return await this.authService.signUp(req, body)
   }
 
   @Mutation(() => AuthEntity)
-  async signIn(@Context('req') req: Request, @Args('body') body: SignInInput) {
+  async signIn(
+    @Context('req') req: Request,
+    @Args('body') body: SignInInput
+  ): Promise<AuthEntity> {
     return await this.authService.signIn(req, body)
   }
 
   @Mutation(() => LogoutEntity)
   @UseGuards(AuthGuard)
-  async signOut(@Context() ctx: GraphQLContext) {
+  async signOut(@Context() ctx: GraphQLContext): Promise<LogoutEntity> {
     return await this.authService.signOut(ctx.req, ctx.res)
   }
 }

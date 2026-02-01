@@ -10,6 +10,8 @@ import { UserService } from '../user/user.service'
 
 import { SignInInput } from './dto/sign-in.input'
 import { SignUpInput } from './dto/sign-up.input'
+import { AuthEntity } from './entities/auth.entity'
+import { LogoutEntity } from './entities/logout.entity'
 
 @Injectable()
 export class AuthService {
@@ -37,7 +39,7 @@ export class AuthService {
     return this.saveSession(req, newUser)
   }
 
-  async signIn(req: Request, body: SignInInput) {
+  async signIn(req: Request, body: SignInInput): Promise<AuthEntity> {
     const user = await this.userService.findByEmail(body.email)
 
     if (!user) {
@@ -53,22 +55,21 @@ export class AuthService {
     return this.saveSession(req, user)
   }
 
-  async signOut(req: Request, res: Response): Promise<boolean> {
+  async signOut(req: Request, res: Response): Promise<LogoutEntity> {
     return new Promise((resolve, reject) => {
       req.session.destroy((err) => {
         if (err) {
           Logger.error(`Failed to sign out: ${err}`)
-          reject(new HttpException('Failed to sign out', 500))
-          return false
+          return reject(new HttpException('Failed to sign out', 500))
         }
 
         res.clearCookie(this.configServe.getOrThrow<string>('SESSION_NAME'))
-        resolve(true)
+        resolve({ success: true })
       })
     })
   }
 
-  private async saveSession(req: Request, user: User) {
+  private async saveSession(req: Request, user: User): Promise<AuthEntity> {
     return new Promise((resolve, reject) => {
       req.session.userId = user.id
 
