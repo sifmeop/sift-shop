@@ -71,6 +71,8 @@ model Token {
   token     String    @unique
   type      TokenType
   expiresAt DateTime
+
+  @@unique([email, type])
 }
 
 model Product {

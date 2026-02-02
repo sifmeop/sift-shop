@@ -3,25 +3,27 @@ import { ConfigService } from '@nestjs/config'
 import { verify } from 'argon2'
 import { Request, Response } from 'express'
 
-import { User } from '~/generated/prisma/client'
+import { AuthMethod, User } from '~/generated/prisma/client'
+import { UserService } from '~/modules/user/user.service'
 import { PrismaService } from '~/prisma/prisma.service'
 
-import { UserService } from '../user/user.service'
+import { SignInInput } from '../dto/sign-in.input'
+import { SignUpInput } from '../dto/sign-up.input'
+import { AuthEntity, SuccessEntity } from '../entities/auth.entity'
+import { LogoutEntity } from '../entities/logout.entity'
 
-import { SignInInput } from './dto/sign-in.input'
-import { SignUpInput } from './dto/sign-up.input'
-import { AuthEntity } from './entities/auth.entity'
-import { LogoutEntity } from './entities/logout.entity'
+import { EmailConfirmationService } from './email-confirmation.service'
 
 @Injectable()
-export class AuthService {
+export class CredentialsService {
   constructor(
-    private readonly prisma: PrismaService,
+    private readonly prismaService: PrismaService,
     private readonly userService: UserService,
-    private readonly configServe: ConfigService
+    private readonly emailConfirmationService: EmailConfirmationService,
+    private readonly configService: ConfigService
   ) {}
 
-  async signUp(req: Request, body: SignUpInput) {
+  async signUp(req: Request, body: SignUpInput): Promise<SuccessEntity> {
     const isExist = await this.userService.findByEmail(body.email)
 
     if (isExist) {
@@ -32,11 +34,13 @@ export class AuthService {
       body.email,
       body.password,
       body.fullName,
-      'CREDENTIALS',
+      AuthMethod.CREDENTIALS,
       false
     )
 
-    return this.saveSession(req, newUser)
+    await this.emailConfirmationService.sendConfirmationLink(newUser)
+
+    return { success: true }
   }
 
   async signIn(req: Request, body: SignInInput): Promise<AuthEntity> {
@@ -67,7 +71,7 @@ export class AuthService {
           return reject(new HttpException('Failed to sign out', 500))
         }
 
-        res.clearCookie(this.configServe.getOrThrow<string>('SESSION_NAME'))
+        res.clearCookie(this.configService.getOrThrow<string>('SESSION_NAME'))
         resolve({ success: true })
       })
     })

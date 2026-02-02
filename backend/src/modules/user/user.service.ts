@@ -6,10 +6,10 @@ import { PrismaService } from '~/prisma/prisma.service'
 
 @Injectable()
 export class UserService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) {}
 
   async findById(id: string) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: {
         id
       },
@@ -26,7 +26,7 @@ export class UserService {
   }
 
   async findByEmail(email: string) {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prismaService.user.findUnique({
       where: {
         email
       },
@@ -47,7 +47,7 @@ export class UserService {
   ) {
     const hashedPassword = method === 'CREDENTIALS' ? await hash(password) : ''
 
-    const user = await this.prisma.user.create({
+    const user = await this.prismaService.user.create({
       data: {
         email,
         password: hashedPassword,

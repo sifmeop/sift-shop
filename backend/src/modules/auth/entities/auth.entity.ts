@@ -44,3 +44,9 @@ export class AuthEntity implements Partial<User> {
   @Field(() => Date)
   createdAt: Date
 }
+
+@ObjectType()
+export class SuccessEntity {
+  @Field(() => Boolean)
+  success: boolean
+}

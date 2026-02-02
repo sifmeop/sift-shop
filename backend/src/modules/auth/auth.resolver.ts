@@ -1,29 +1,31 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Recaptcha } from '@nestlab/google-recaptcha'
 import { Request } from 'express'
 
 import { AuthGuard } from '~/common/guards/auth.guard'
 import { GraphQLContext } from '~/common/types/graphql-context'
 
-import { AuthService } from './auth.service'
 import { SignInInput } from './dto/sign-in.input'
 import { SignUpInput } from './dto/sign-up.input'
-import { AuthEntity } from './entities/auth.entity'
+import { AuthEntity, SuccessEntity } from './entities/auth.entity'
 import { LogoutEntity } from './entities/logout.entity'
+import { CredentialsService } from './services/credentials.service'
 
 @Resolver(() => AuthEntity)
 export class AuthResolver {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly credentialsService: CredentialsService) {}
 
   @Query(() => AuthEntity)
   async me() {}
 
-  @Mutation(() => AuthEntity)
+  @Mutation(() => SuccessEntity)
+  @Recaptcha()
   async signUp(
     @Context('req') req: Request,
     @Args('input') body: SignUpInput
-  ): Promise<AuthEntity> {
-    return await this.authService.signUp(req, body)
+  ): Promise<SuccessEntity> {
+    return await this.credentialsService.signUp(req, body)
   }
 
   @Mutation(() => AuthEntity)
@@ -31,12 +33,12 @@ export class AuthResolver {
     @Context('req') req: Request,
     @Args('input') body: SignInInput
   ): Promise<AuthEntity> {
-    return await this.authService.signIn(req, body)
+    return await this.credentialsService.signIn(req, body)
   }
 
   @Mutation(() => LogoutEntity)
   @UseGuards(AuthGuard)
   async signOut(@Context() ctx: GraphQLContext): Promise<LogoutEntity> {
-    return await this.authService.signOut(ctx.req, ctx.res)
+    return await this.credentialsService.signOut(ctx.req, ctx.res)
   }
 }

@@ -195,13 +195,14 @@ export type TokenOrderByWithRelationInput = {
 export type TokenWhereUniqueInput = Prisma.AtLeast<{
   id?: string
   token?: string
+  email_type?: Prisma.TokenEmailTypeCompoundUniqueInput
   AND?: Prisma.TokenWhereInput | Prisma.TokenWhereInput[]
   OR?: Prisma.TokenWhereInput[]
   NOT?: Prisma.TokenWhereInput | Prisma.TokenWhereInput[]
   email?: Prisma.StringFilter<"Token"> | string
   type?: Prisma.EnumTokenTypeFilter<"Token"> | $Enums.TokenType
   expiresAt?: Prisma.DateTimeFilter<"Token"> | Date | string
-}, "id" | "token">
+}, "id" | "token" | "email_type">
 
 export type TokenOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -279,6 +280,11 @@ export type TokenUncheckedUpdateManyInput = {
   token?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumTokenTypeFieldUpdateOperationsInput | $Enums.TokenType
   expiresAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type TokenEmailTypeCompoundUniqueInput = {
+  email: string
+  type: $Enums.TokenType
 }
 
 export type TokenCountOrderByAggregateInput = {
