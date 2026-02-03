@@ -1,9 +1,11 @@
 import { useState } from 'react'
+import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { toast } from 'sonner'
 
+import { env } from '~/common/constants/env'
 import { Button } from '~/common/ui/button'
 import { EmailInput, PasswordInput } from '~/common/ui/input'
 import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
@@ -14,7 +16,7 @@ import { SocialAuth } from '~/modules/auth/ui/SocialAuth'
 import { useSignUpMutation } from '../hooks/useSignUpMutation'
 import { SignUpFormData, signUpSchema } from '../schemas/sign-up.schema'
 
-import { EmailVerificationAlert } from './EmailVerificationAlert'
+import { EmailConfirmationAlert } from './EmailConfirmationAlert'
 import { FullNameInput } from './FullNameInput'
 
 export const SignUpForm = () => {
@@ -43,6 +45,7 @@ export const SignUpForm = () => {
       })
       toast.success('Account created successfully')
       setShowAlert(true)
+      reset()
     } catch (error) {
       handleGraphQLError(error)
     }
@@ -50,15 +53,18 @@ export const SignUpForm = () => {
 
   const handleClose = () => {
     setShowAlert(false)
-    reset()
+  }
+
+  function onChange(value: string | null) {
+    console.log('Captcha value:', value)
   }
 
   return (
     <>
       <FormContainer>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={onSubmit} className='space-y-6'>
           <SocialAuth />
-          <div className='space-y-3.75 mb-6'>
+          <div className='space-y-3.75'>
             <FullNameInput {...register('fullName')} />
             <EmailInput
               {...register('email')}
@@ -79,13 +85,17 @@ export const SignUpForm = () => {
               errorMessage={errors.confirmPassword?.message}
             />
           </div>
-          <Button fullWidth className='mb-6' isLoading={loading}>
+          <ReCAPTCHA
+            sitekey={env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY}
+            onChange={onChange}
+          />
+          <Button fullWidth isLoading={loading}>
             Create account
           </Button>
           <AuthPrompt variant='signUp' />
         </form>
       </FormContainer>
-      <EmailVerificationAlert open={showAlert} onClose={handleClose} />
+      <EmailConfirmationAlert open={showAlert} onClose={handleClose} />
     </>
   )
 }

@@ -27,21 +27,33 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input ForgotPasswordInput {
+  email: String!
+}
+
 type LogoutEntity {
   success: Boolean!
 }
 
 type Mutation {
+  forgotPassword(input: ForgotPasswordInput!): SuccessEntity!
+  resetPassword(input: ResetPasswordInput!): SuccessEntity!
   signIn(input: SignInInput!): AuthEntity!
   signOut: LogoutEntity!
-  signUp(input: SignUpInput!): AuthEntity!
+  signUp(input: SignUpInput!): SuccessEntity!
 }
 
 type Query {
-  me: AuthEntity!
+  schema: String!
+}
+
+input ResetPasswordInput {
+  password: String!
+  token: String!
 }
 
 input SignInInput {
+  code: String
   email: String!
   password: String!
 }
@@ -51,6 +63,10 @@ input SignUpInput {
   email: String!
   fullName: String!
   password: String!
+}
+
+type SuccessEntity {
+  success: Boolean!
 }
 
 """User role"""

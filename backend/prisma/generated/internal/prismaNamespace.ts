@@ -1126,6 +1126,7 @@ export const UserScalarFieldEnum = {
   role: 'role',
   isVerified: 'isVerified',
   isTwoFactorEnabled: 'isTwoFactorEnabled',
+  twoFactorSecret: 'twoFactorSecret',
   method: 'method',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

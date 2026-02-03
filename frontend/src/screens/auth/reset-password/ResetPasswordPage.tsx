@@ -2,6 +2,10 @@
 
 import { ResetPasswordForm } from '~/modules/auth'
 
-export const ResetPasswordPage = () => {
-  return <ResetPasswordForm />
+interface ResetPasswordPageProps {
+  token: string
+}
+
+export const ResetPasswordPage = ({ token }: ResetPasswordPageProps) => {
+  return <ResetPasswordForm token={token} />
 }

@@ -1,20 +1,24 @@
 import { Field, InputType } from '@nestjs/graphql'
 import {
   IsEmail,
-  IsOptional,
   IsString,
   Matches,
   MaxLength,
   MinLength
 } from 'class-validator'
 
-import { User } from '~/generated/prisma/client'
-
 @InputType()
-export class SignInInput implements Partial<User> {
+export class ForgotPasswordInput {
   @Field()
   @IsEmail({}, { message: 'Invalid email address' })
   email: string
+}
+
+@InputType()
+export class ResetPasswordInput {
+  @Field()
+  @IsString()
+  token: string
 
   @Field()
   @IsString()
@@ -22,11 +26,7 @@ export class SignInInput implements Partial<User> {
   @MaxLength(32, { message: 'Password must be at most 32 characters' })
   @Matches(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/, {
     message:
-      'Password must contain at least one uppercase letter, one lowercase letter, and one number'
+      'Password must contain at least one lowercase letter, one uppercase letter, and one number'
   })
   password: string
-
-  @Field(() => String, { nullable: true })
-  @IsOptional()
-  code: string
 }

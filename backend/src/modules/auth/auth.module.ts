@@ -5,11 +5,13 @@ import { GoogleRecaptchaModule } from '@nestlab/google-recaptcha'
 import { getRecaptchaConfig } from '~/common/config/recaptcha.config'
 
 import { AuthController } from './auth.controller'
-import { AuthResolver } from './auth.resolver'
+import { CredentialsResolver } from './resolvers/credentials.resolver'
+import { PasswordRecoveryResolver } from './resolvers/password-recovery.resolver'
 import { CredentialsService } from './services/credentials.service'
 import { EmailConfirmationService } from './services/email-confirmation.service'
 import { OAuthService } from './services/oauth.service'
-import { GoogleStrategy } from './strategies/google.strategy'
+import { PasswordRecoveryService } from './services/password-recovery.service'
+import { SessionsService } from './services/sessions.service'
 
 @Module({
   imports: [
@@ -21,11 +23,14 @@ import { GoogleStrategy } from './strategies/google.strategy'
   ],
   controllers: [AuthController],
   providers: [
-    AuthResolver,
+    CredentialsResolver,
+    PasswordRecoveryResolver,
     CredentialsService,
     OAuthService,
     EmailConfirmationService,
-    GoogleStrategy
+    PasswordRecoveryService,
+    SessionsService
+    // GoogleStrategy
   ]
 })
 export class AuthModule {}

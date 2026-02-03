@@ -8,15 +8,15 @@ import {
   AlertDialogTitle
 } from '~/common/ui/alert-dialog'
 
-interface EmailVerificationAlertProps {
+interface EmailConfirmationAlertProps {
   open: boolean
   onClose: () => void
 }
 
-export const EmailVerificationAlert = ({
+export const EmailConfirmationAlert = ({
   open,
   onClose
-}: EmailVerificationAlertProps) => {
+}: EmailConfirmationAlertProps) => {
   return (
     <AlertDialog open={open} onOpenChange={onClose}>
       <AlertDialogContent>

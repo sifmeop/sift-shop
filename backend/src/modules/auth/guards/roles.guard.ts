@@ -6,7 +6,9 @@ import {
 } from '@nestjs/common'
 import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
+import { Request } from 'express'
 
+import { User } from '~/generated/prisma/client'
 import { UserRole } from '~/generated/prisma/enums'
 
 @Injectable()
@@ -23,7 +25,7 @@ export class RolesGuard implements CanActivate {
 
     const ctx = GqlExecutionContext.create(context)
 
-    const user = ctx.getContext().req.user
+    const user = ctx.getContext<{ req: Request }>().req.user as User
 
     if (!user) return false
 
