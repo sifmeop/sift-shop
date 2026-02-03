@@ -1,6 +1,5 @@
 import { UseGuards } from '@nestjs/common'
 import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { Recaptcha } from '@nestlab/google-recaptcha'
 import { Request } from 'express'
 
 import { GraphQLContext } from '~/common/types/graphql-context'
@@ -21,7 +20,7 @@ export class CredentialsResolver {
   async schema(): Promise<void> {}
 
   @Mutation(() => SuccessEntity)
-  @Recaptcha()
+  // @Recaptcha()
   async signUp(@Args('input') input: SignUpInput): Promise<SuccessEntity> {
     return await this.credentialsService.signUp(input)
   }

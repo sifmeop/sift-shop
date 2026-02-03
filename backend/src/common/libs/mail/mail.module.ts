@@ -4,7 +4,6 @@ import { MailService } from './mail.service'
 
 @Global()
 @Module({
-  imports: [],
   providers: [MailService],
   exports: [MailService]
 })

@@ -1,5 +1,4 @@
 import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
-import { Recaptcha } from '@nestlab/google-recaptcha'
 
 import {
   ForgotPasswordInput,
@@ -18,7 +17,7 @@ export class PasswordRecoveryResolver {
   async schema(): Promise<void> {}
 
   @Mutation(() => SuccessEntity)
-  @Recaptcha()
+  // @Recaptcha()
   async forgotPassword(
     @Args('input') input: ForgotPasswordInput
   ): Promise<SuccessEntity> {
