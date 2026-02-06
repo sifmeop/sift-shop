@@ -11,6 +11,7 @@ import { GqlThrottlerGuard } from './common/guards/gql-throttler.guard'
 import { MailModule } from './common/libs/mail/mail.module'
 import { GraphQLContext } from './common/types/graphql-context'
 import { AuthModule } from './modules/auth/auth.module'
+import { CategoryModule } from './modules/category/category.module'
 import { UserModule } from './modules/user/user.module'
 import { PrismaModule } from './prisma/prisma.module'
 
@@ -43,9 +44,10 @@ import { PrismaModule } from './prisma/prisma.module'
     }),
     PassportModule,
     PrismaModule,
+    MailModule,
     AuthModule,
     UserModule,
-    MailModule
+    CategoryModule
   ],
   controllers: [],
   providers: [

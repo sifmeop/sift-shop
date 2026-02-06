@@ -8,6 +8,12 @@ export const ROUTES = {
   FORGOT_PASSWORD: '/auth/forgot-password',
   RESET_PASSWORD: '/auth/reset-password',
 
+  // NAVIGATION
+  CATEGORIES: '/categories',
+  ABOUT: '/about',
+  CONTACT: '/contact',
+  CART: '/cart',
+
   // PROFILE
   ORDERS: '/profile/orders',
   WISHLIST: '/profile/wishlist',
@@ -15,3 +21,5 @@ export const ROUTES = {
   PASSWORD: '/profile/password',
   ACCOUNT_DETAIL: '/profile/account-detail'
 } as const
+
+export type Route = (typeof ROUTES)[keyof typeof ROUTES]

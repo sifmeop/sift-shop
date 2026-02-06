@@ -7,7 +7,7 @@ import { Layout } from './_layout/Layout'
 import { Providers } from './_providers/Providers'
 import './globals.css'
 
-const inter = Inter({ variable: '--font-sans' })
+const inter = Inter({ variable: '--font-sans', subsets: ['latin', 'cyrillic'] })
 
 export const metadata: Metadata = {
   title: 'Create Next App',
