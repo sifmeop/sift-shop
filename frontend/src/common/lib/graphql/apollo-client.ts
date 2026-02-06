@@ -1,6 +1,6 @@
 import { ApolloClient, HttpLink, InMemoryCache } from '@apollo/client'
 
-import { env } from '../constants/env'
+import { env } from '~/common/constants/env'
 
 const url = new URL(env.NEXT_PUBLIC_API_URL).origin
 

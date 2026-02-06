@@ -1,9 +1,9 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { hash } from 'argon2'
 
+import { PrismaService } from '~/common/libs/prisma/prisma.service'
 import { User } from '~/generated/prisma/client'
 import { AuthMethod } from '~/generated/prisma/enums'
-import { PrismaService } from '~/prisma/prisma.service'
 
 @Injectable()
 export class UserService {

@@ -17,6 +17,7 @@ export const Logout = () => {
       as='button'
       name='Logout'
       icon={LogOutIcon}
+      className='text-destructive'
       onClick={handleLogout}
     />
   )

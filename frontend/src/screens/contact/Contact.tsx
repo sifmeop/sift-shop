@@ -169,7 +169,7 @@ export const ContactPage = () => {
             whileTap={{ scale: 0.95 }}
             transition={{ type: 'spring', stiffness: 400, damping: 17 }}>
             <Link
-              href={ROUTES.CATEGORIES}
+              href={ROUTES.CATEGORY}
               className='inline-flex items-center gap-2 px-6 py-3 bg-foreground text-background rounded-lg hover:bg-foreground/90 transition-colors font-medium group'>
               Browse Products
               <motion.span

@@ -3,9 +3,9 @@ import { hash } from 'argon2'
 import { v4 as uuidv4 } from 'uuid'
 
 import { MailService } from '~/common/libs/mail/mail.service'
+import { PrismaService } from '~/common/libs/prisma/prisma.service'
 import { Token, TokenType } from '~/generated/prisma/client'
 import { UserService } from '~/modules/user/user.service'
-import { PrismaService } from '~/prisma/prisma.service'
 
 import {
   ForgotPasswordInput,

@@ -1,13 +1,16 @@
-import { Container } from '~/common/ui/container'
 import { PageHeader } from '~/common/ui/page-header'
 
 import { getCategories } from '../api/getCategories'
+
+import { SubcategoriesGrid } from './SubcategoriesGrid'
 
 interface CategoriesListProps {
   slug: string
 }
 
 export const CategoriesList = async ({ slug }: CategoriesListProps) => {
+  // await new Promise((resolve) => setTimeout(resolve, 5000))
+
   const { data, error } = await getCategories()
 
   if (error) {
@@ -23,7 +26,7 @@ export const CategoriesList = async ({ slug }: CategoriesListProps) => {
   return (
     <>
       <PageHeader breadcrumbs={[{ label: category.name }]} />
-      <Container bgColor='white'>CategoriesList</Container>
+      <SubcategoriesGrid category={category} />
     </>
   )
 }

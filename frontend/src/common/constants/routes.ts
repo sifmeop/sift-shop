@@ -9,7 +9,7 @@ export const ROUTES = {
   RESET_PASSWORD: '/auth/reset-password',
 
   // NAVIGATION
-  CATEGORIES: '/categories',
+  CATEGORY: '/category',
   ABOUT: '/about',
   CONTACT: '/contact',
   CART: '/cart',

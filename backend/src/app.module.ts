@@ -9,11 +9,11 @@ import { join } from 'path'
 
 import { GqlThrottlerGuard } from './common/guards/gql-throttler.guard'
 import { MailModule } from './common/libs/mail/mail.module'
+import { PrismaModule } from './common/libs/prisma/prisma.module'
 import { GraphQLContext } from './common/types/graphql-context'
 import { AuthModule } from './modules/auth/auth.module'
 import { CategoryModule } from './modules/category/category.module'
 import { UserModule } from './modules/user/user.module'
-import { PrismaModule } from './prisma/prisma.module'
 
 @Module({
   imports: [

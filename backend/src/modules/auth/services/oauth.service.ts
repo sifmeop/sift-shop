@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common'
 import { Request, Response } from 'express'
 
-import { PrismaService } from '~/prisma/prisma.service'
+import { PrismaService } from '~/common/libs/prisma/prisma.service'
 
 @Injectable()
 export class OAuthService {

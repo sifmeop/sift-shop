@@ -3,9 +3,9 @@ import { ConfigService } from '@nestjs/config'
 import { verify } from 'argon2'
 import { Request, Response } from 'express'
 
+import { PrismaService } from '~/common/libs/prisma/prisma.service'
 import { AuthMethod } from '~/generated/prisma/client'
 import { UserService } from '~/modules/user/user.service'
-import { PrismaService } from '~/prisma/prisma.service'
 
 import { SignInInput } from '../dto/sign-in.input'
 import { SignUpInput } from '../dto/sign-up.input'

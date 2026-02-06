@@ -37,7 +37,7 @@ export const Hero = () => {
               <Button
                 asChild
                 className='mt-8 bg-foreground hover:bg-foreground/90'>
-                <Link href={ROUTES.CATEGORIES}>
+                <Link href={ROUTES.CATEGORY}>
                   View Collection
                   <ArrowRight className='ml-2 size-4' />
                 </Link>

@@ -37,7 +37,7 @@ export const UserMenu = () => {
           <CircleUserRound className='size-6.5' strokeWidth={1.5} />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align='end' className='w-40'>
+      <DropdownMenuContent align='end' className='w-48'>
         <DropdownMenuGroup>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuItem onClick={handleRoute(ROUTES.ORDERS)}>

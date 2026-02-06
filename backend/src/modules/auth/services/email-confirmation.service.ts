@@ -3,10 +3,10 @@ import { Request } from 'express'
 import { v4 as uuidv4 } from 'uuid'
 
 import { MailService } from '~/common/libs/mail/mail.service'
+import { PrismaService } from '~/common/libs/prisma/prisma.service'
 import { Token } from '~/generated/prisma/client'
 import { TokenType } from '~/generated/prisma/enums'
 import { UserService } from '~/modules/user/user.service'
-import { PrismaService } from '~/prisma/prisma.service'
 
 import { EmailConfirmationDto } from '../dto/email-confirmation.dto'
 

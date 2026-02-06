@@ -1,9 +1,8 @@
-import { gql } from '@apollo/client'
+import { apolloClient } from '~/common/lib/graphql/apollo-client'
+import { gql } from '~/common/lib/graphql/generated'
 
-import { apolloClient } from '~/common/lib/apollo-client'
-
-const CATEGORIES_LIST = gql`
-  query {
+const CATEGORIES_LIST = gql(`
+  query GetCategories {
     categories {
       slug
       name
@@ -14,7 +13,7 @@ const CATEGORIES_LIST = gql`
       }
     }
   }
-`
+`)
 
 export const getCategories = async () => {
   return apolloClient.query({ query: CATEGORIES_LIST })

@@ -27,7 +27,7 @@ export const FashionBanner = () => {
               clothing categories.
             </p>
             <Button asChild className='mt-6 hover:bg-foreground/90'>
-              <Link href={ROUTES.CATEGORIES}>
+              <Link href={ROUTES.CATEGORY}>
                 Start Browsing
                 <ArrowRight className='ml-2 size-4' />
               </Link>

@@ -30,7 +30,7 @@ export default function NotFound() {
             Go Home
           </Link>
           <Link
-            href={ROUTES.CATEGORIES}
+            href={ROUTES.CATEGORY}
             className='inline-flex items-center justify-center gap-2 px-6 py-3 border border-input rounded-md hover:bg-accent transition-colors font-medium min-w-40'>
             <ShoppingBag className='w-4 h-4' />
             Shop Now
