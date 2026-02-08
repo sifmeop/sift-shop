@@ -1,5 +1,3 @@
-import { Suspense } from 'react'
-
 import { CategoriesList } from '~/modules/categories'
 
 interface CategoriesPageProps {
@@ -7,9 +5,5 @@ interface CategoriesPageProps {
 }
 
 export const CategoriesPage = ({ slug }: CategoriesPageProps) => {
-  return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <CategoriesList slug={slug} />
-    </Suspense>
-  )
+  return <CategoriesList slug={slug} />
 }

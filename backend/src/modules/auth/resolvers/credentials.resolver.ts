@@ -21,7 +21,9 @@ export class CredentialsResolver {
 
   @Mutation(() => SuccessEntity)
   // @Recaptcha()
-  async signUp(@Args('input') input: SignUpInput): Promise<SuccessEntity> {
+  async signUp(
+    @Args('input', { type: () => SignUpInput }) input: SignUpInput
+  ): Promise<SuccessEntity> {
     return await this.credentialsService.signUp(input)
   }
 
@@ -29,7 +31,7 @@ export class CredentialsResolver {
   @UseGuards(TwoFactorGuard)
   async signIn(
     @Context('req') req: Request,
-    @Args('input') input: SignInInput
+    @Args('input', { type: () => SignInInput }) input: SignInInput
   ): Promise<AuthEntity> {
     return await this.credentialsService.signIn(req, input)
   }

@@ -29,12 +29,7 @@ enum FilterType {
   CHECKBOX
   RANGE
   RADIO
-  TOGGLE
-  COLOR
-  SIZE
-  RATING
-  DATE_RANGE
-  TEXT_SEARCH
+  BOOLEAN
 }
 
 model User {
@@ -50,7 +45,6 @@ model User {
   method             AuthMethod
   accounts           Account[]
   createdAt          DateTime   @default(now())
-  updatedAt          DateTime   @updatedAt
 }
 
 model Account {
@@ -63,7 +57,6 @@ model Account {
   userId       String?
   user         User?     @relation(fields: [userId], references: [id])
   createdAt    DateTime  @default(now())
-  updatedAt    DateTime  @updatedAt
 }
 
 model Token {
@@ -89,33 +82,37 @@ model Product {
   images         String[]
   subcategoryId  String
   subcategory    Subcategory      @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
-  filterValues   Json?
-  specifications Json?
+  filterValues   Json // { "brand": "Nike", "material": "Cotton" } Как найти в каталоге?
+  specifications Json // { "weight": "200g", "dimensions": "10x20x30" } Что это за товар?
   variants       ProductVariant[]
   createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
 
   @@index([subcategoryId])
   @@index([isFeatured])
   @@index([slug])
+  @@index([price])
+  @@index([createdAt])
   @@index([subcategoryId, isFeatured])
   @@index([subcategoryId, inStock])
+  @@index([subcategoryId, price])
 }
 
 model ProductVariant {
   id             String   @id @default(uuid())
   sku            String   @unique
-  attributes     Json
   stock          Int      @default(0)
-  price          Decimal  @db.Decimal(10, 2)
+  price          Decimal? @db.Decimal(10, 2)
   compareAtPrice Decimal? @db.Decimal(10, 2)
+  thumbnail      String
+  images         String[]
   productId      String
   product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  attributes     Json // { "color": "red", "size": "M" } Какой именно?
   createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
 
   @@index([productId])
   @@index([sku])
+  @@index([productId, stock])
 }
 
 model Category {
@@ -124,7 +121,6 @@ model Category {
   name          String
   subcategories Subcategory[]
   createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
 
   @@index([slug])
 }
@@ -139,7 +135,6 @@ model Subcategory {
   products   Product[]
   filters    Filter[]
   createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
 
   @@index([categoryId])
   @@index([slug])
@@ -148,12 +143,13 @@ model Subcategory {
 model Filter {
   id            String         @id @default(uuid())
   name          String
+  value         String
   type          FilterType
+  position      Int            @default(0)
+  options       FilterOption[]
   subcategoryId String
   subcategory   Subcategory    @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
-  options       FilterOption[]
   createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
 
   @@index([subcategoryId])
   @@index([subcategoryId, type])

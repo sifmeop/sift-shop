@@ -1,6 +1,7 @@
 import { Fragment } from 'react/jsx-runtime'
 
 import { ROUTES } from '../constants/routes'
+import { cn } from '../utils/cn'
 
 import {
   Breadcrumb,
@@ -13,7 +14,7 @@ import {
 import { Container } from './container'
 import { Show } from './show'
 
-interface BreadcrumbProps {
+export interface BreadcrumbProps {
   label: string
   href?: string
 }
@@ -21,11 +22,16 @@ interface BreadcrumbProps {
 interface PageHeaderProps {
   title?: string
   breadcrumbs: BreadcrumbProps[]
+  className?: string
 }
 
-export const PageHeader = ({ title, breadcrumbs }: PageHeaderProps) => {
+export const PageHeader = ({
+  title,
+  breadcrumbs,
+  className
+}: PageHeaderProps) => {
   return (
-    <Container className='py-4.5'>
+    <Container className={cn('py-4.5', className)}>
       <Show when={!!title}>
         <h1 className='font-bold text-2xl mb-2'>{title}</h1>
       </Show>

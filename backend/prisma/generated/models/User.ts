@@ -36,7 +36,6 @@ export type UserMinAggregateOutputType = {
   twoFactorSecret: string | null
   method: $Enums.AuthMethod | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -51,7 +50,6 @@ export type UserMaxAggregateOutputType = {
   twoFactorSecret: string | null
   method: $Enums.AuthMethod | null
   createdAt: Date | null
-  updatedAt: Date | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -66,7 +64,6 @@ export type UserCountAggregateOutputType = {
   twoFactorSecret: number
   method: number
   createdAt: number
-  updatedAt: number
   _all: number
 }
 
@@ -83,7 +80,6 @@ export type UserMinAggregateInputType = {
   twoFactorSecret?: true
   method?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -98,7 +94,6 @@ export type UserMaxAggregateInputType = {
   twoFactorSecret?: true
   method?: true
   createdAt?: true
-  updatedAt?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -113,7 +108,6 @@ export type UserCountAggregateInputType = {
   twoFactorSecret?: true
   method?: true
   createdAt?: true
-  updatedAt?: true
   _all?: true
 }
 
@@ -201,7 +195,6 @@ export type UserGroupByOutputType = {
   twoFactorSecret: string | null
   method: $Enums.AuthMethod
   createdAt: Date
-  updatedAt: Date
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -237,7 +230,6 @@ export type UserWhereInput = {
   twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
   method?: Prisma.EnumAuthMethodFilter<"User"> | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
 }
 
@@ -253,7 +245,6 @@ export type UserOrderByWithRelationInput = {
   twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
 }
 
@@ -272,7 +263,6 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
   method?: Prisma.EnumAuthMethodFilter<"User"> | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
   accounts?: Prisma.AccountListRelationFilter
 }, "id" | "email">
 
@@ -288,7 +278,6 @@ export type UserOrderByWithAggregationInput = {
   twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -309,7 +298,6 @@ export type UserScalarWhereWithAggregatesInput = {
   twoFactorSecret?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   method?: Prisma.EnumAuthMethodWithAggregatesFilter<"User"> | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
-  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
 }
 
 export type UserCreateInput = {
@@ -324,7 +312,6 @@ export type UserCreateInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
-  updatedAt?: Date | string
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
 }
 
@@ -340,7 +327,6 @@ export type UserUncheckedCreateInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
-  updatedAt?: Date | string
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -356,7 +342,6 @@ export type UserUpdateInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
 }
 
@@ -372,7 +357,6 @@ export type UserUncheckedUpdateInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -388,7 +372,6 @@ export type UserCreateManyInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type UserUpdateManyMutationInput = {
@@ -403,7 +386,6 @@ export type UserUpdateManyMutationInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -418,7 +400,6 @@ export type UserUncheckedUpdateManyInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -433,7 +414,6 @@ export type UserCountOrderByAggregateInput = {
   twoFactorSecret?: Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -448,7 +428,6 @@ export type UserMaxOrderByAggregateInput = {
   twoFactorSecret?: Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -463,7 +442,6 @@ export type UserMinOrderByAggregateInput = {
   twoFactorSecret?: Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  updatedAt?: Prisma.SortOrder
 }
 
 export type UserNullableScalarRelationFilter = {
@@ -523,7 +501,6 @@ export type UserCreateWithoutAccountsInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type UserUncheckedCreateWithoutAccountsInput = {
@@ -538,7 +515,6 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
-  updatedAt?: Date | string
 }
 
 export type UserCreateOrConnectWithoutAccountsInput = {
@@ -569,7 +545,6 @@ export type UserUpdateWithoutAccountsInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type UserUncheckedUpdateWithoutAccountsInput = {
@@ -584,7 +559,6 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -630,7 +604,6 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
@@ -647,7 +620,6 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -662,7 +634,6 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -677,10 +648,9 @@ export type UserSelectScalar = {
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
-  updatedAt?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "fullName" | "avatar" | "role" | "isVerified" | "isTwoFactorEnabled" | "twoFactorSecret" | "method" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "fullName" | "avatar" | "role" | "isVerified" | "isTwoFactorEnabled" | "twoFactorSecret" | "method" | "createdAt", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -705,7 +675,6 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     twoFactorSecret: string | null
     method: $Enums.AuthMethod
     createdAt: Date
-    updatedAt: Date
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1141,7 +1110,6 @@ export interface UserFieldRefs {
   readonly twoFactorSecret: Prisma.FieldRef<"User", 'String'>
   readonly method: Prisma.FieldRef<"User", 'AuthMethod'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
-  readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>
 }
     
 

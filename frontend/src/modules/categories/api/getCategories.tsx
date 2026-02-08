@@ -16,5 +16,7 @@ const CATEGORIES_LIST = gql(`
 `)
 
 export const getCategories = async () => {
-  return apolloClient.query({ query: CATEGORIES_LIST })
+  return apolloClient.query({
+    query: CATEGORIES_LIST
+  })
 }

@@ -40,12 +40,7 @@ export const FilterType = {
   CHECKBOX: 'CHECKBOX',
   RANGE: 'RANGE',
   RADIO: 'RADIO',
-  TOGGLE: 'TOGGLE',
-  COLOR: 'COLOR',
-  SIZE: 'SIZE',
-  RATING: 'RATING',
-  DATE_RANGE: 'DATE_RANGE',
-  TEXT_SEARCH: 'TEXT_SEARCH'
+  BOOLEAN: 'BOOLEAN'
 } as const
 
 export type FilterType = (typeof FilterType)[keyof typeof FilterType]

@@ -1,3 +1,5 @@
+import { use } from 'react'
+
 import { redirect } from 'next/navigation'
 
 import { ROUTES } from '~/common/constants/routes'
@@ -9,8 +11,8 @@ interface PageProps {
   }>
 }
 
-export default async function Page({ searchParams }: PageProps) {
-  const token = (await searchParams).token
+export default function Page({ searchParams }: PageProps) {
+  const { token } = use(searchParams)
 
   if (!token || token.length === 0) {
     redirect(ROUTES.FORGOT_PASSWORD)

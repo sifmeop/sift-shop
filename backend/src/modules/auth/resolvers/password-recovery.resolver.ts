@@ -19,14 +19,15 @@ export class PasswordRecoveryResolver {
   @Mutation(() => SuccessEntity)
   // @Recaptcha()
   async forgotPassword(
-    @Args('input') input: ForgotPasswordInput
+    @Args('input', { type: () => ForgotPasswordInput })
+    input: ForgotPasswordInput
   ): Promise<SuccessEntity> {
     return await this.passwordRecoveryService.forgotPassword(input)
   }
 
   @Mutation(() => SuccessEntity)
   async resetPassword(
-    @Args('input') input: ResetPasswordInput
+    @Args('input', { type: () => ResetPasswordInput }) input: ResetPasswordInput
   ): Promise<SuccessEntity> {
     return await this.passwordRecoveryService.resetPassword(input)
   }

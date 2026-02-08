@@ -5,6 +5,7 @@ import { APP_GUARD } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { PassportModule } from '@nestjs/passport'
 import { ThrottlerModule } from '@nestjs/throttler'
+import { GraphQLJSON, GraphQLJSONObject } from 'graphql-scalars'
 import { join } from 'path'
 
 import { GqlThrottlerGuard } from './common/guards/gql-throttler.guard'
@@ -13,6 +14,7 @@ import { PrismaModule } from './common/libs/prisma/prisma.module'
 import { GraphQLContext } from './common/types/graphql-context'
 import { AuthModule } from './modules/auth/auth.module'
 import { CategoryModule } from './modules/category/category.module'
+import { ProductModule } from './modules/product/product.module'
 import { UserModule } from './modules/user/user.module'
 
 @Module({
@@ -40,14 +42,28 @@ import { UserModule } from './modules/user/user.module'
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
       sortSchema: true,
       playground: true,
-      context: ({ req, res }: GraphQLContext) => ({ req, res })
+      context: ({ req, res }: GraphQLContext) => ({ req, res }),
+      buildSchemaOptions: {
+        numberScalarMode: 'integer',
+        scalarsMap: [
+          {
+            type: () => 'JSON',
+            scalar: GraphQLJSON
+          },
+          {
+            type: () => 'JSONObject',
+            scalar: GraphQLJSONObject
+          }
+        ]
+      }
     }),
     PassportModule,
     PrismaModule,
     MailModule,
     AuthModule,
     UserModule,
-    CategoryModule
+    CategoryModule,
+    ProductModule
   ],
   controllers: [],
   providers: [
