@@ -1,5 +1,5 @@
 import { api } from '~/common/api/axiosInstance'
-import type { User } from '~/common/contexts/AuthProvider'
+import type { User } from '~/common/contexts/auth'
 import type { LoginSchema } from '../schemas/login.schema'
 
 export const AuthService = {

@@ -11,7 +11,13 @@
 import { Route as rootRouteImport } from './../app/routes/__root'
 import { Route as AuthRouteImport } from './../app/routes/_auth'
 import { Route as IndexRouteImport } from './../app/routes/index'
+import { Route as AuthReviewsRouteImport } from './../app/routes/_auth/reviews'
+import { Route as AuthProductsRouteImport } from './../app/routes/_auth/products'
+import { Route as AuthOrdersRouteImport } from './../app/routes/_auth/orders'
 import { Route as AuthDashboardRouteImport } from './../app/routes/_auth/dashboard'
+import { Route as AuthCustomersRouteImport } from './../app/routes/_auth/customers'
+import { Route as AuthCategoriesIndexRouteImport } from './../app/routes/_auth/categories/index'
+import { Route as AuthCategoriesCategoryIdRouteImport } from './../app/routes/_auth/categories/$categoryId'
 
 const AuthRoute = AuthRouteImport.update({
   id: '/_auth',
@@ -22,32 +28,107 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthReviewsRoute = AuthReviewsRouteImport.update({
+  id: '/reviews',
+  path: '/reviews',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthProductsRoute = AuthProductsRouteImport.update({
+  id: '/products',
+  path: '/products',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthOrdersRoute = AuthOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthDashboardRoute = AuthDashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthCustomersRoute = AuthCustomersRouteImport.update({
+  id: '/customers',
+  path: '/customers',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthCategoriesIndexRoute = AuthCategoriesIndexRouteImport.update({
+  id: '/categories/',
+  path: '/categories/',
+  getParentRoute: () => AuthRoute,
+} as any)
+const AuthCategoriesCategoryIdRoute =
+  AuthCategoriesCategoryIdRouteImport.update({
+    id: '/categories/$categoryId',
+    path: '/categories/$categoryId',
+    getParentRoute: () => AuthRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/customers': typeof AuthCustomersRoute
   '/dashboard': typeof AuthDashboardRoute
+  '/orders': typeof AuthOrdersRoute
+  '/products': typeof AuthProductsRoute
+  '/reviews': typeof AuthReviewsRoute
+  '/categories/$categoryId': typeof AuthCategoriesCategoryIdRoute
+  '/categories/': typeof AuthCategoriesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/customers': typeof AuthCustomersRoute
   '/dashboard': typeof AuthDashboardRoute
+  '/orders': typeof AuthOrdersRoute
+  '/products': typeof AuthProductsRoute
+  '/reviews': typeof AuthReviewsRoute
+  '/categories/$categoryId': typeof AuthCategoriesCategoryIdRoute
+  '/categories': typeof AuthCategoriesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/_auth': typeof AuthRouteWithChildren
+  '/_auth/customers': typeof AuthCustomersRoute
   '/_auth/dashboard': typeof AuthDashboardRoute
+  '/_auth/orders': typeof AuthOrdersRoute
+  '/_auth/products': typeof AuthProductsRoute
+  '/_auth/reviews': typeof AuthReviewsRoute
+  '/_auth/categories/$categoryId': typeof AuthCategoriesCategoryIdRoute
+  '/_auth/categories/': typeof AuthCategoriesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/dashboard'
+  fullPaths:
+    | '/'
+    | '/customers'
+    | '/dashboard'
+    | '/orders'
+    | '/products'
+    | '/reviews'
+    | '/categories/$categoryId'
+    | '/categories/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/dashboard'
-  id: '__root__' | '/' | '/_auth' | '/_auth/dashboard'
+  to:
+    | '/'
+    | '/customers'
+    | '/dashboard'
+    | '/orders'
+    | '/products'
+    | '/reviews'
+    | '/categories/$categoryId'
+    | '/categories'
+  id:
+    | '__root__'
+    | '/'
+    | '/_auth'
+    | '/_auth/customers'
+    | '/_auth/dashboard'
+    | '/_auth/orders'
+    | '/_auth/products'
+    | '/_auth/reviews'
+    | '/_auth/categories/$categoryId'
+    | '/_auth/categories/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -71,6 +152,27 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_auth/reviews': {
+      id: '/_auth/reviews'
+      path: '/reviews'
+      fullPath: '/reviews'
+      preLoaderRoute: typeof AuthReviewsRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/products': {
+      id: '/_auth/products'
+      path: '/products'
+      fullPath: '/products'
+      preLoaderRoute: typeof AuthProductsRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/orders': {
+      id: '/_auth/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof AuthOrdersRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/dashboard': {
       id: '/_auth/dashboard'
       path: '/dashboard'
@@ -78,15 +180,48 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthDashboardRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/customers': {
+      id: '/_auth/customers'
+      path: '/customers'
+      fullPath: '/customers'
+      preLoaderRoute: typeof AuthCustomersRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/categories/': {
+      id: '/_auth/categories/'
+      path: '/categories'
+      fullPath: '/categories/'
+      preLoaderRoute: typeof AuthCategoriesIndexRouteImport
+      parentRoute: typeof AuthRoute
+    }
+    '/_auth/categories/$categoryId': {
+      id: '/_auth/categories/$categoryId'
+      path: '/categories/$categoryId'
+      fullPath: '/categories/$categoryId'
+      preLoaderRoute: typeof AuthCategoriesCategoryIdRouteImport
+      parentRoute: typeof AuthRoute
+    }
   }
 }
 
 interface AuthRouteChildren {
+  AuthCustomersRoute: typeof AuthCustomersRoute
   AuthDashboardRoute: typeof AuthDashboardRoute
+  AuthOrdersRoute: typeof AuthOrdersRoute
+  AuthProductsRoute: typeof AuthProductsRoute
+  AuthReviewsRoute: typeof AuthReviewsRoute
+  AuthCategoriesCategoryIdRoute: typeof AuthCategoriesCategoryIdRoute
+  AuthCategoriesIndexRoute: typeof AuthCategoriesIndexRoute
 }
 
 const AuthRouteChildren: AuthRouteChildren = {
+  AuthCustomersRoute: AuthCustomersRoute,
   AuthDashboardRoute: AuthDashboardRoute,
+  AuthOrdersRoute: AuthOrdersRoute,
+  AuthProductsRoute: AuthProductsRoute,
+  AuthReviewsRoute: AuthReviewsRoute,
+  AuthCategoriesCategoryIdRoute: AuthCategoriesCategoryIdRoute,
+  AuthCategoriesIndexRoute: AuthCategoriesIndexRoute,
 }
 
 const AuthRouteWithChildren = AuthRoute._addFileChildren(AuthRouteChildren)

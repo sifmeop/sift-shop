@@ -1,30 +1,29 @@
-import { createFileRoute, Outlet, redirect } from '@tanstack/react-router'
+import { createFileRoute, Outlet } from '@tanstack/react-router'
+import { MainLayout } from '../layouts/main'
 
 export const Route = createFileRoute('/_auth')({
 	validateSearch: (search) => ({
 		redirect: (search.redirect as string) || '/'
 	}),
-	beforeLoad: ({ context, location }) => {
-		const isAuthenticated = !!context.user?.id
+	// beforeLoad: ({ context, location }) => {
+	// 	const isAuthenticated = !!context.user?.id
 
-		console.debug('isAuthenticated', isAuthenticated)
-
-		if (!isAuthenticated) {
-			throw redirect({
-				to: '/',
-				search: {
-					redirect: location.href
-				}
-			})
-		}
-	},
-	component: RouteComponent
+	// 	if (!isAuthenticated) {
+	// 		throw redirect({
+	// 			to: '/',
+	// 			search: {
+	// 				redirect: location.href
+	// 			}
+	// 		})
+	// 	}
+	// },
+	component: RootComponent
 })
 
-function RouteComponent() {
+function RootComponent() {
 	return (
-		<div>
+		<MainLayout>
 			<Outlet />
-		</div>
+		</MainLayout>
 	)
 }

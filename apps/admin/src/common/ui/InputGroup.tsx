@@ -1,10 +1,9 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import * as React from 'react'
 
 import { cn } from '../utils/cn'
 import { Button } from './Button'
 import { Input } from './Input'
-import { Textarea } from './textarea'
+import { Textarea } from './Textarea'
 
 export const InputGroup = ({
 	className,

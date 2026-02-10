@@ -1,3 +1,4 @@
 export const MUTATIONS = {
-	LOGIN: ['login']
+	LOGIN: ['login'],
+	LOGOUT: ['logout']
 }

@@ -1,5 +1,5 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router'
-import { useAuth } from '~/common/contexts/AuthProvider'
+import { useAuth } from '~/common/contexts/auth'
 import { routeTree } from '~/global/routeTree.gen'
 
 declare module '@tanstack/react-router' {

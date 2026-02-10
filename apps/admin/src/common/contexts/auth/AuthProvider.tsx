@@ -1,4 +1,10 @@
-import { createContext, useContext, useMemo, useState } from 'react'
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useMemo,
+	useState
+} from 'react'
 
 export interface User {
 	id: string
@@ -10,6 +16,7 @@ export interface UserContext {
 
 interface AuthContext extends UserContext {
 	setUser: (user: User | null) => void
+	logout: () => void
 }
 
 const AuthContext = createContext<AuthContext | null>(null)
@@ -17,10 +24,13 @@ const AuthContext = createContext<AuthContext | null>(null)
 export const AuthProvider = ({ children }: React.PropsWithChildren) => {
 	const [user, setUser] = useState<User | null>(null)
 
+	const logout = useCallback(() => setUser(null), [])
+
 	const value = useMemo(
 		() => ({
 			user,
-			setUser
+			setUser,
+			logout
 		}),
 		[user]
 	)
