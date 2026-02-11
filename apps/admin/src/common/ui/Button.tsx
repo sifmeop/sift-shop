@@ -1,6 +1,7 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 import { Slot } from 'radix-ui'
 import { cn } from '../utils/cn'
+import { Spinner } from './Spinner'
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const buttonVariants = cva(
@@ -28,6 +29,10 @@ export const buttonVariants = cva(
 				'icon-xs': "size-6 rounded-md [&_svg:not([class*='size-'])]:size-3",
 				'icon-sm': 'size-8',
 				'icon-lg': 'size-10'
+			},
+			color: {
+				yellow:
+					'bg-yellow-500 text-white hover:bg-yellow-500/90 focus-visible:ring-yellow-500/20 dark:focus-visible:ring-yellow-500/40 dark:bg-yellow-500/60'
 			}
 		},
 		defaultVariants: {
@@ -41,6 +46,7 @@ type ButtonProps = React.ComponentProps<'button'> &
 	VariantProps<typeof buttonVariants> & {
 		asChild?: boolean
 		fullWidth?: boolean
+		isLoading?: boolean
 	}
 
 export const Button = ({
@@ -49,6 +55,9 @@ export const Button = ({
 	size = 'default',
 	asChild = false,
 	fullWidth = false,
+	color,
+	isLoading = false,
+	children,
 	...props
 }: ButtonProps) => {
 	const Comp = asChild ? Slot.Root : 'button'
@@ -58,10 +67,13 @@ export const Button = ({
 			data-slot='button'
 			data-variant={variant}
 			data-size={size}
-			className={cn(buttonVariants({ variant, size, className }), {
+			className={cn(buttonVariants({ variant, size, className, color }), {
 				'w-full': fullWidth
 			})}
-			{...props}
-		/>
+			disabled={isLoading}
+			{...props}>
+			{isLoading && <Spinner data-icon='inline-start' />}
+			{children}
+		</Comp>
 	)
 }

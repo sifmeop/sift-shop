@@ -1,6 +1,6 @@
 'use client'
 
-import { EyeIcon, EyeOffIcon } from 'lucide-react'
+import { EyeIcon, EyeOffIcon, SearchIcon } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '../utils/cn'
 import { InputGroup, InputGroupAddon, InputGroupInput } from './InputGroup'
@@ -47,6 +47,23 @@ export const PasswordInput = (props: React.ComponentProps<'input'>) => {
 				<button type='button' className='size-[70%]'>
 					<Icon onClick={handleToggle} className='cursor-pointer size-full' />
 				</button>
+			</InputGroupAddon>
+		</InputGroup>
+	)
+}
+
+export const SearchInput = (props: React.ComponentProps<'input'>) => {
+	return (
+		<InputGroup>
+			<InputGroupInput
+				type='search'
+				name='search'
+				autoComplete='search'
+				placeholder='Search'
+				{...props}
+			/>
+			<InputGroupAddon align='inline-start'>
+				<SearchIcon />
 			</InputGroupAddon>
 		</InputGroup>
 	)

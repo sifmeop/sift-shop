@@ -1,8 +1,16 @@
-import { useParams } from '@tanstack/react-router'
-import { SubcategoriesTable } from '~/modules/subcategories'
+import { Route } from '~/app/routes/_auth/categories/$categoryId'
+import {
+	SubcategoriesHeader,
+	SubcategoriesTable
+} from '~/modules/subcategories'
 
 export const SubcategoriesPage = () => {
-	const { categoryId } = useParams({ from: '/_auth/categories/$categoryId' })
+	const { categoryId } = Route.useParams()
 
-	return <SubcategoriesTable id={categoryId} />
+	return (
+		<>
+			<SubcategoriesHeader />
+			<SubcategoriesTable categoryId={categoryId} />
+		</>
+	)
 }

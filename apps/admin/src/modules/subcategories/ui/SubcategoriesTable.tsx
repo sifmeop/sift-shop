@@ -12,15 +12,16 @@ import {
 	TableHeader,
 	TableRow
 } from '~/common/ui/Table'
+import { TableLoader } from '~/common/ui/TableLoader'
 import { useGetSubcategoriesQuery } from '../hooks/useGetSubcategoriesQuery'
 import { columns } from './columns'
 
 interface SubcategoriesTableProps {
-	id: string
+	categoryId: string
 }
 
-export const SubcategoriesTable = ({ id }: SubcategoriesTableProps) => {
-	const { data, isLoading, isError } = useGetSubcategoriesQuery(id)
+export const SubcategoriesTable = ({ categoryId }: SubcategoriesTableProps) => {
+	const { data, isLoading, isError } = useGetSubcategoriesQuery(categoryId)
 
 	const table = useReactTable({
 		data: data ?? [],
@@ -29,7 +30,7 @@ export const SubcategoriesTable = ({ id }: SubcategoriesTableProps) => {
 		getPaginationRowModel: getPaginationRowModel()
 	})
 
-	if (isLoading) return <div>Загрузка...</div>
+	if (isLoading) return <TableLoader />
 	if (isError) return <div>Ошибка загрузки</div>
 
 	return (

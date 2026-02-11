@@ -12,6 +12,7 @@ import {
 	TableHeader,
 	TableRow
 } from '~/common/ui/Table'
+import { TableLoader } from '~/common/ui/TableLoader'
 import { useGetCategoriesQuery } from '../hooks/useGetCategoriesQuery'
 import { columns } from './columns'
 
@@ -25,7 +26,7 @@ export const CategoriesTable = () => {
 		getPaginationRowModel: getPaginationRowModel()
 	})
 
-	if (isLoading) return <div>Загрузка...</div>
+	if (isLoading) return <TableLoader />
 	if (isError) return <div>Ошибка загрузки</div>
 
 	return (

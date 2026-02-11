@@ -1,14 +1,18 @@
 import { useMutation } from '@tanstack/react-query'
 import { useNavigate } from '@tanstack/react-router'
+import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
-import { LogoutService } from '../api/logout.service'
+
+const logout = async () => {
+	await api.post('/auth/logout')
+}
 
 export const useLogoutMutation = () => {
 	const navigate = useNavigate()
 
 	return useMutation({
 		mutationKey: MUTATIONS.LOGOUT,
-		mutationFn: LogoutService.logout,
+		mutationFn: logout,
 		onMutate: () => {
 			navigate({ to: '/' })
 		}

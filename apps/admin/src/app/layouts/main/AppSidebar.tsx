@@ -24,7 +24,7 @@ import type { FileRouteTypes } from '~/global/routeTree.gen'
 
 interface Link {
 	title: string
-	href: FileRouteTypes['fullPaths']
+	href: FileRouteTypes['to']
 	icon: LucideIcon
 }
 

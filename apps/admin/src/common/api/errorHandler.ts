@@ -1,7 +1,7 @@
 import { isAxiosError } from 'axios'
 import { ERROR_MESSAGES } from '../constants/errorMessages'
 
-export const handleApiError = (error: unknown) => {
+export const handleApiError = (error: unknown): string => {
 	if (isAxiosError(error)) {
 		const code = error.response?.data?.code
 		const message = error.response?.data?.message
@@ -15,7 +15,5 @@ export const handleApiError = (error: unknown) => {
 		}
 	}
 
-	return {
-		message: 'An error occurred'
-	}
+	return 'An error occurred'
 }

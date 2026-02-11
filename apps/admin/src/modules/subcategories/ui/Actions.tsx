@@ -1,20 +1,15 @@
 import type { CellContext } from '@tanstack/react-table'
-import { EditIcon, TrashIcon } from 'lucide-react'
-import { Button } from '~/common/ui/Button'
-import { ButtonGroup } from '~/common/ui/ButtonGroup'
-import type { Category } from '../types/column.types'
+import type { Subcategory } from '../types/subcategory.types'
+import { DeleteSubcategory } from './actions/DeleteSubcategory'
+import { UpdateSubcategory } from './actions/UpdateSubcategory'
 
-type ActionsProps = CellContext<Category, unknown>
+type ActionsProps = CellContext<Subcategory, unknown>
 
-export const Actions = ({}: ActionsProps) => {
+export const Actions = ({ row }: ActionsProps) => {
 	return (
-		<ButtonGroup>
-			<Button variant='outline' size='icon'>
-				<EditIcon />
-			</Button>
-			<Button variant='destructive' size='icon'>
-				<TrashIcon />
-			</Button>
-		</ButtonGroup>
+		<div className='flex gap-2 justify-end'>
+			<UpdateSubcategory values={row.original} />
+			<DeleteSubcategory id={row.original.id} name={row.original.name} />
+		</div>
 	)
 }

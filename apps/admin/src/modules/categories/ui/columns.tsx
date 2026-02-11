@@ -1,13 +1,17 @@
 import { Link } from '@tanstack/react-router'
 import type { ColumnDef } from '@tanstack/react-table'
 import { LinkIcon } from 'lucide-react'
-import type { Category } from '../types/column.types'
+import type { Category } from '../types/category.types'
 import { Actions } from './Actions'
+import { ActionsHeader } from './headers/ActionsHeader'
+import { NameHeader } from './headers/NameHeader'
+import { ProductsCountHeader } from './headers/ProductsCountHeader'
+import { SubcategoriesCountHeader } from './headers/SubcategoriesCountHeader'
 
 export const columns: ColumnDef<Category>[] = [
 	{
 		accessorKey: 'name',
-		header: 'Категория'
+		header: NameHeader
 	},
 	{
 		accessorKey: 'slug',
@@ -15,14 +19,17 @@ export const columns: ColumnDef<Category>[] = [
 	},
 	{
 		accessorKey: 'subcategoriesCount',
-		header: 'Подкатегорий',
+		header: SubcategoriesCountHeader,
 		cell: ({ getValue, row }) => {
 			const count = getValue() as number
-			const categoryId = row.original.id
+			const { id: categoryId } = row.original
 			return (
 				<div className='flex items-center gap-2'>
 					<span>{count}</span>
-					<Link to={`/categories/${categoryId}`}>
+					<Link
+						to='/categories/$categoryId'
+						params={{ categoryId }}
+						search={{ redirect: window.location.pathname }}>
 						<LinkIcon size={18} strokeWidth={2.5} />
 					</Link>
 				</div>
@@ -31,16 +38,11 @@ export const columns: ColumnDef<Category>[] = [
 	},
 	{
 		accessorKey: 'productsCount',
-		header: 'Товаров'
-	},
-	{
-		accessorKey: 'isActive',
-		header: 'Статус',
-		cell: ({ getValue }) => (getValue() ? 'Активна' : 'Не активна')
+		header: ProductsCountHeader
 	},
 	{
 		accessorKey: 'actions',
-		header: 'Действия',
+		header: ActionsHeader,
 		cell: Actions
 	}
 ]

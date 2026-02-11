@@ -4,6 +4,5 @@ export interface Category {
 	slug: string
 	subcategoriesCount: number
 	productsCount: number
-	isActive: boolean
 	createdAt: string
 }

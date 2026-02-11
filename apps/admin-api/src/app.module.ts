@@ -8,6 +8,7 @@ import { CategoryModule } from './modules/category/category.module'
 import { DashboardModule } from './modules/dashboard/dashboard.module'
 import { OrderModule } from './modules/order/order.module'
 import { ProductModule } from './modules/product/product.module'
+import { SubcategoryModule } from './modules/subcategory/subcategory.module'
 import { UserModule } from './modules/user/user.module'
 
 @Module({
@@ -17,6 +18,7 @@ import { UserModule } from './modules/user/user.module'
     UserModule,
     DashboardModule,
     CategoryModule,
+    SubcategoryModule,
     ProductModule,
     OrderModule
   ],
