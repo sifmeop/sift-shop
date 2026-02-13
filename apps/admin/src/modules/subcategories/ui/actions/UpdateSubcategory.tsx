@@ -2,7 +2,7 @@ import type { CoreRow } from '@tanstack/react-table'
 import { EditIcon } from 'lucide-react'
 import { Button } from '~/common/ui/Button'
 import type { Subcategory } from '../../types/subcategory.types'
-import { SubcategoryDialog } from '../SubategoryFormDialog'
+import { SubcategoryDialog } from '../SubcategoryFormDialog'
 
 interface UpdateSubcategoryProps {
 	values: CoreRow<Subcategory>['original']

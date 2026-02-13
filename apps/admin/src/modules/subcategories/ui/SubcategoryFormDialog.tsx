@@ -1,0 +1,203 @@
+import type { CoreRow } from '@tanstack/react-table'
+import { useCallback, useEffect, useState } from 'react'
+import { env } from '~/common/constants/env'
+import { Button } from '~/common/ui/Button'
+import {
+	Dialog,
+	DialogContent,
+	DialogDescription,
+	DialogFooter,
+	DialogHeader,
+	DialogTitle,
+	DialogTrigger
+} from '~/common/ui/Dialog'
+import {
+	Field,
+	FieldDescription,
+	FieldError,
+	FieldGroup,
+	FieldLabel
+} from '~/common/ui/Field'
+import { Input } from '~/common/ui/Input'
+import { useSubcategoryForm } from '../hooks/useSubcategoryForm'
+import type { Subcategory } from '../types/subcategory.types'
+
+interface SubcategoryDialogProps {
+	mode: 'create' | 'edit'
+	defaultValues?: CoreRow<Subcategory>['original']
+	children: React.ReactNode
+}
+
+export const SubcategoryDialog = ({
+	mode,
+	defaultValues,
+	children: trigger
+}: SubcategoryDialogProps) => {
+	const [isOpen, setIsOpen] = useState(false)
+	const [preview, setPreview] = useState<string | null>(
+		defaultValues?.image
+			? env.VITE_S3_BASE_URL + '/' + defaultValues.image
+			: null
+	)
+
+	const handleClose = useCallback(() => {
+		setIsOpen(false)
+		setPreview(null)
+	}, [])
+
+	const { form, onSubmit, isLoading, setFile, fileError, setFileError } =
+		useSubcategoryForm({
+			mode,
+			defaultValues,
+			onClose: handleClose
+		})
+
+	const handleChangeImage = useCallback(
+		(e: React.ChangeEvent<HTMLInputElement>) => {
+			const selectedFile = e.target.files?.[0]
+			if (!selectedFile) return
+
+			if (preview) URL.revokeObjectURL(preview)
+
+			const url = URL.createObjectURL(selectedFile)
+			setPreview(url)
+			setFile(selectedFile)
+			setFileError(null)
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[preview]
+	)
+
+	const handleOpenChange = useCallback(
+		(open: boolean) => {
+			setIsOpen(open)
+
+			if (open) {
+				if (defaultValues?.image) {
+					setPreview(env.VITE_S3_BASE_URL + '/' + defaultValues.image)
+				}
+			} else {
+				form.reset()
+				setFile(null)
+				setFileError(null)
+
+				if (preview) {
+					URL.revokeObjectURL(preview)
+					setPreview(null)
+				}
+			}
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[form, preview]
+	)
+
+	useEffect(() => {
+		return () => {
+			if (preview) {
+				URL.revokeObjectURL(preview)
+			}
+		}
+	}, [preview])
+
+	const isEdit = mode === 'edit'
+	const formId = `${mode}-subcategory-${defaultValues?.id || 'new'}`
+	const title = isEdit
+		? `Edit subcategory: ${defaultValues?.name}`
+		: 'Create subcategory'
+
+	return (
+		<Dialog open={isOpen} onOpenChange={handleOpenChange}>
+			<DialogTrigger asChild>{trigger}</DialogTrigger>
+			<DialogContent aria-describedby={undefined}>
+				<DialogHeader>
+					<DialogTitle>{title}</DialogTitle>
+					{isEdit && <DialogDescription />}
+				</DialogHeader>
+
+				<form id={formId} onSubmit={onSubmit}>
+					<FieldGroup className='mb-4'>
+						<form.Field name='name'>
+							{(field) => {
+								const isInvalid = !field.state.meta.isValid
+
+								return (
+									<Field data-invalid={isInvalid}>
+										<FieldLabel htmlFor={field.name}>Name</FieldLabel>
+										<Input
+											aria-invalid={isInvalid}
+											id={field.name}
+											name={field.name}
+											value={field.state.value}
+											onChange={(e) => field.handleChange(e.target.value)}
+											onBlur={field.handleBlur}
+										/>
+										<FieldError errors={field.state.meta.errors} />
+									</Field>
+								)
+							}}
+						</form.Field>
+
+						<form.Field name='slug'>
+							{(field) => {
+								const isInvalid = !field.state.meta.isValid
+
+								return (
+									<Field data-invalid={isInvalid}>
+										<FieldLabel htmlFor={field.name}>Slug</FieldLabel>
+										<Input
+											aria-invalid={isInvalid}
+											id={field.name}
+											name={field.name}
+											value={field.state.value}
+											disabled
+										/>
+										<FieldError errors={field.state.meta.errors} />
+									</Field>
+								)
+							}}
+						</form.Field>
+
+						<Field>
+							<FieldLabel htmlFor='image'>Image</FieldLabel>
+							<Input
+								aria-invalid={!!fileError}
+								id='image'
+								type='file'
+								onChange={handleChangeImage}
+							/>
+							{!preview ? (
+								<FieldDescription>
+									Select an image to upload (JPG, PNG, or WebP, max 5MB)
+								</FieldDescription>
+							) : (
+								<div className='aspect-video rounded-lg overflow-hidden max-w-80 mx-auto'>
+									<img
+										src={preview}
+										alt='Subcategory preview'
+										className='w-full h-full object-cover'
+									/>
+								</div>
+							)}
+							<FieldError
+								errors={fileError ? [{ message: fileError }] : undefined}
+							/>
+						</Field>
+					</FieldGroup>
+
+					<DialogFooter>
+						<Button
+							type='button'
+							variant='outline'
+							onClick={handleClose}
+							disabled={isLoading}>
+							Close
+						</Button>
+						<Button type='submit' isLoading={isLoading}>
+							{isEdit ? 'Save' : 'Create'}
+						</Button>
+					</DialogFooter>
+				</form>
+			</DialogContent>
+		</Dialog>
+	)
+}

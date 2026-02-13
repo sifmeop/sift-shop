@@ -1,9 +1,11 @@
 import slugify from '@sindresorhus/slugify'
 import { useForm, useStore } from '@tanstack/react-form'
 import type { CoreRow } from '@tanstack/react-table'
-import { useEffect } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
+import { Route } from '~/app/routes/_auth/categories/$categoryId'
 import { handleApiError } from '~/common/api/errorHandler'
+import { validateImageFile } from '~/common/utils/validateImageFile'
 import { createSubcategorySchema } from '../schemas/createSubcategory.schema'
 import type { Subcategory } from '../types/subcategory.types'
 import { useCreateSubcategoryMutation } from './useCreateSubcategoryMutation'
@@ -20,51 +22,83 @@ export const useSubcategoryForm = ({
 	defaultValues,
 	onClose
 }: UseSubcategoryFormOptions) => {
+	const { categoryId } = Route.useParams()
+	const isEditMode = mode === 'edit'
+
 	const createMutation = useCreateSubcategoryMutation()
 	const updateMutation = useUpdateSubcategoryMutation(defaultValues?.id ?? '')
+	const mutation = isEditMode ? updateMutation : createMutation
 
-	const mutation = mode === 'edit' ? updateMutation : createMutation
-	const isPending = mutation.isPending
+	const [file, setFile] = useState<File | null>(null)
+	const [fileError, setFileError] = useState<string | null>(null)
+
+	const resetFileState = useCallback(() => {
+		setFile(null)
+		setFileError(null)
+	}, [])
+
+	const handleValidateFile = useCallback(
+		(fileToValidate: File | null): boolean => {
+			const result = validateImageFile(fileToValidate)
+
+			setFileError(result.error)
+
+			if (!result.isValid && fileToValidate) {
+				setFile(null)
+			}
+
+			return result.isValid
+		},
+		[]
+	)
+
+	const formDefaultValues = useMemo(
+		() => ({
+			name: defaultValues?.name ?? '',
+			slug: defaultValues?.slug ?? ''
+		}),
+		[defaultValues?.name, defaultValues?.slug]
+	)
 
 	const form = useForm({
-		defaultValues: {
-			name: defaultValues?.name ?? '',
-			slug: defaultValues?.slug ?? '',
-			image: defaultValues?.image ?? '',
-			categoryId: defaultValues?.categoryId ?? ''
-		},
+		defaultValues: formDefaultValues,
 		validators: {
 			onSubmit: createSubcategorySchema
 		},
 		onSubmit: async ({ value }) => {
-			if (isPending) return
+			if (mutation.isPending) return
 
-			if (mode === 'edit') {
-				const nameIsChanged = value.name !== defaultValues?.name
+			if (isEditMode && value.name === defaultValues?.name) {
+				onClose()
+				resetFileState()
+				return
+			}
 
-				if (!nameIsChanged) {
-					onClose()
-					return
-				}
+			if (!(isEditMode && !file) && !handleValidateFile(file)) {
+				return
 			}
 
 			try {
-				if (mode === 'edit') {
-					await updateMutation.mutateAsync(value)
-				} else {
-					await createMutation.mutateAsync(value)
+				const formData = new FormData()
+				formData.append('name', value.name)
+				formData.append('slug', value.slug)
+				formData.append('categoryId', categoryId)
+
+				if (file) {
+					formData.append('image', file)
 				}
+
+				await mutation.mutateAsync(formData)
 
 				form.reset()
 				onClose()
+				resetFileState()
+
 				toast.success(
-					mode === 'edit'
-						? 'Subcategory updated successfully'
-						: 'Subcategory created successfully'
+					`Subcategory ${isEditMode ? 'updated' : 'created'} successfully`
 				)
 			} catch (err) {
-				const message = handleApiError(err)
-				toast.error(message)
+				toast.error(handleApiError(err))
 			}
 		}
 	})
@@ -73,13 +107,24 @@ export const useSubcategoryForm = ({
 
 	useEffect(() => {
 		form.setFieldValue('slug', slugify(nameValue))
-	}, [nameValue, mode])
+	}, [nameValue, form])
 
-	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
-		form.handleSubmit()
+	const onSubmit = useCallback(
+		(e: React.ChangeEvent<HTMLFormElement>) => {
+			e.preventDefault()
+			e.stopPropagation()
+			form.handleSubmit()
+		},
+		[form]
+	)
+
+	return {
+		onSubmit,
+		form,
+		isLoading: mutation.isPending,
+		file,
+		setFile,
+		fileError,
+		setFileError
 	}
-
-	return { onSubmit, form, isLoading: isPending }
 }

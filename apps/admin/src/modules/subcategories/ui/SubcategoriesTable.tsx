@@ -4,6 +4,7 @@ import {
 	getPaginationRowModel,
 	useReactTable
 } from '@tanstack/react-table'
+import { Route } from '~/app/routes/_auth/categories/$categoryId'
 import {
 	Table,
 	TableBody,
@@ -16,11 +17,8 @@ import { TableLoader } from '~/common/ui/TableLoader'
 import { useGetSubcategoriesQuery } from '../hooks/useGetSubcategoriesQuery'
 import { columns } from './columns'
 
-interface SubcategoriesTableProps {
-	categoryId: string
-}
-
-export const SubcategoriesTable = ({ categoryId }: SubcategoriesTableProps) => {
+export const SubcategoriesTable = () => {
+	const { categoryId } = Route.useParams()
 	const { data, isLoading, isError } = useGetSubcategoriesQuery(categoryId)
 
 	const table = useReactTable({
@@ -41,7 +39,11 @@ export const SubcategoriesTable = ({ categoryId }: SubcategoriesTableProps) => {
 						<TableRow key={headerGroup.id}>
 							{headerGroup.headers.map((header) => {
 								return (
-									<TableHead key={header.id}>
+									<TableHead
+										key={header.id}
+										style={{
+											width: header.column.getSize()
+										}}>
 										{header.isPlaceholder
 											? null
 											: flexRender(
@@ -61,7 +63,11 @@ export const SubcategoriesTable = ({ categoryId }: SubcategoriesTableProps) => {
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell key={cell.id}>
+									<TableCell
+										key={cell.id}
+										style={{
+											width: cell.column.getSize()
+										}}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>
 								))}

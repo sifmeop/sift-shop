@@ -3,6 +3,7 @@ import { ConfigModule } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 
 import { AuthGuard } from './common/guards/auth.guard'
+import { S3Module } from './infrastructure/s3/s3.module'
 import { AuthModule } from './modules/auth/auth.module'
 import { CategoryModule } from './modules/category/category.module'
 import { DashboardModule } from './modules/dashboard/dashboard.module'
@@ -20,7 +21,8 @@ import { UserModule } from './modules/user/user.module'
     CategoryModule,
     SubcategoryModule,
     ProductModule,
-    OrderModule
+    OrderModule,
+    S3Module
   ],
   controllers: [],
   providers: [

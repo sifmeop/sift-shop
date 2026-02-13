@@ -58,7 +58,7 @@ export const FieldGroup = ({
 }
 
 const fieldVariants = cva(
-	'group/field flex w-full gap-1 data-[invalid=true]:text-destructive',
+	'group/field flex w-full gap-1.5 data-[invalid=true]:text-destructive',
 	{
 		variants: {
 			orientation: {

@@ -5,5 +5,9 @@ declare global {
     interface Request {
       user?: User
     }
+
+    interface MulterFile {
+      buffer: Buffer
+    }
   }
 }

@@ -6,7 +6,4 @@ export class CreateSubcategoryDto {
 
   @IsString()
   slug: string
-
-  @IsString()
-  image: string
 }

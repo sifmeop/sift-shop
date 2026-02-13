@@ -1,5 +1,5 @@
 import { Button } from '~/common/ui/Button'
-import { SubcategoryDialog } from '../SubategoryFormDialog'
+import { SubcategoryDialog } from '../SubcategoryFormDialog'
 
 export const AddSubcategory = () => {
 	return (

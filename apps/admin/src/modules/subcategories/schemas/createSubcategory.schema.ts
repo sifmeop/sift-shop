@@ -18,9 +18,7 @@ export const createSubcategorySchema = z.object({
 			/^[a-z]+(?:-[a-z]+)*$/,
 			'Slug must contain only lowercase letters and hyphens'
 		)
-		.trim(),
-	image: z.string('Image is required'),
-	categoryId: z.string('Category is required')
+		.trim()
 })
 
 export type CreateSubcategorySchema = z.infer<typeof createSubcategorySchema>

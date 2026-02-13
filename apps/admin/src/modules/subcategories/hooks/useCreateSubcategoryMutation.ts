@@ -4,16 +4,17 @@ import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
 import { QUERIES } from '~/common/constants/quries'
 import type { Category } from '~/modules/categories/types/category.types'
-import type { CreateSubcategorySchema } from '../schemas/createSubcategory.schema'
 import type { Subcategory } from '../types/subcategory.types'
 
-const createSubcategory = async (
-	categoryId: string,
-	body: CreateSubcategorySchema
-) => {
+const createSubcategory = async (categoryId: string, body: FormData) => {
 	const { data } = await api.post<Subcategory>(
 		`/subcategories/${categoryId}/create`,
-		body
+		body,
+		{
+			headers: {
+				'Content-Type': 'multipart/form-data'
+			}
+		}
 	)
 	return data
 }
@@ -24,8 +25,7 @@ export const useCreateSubcategoryMutation = () => {
 
 	return useMutation({
 		mutationKey: MUTATIONS.CREATE_SUBCATEGORY,
-		mutationFn: (body: CreateSubcategorySchema) =>
-			createSubcategory(categoryId, body),
+		mutationFn: (body: FormData) => createSubcategory(categoryId, body),
 		onSuccess: (data) => {
 			const prevSubcategories = queryClient.getQueryData<Subcategory[]>(
 				QUERIES.GET_SUBCATEGORIES(categoryId)
