@@ -51,7 +51,7 @@ export class S3Service {
   }
 
   async updateFile(key: string, file: Express.MulterFile): Promise<string> {
-    await this.deleteFile(key)
+    void this.deleteFile(key)
 
     const optimizedBuffer = await optimizationImage(file)
 

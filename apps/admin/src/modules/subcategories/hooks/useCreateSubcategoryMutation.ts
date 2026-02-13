@@ -1,14 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Route } from '~/app/routes/_auth/categories/$categoryId'
+import { Route } from '~/app/routes/_auth/categories/$slug'
 import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
 import { QUERIES } from '~/common/constants/quries'
 import type { Category } from '~/modules/categories/types/category.types'
 import type { Subcategory } from '../types/subcategory.types'
 
-const createSubcategory = async (categoryId: string, body: FormData) => {
+const createSubcategory = async (slug: string, body: FormData) => {
 	const { data } = await api.post<Subcategory>(
-		`/subcategories/${categoryId}/create`,
+		`/subcategories/${slug}/create`,
 		body,
 		{
 			headers: {
@@ -21,18 +21,18 @@ const createSubcategory = async (categoryId: string, body: FormData) => {
 
 export const useCreateSubcategoryMutation = () => {
 	const queryClient = useQueryClient()
-	const { categoryId } = Route.useParams()
+	const { slug } = Route.useParams()
 
 	return useMutation({
 		mutationKey: MUTATIONS.CREATE_SUBCATEGORY,
-		mutationFn: (body: FormData) => createSubcategory(categoryId, body),
+		mutationFn: (body: FormData) => createSubcategory(slug, body),
 		onSuccess: (data) => {
 			const prevSubcategories = queryClient.getQueryData<Subcategory[]>(
-				QUERIES.GET_SUBCATEGORIES(categoryId)
+				QUERIES.GET_SUBCATEGORIES(slug)
 			)
 
 			queryClient.setQueryData(
-				QUERIES.GET_SUBCATEGORIES(categoryId),
+				QUERIES.GET_SUBCATEGORIES(slug),
 				prevSubcategories
 					? [
 							...prevSubcategories,

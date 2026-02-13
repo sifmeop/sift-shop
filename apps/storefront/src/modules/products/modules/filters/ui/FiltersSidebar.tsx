@@ -12,7 +12,7 @@ export const FiltersSidebar = ({ filters }: FiltersSidebarProps) => {
   if (isEmpty) return
 
   return (
-    <div className='border w-62.5 border-border p-4 rounded-lg space-y-5'>
+    <div className='border w-62.5 border-border p-4 rounded-lg space-y-5 max-h-[70dvh] overflow-y-auto overscroll-contain'>
       {filters.map((filter) => (
         <FilterGroup key={filter.id} filter={filter} />
       ))}

@@ -70,48 +70,35 @@ model Token {
 }
 
 model Product {
-  id             String           @id @default(uuid())
-  slug           String           @unique
-  name           String
-  description    String?          @db.Text
-  price          Decimal          @db.Decimal(10, 2)
-  compareAtPrice Decimal?         @db.Decimal(10, 2)
-  inStock        Boolean          @default(true)
-  isFeatured     Boolean          @default(false)
-  thumbnail      String
-  images         String[]
-  subcategoryId  String
-  subcategory    Subcategory      @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
-  filterValues   Json // { "brand": "Nike", "material": "Cotton" } Как найти в каталоге?
-  specifications Json // { "weight": "200g", "dimensions": "10x20x30" } Что это за товар?
-  variants       ProductVariant[]
-  createdAt      DateTime         @default(now())
-
-  @@index([subcategoryId])
-  @@index([isFeatured])
-  @@index([slug])
-  @@index([price])
-  @@index([createdAt])
-  @@index([subcategoryId, isFeatured])
-  @@index([subcategoryId, inStock])
-  @@index([subcategoryId, price])
+  id                String           @id @default(uuid())
+  description       String?          @db.Text
+  filterValues      Json // { "brand": "Apple", "category": "Smartphones" }
+  variantAttributes String[] // ["color", "storage"] - какие атрибуты используются для вариаций
+  specifications    Json? // { "processor": "A17", "screen": "6.1 inch" } - общие характеристики
+  variants          ProductVariant[]
+  subcategoryId     String
+  subcategory       Subcategory      @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  createdAt         DateTime         @default(now())
 }
 
 model ProductVariant {
   id             String   @id @default(uuid())
+  slug           String   @unique // "iphone-15-pro-128gb-blue"
+  name           String // "iPhone 15 Pro 128GB Синий"
   sku            String   @unique
   stock          Int      @default(0)
-  price          Decimal? @db.Decimal(10, 2)
+  price          Decimal  @db.Decimal(10, 2)
   compareAtPrice Decimal? @db.Decimal(10, 2)
-  thumbnail      String
   images         String[]
+  isFeatured     Boolean  @default(false)
+  attributes     Json // { "color": "blue", "storage": "128GB" }
   productId      String
   product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  attributes     Json // { "color": "red", "size": "M" } Какой именно?
   createdAt      DateTime @default(now())
 
   @@index([productId])
-  @@index([sku])
+  @@index([slug])
+  @@index([isFeatured])
   @@index([productId, stock])
 }
 
@@ -121,8 +108,6 @@ model Category {
   name          String
   subcategories Subcategory[]
   createdAt     DateTime      @default(now())
-
-  @@index([slug])
 }
 
 model Subcategory {
@@ -135,9 +120,6 @@ model Subcategory {
   products   Product[]
   filters    Filter[]
   createdAt  DateTime  @default(now())
-
-  @@index([categoryId])
-  @@index([slug])
 }
 
 model Filter {
@@ -150,9 +132,6 @@ model Filter {
   subcategoryId String
   subcategory   Subcategory    @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
   createdAt     DateTime       @default(now())
-
-  @@index([subcategoryId])
-  @@index([subcategoryId, type])
 }
 
 model FilterOption {
@@ -163,7 +142,4 @@ model FilterOption {
   filterId  String
   filter    Filter   @relation(fields: [filterId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
-
-  @@index([filterId])
-  @@index([filterId, position])
 }

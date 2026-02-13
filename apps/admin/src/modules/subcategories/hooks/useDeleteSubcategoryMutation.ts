@@ -1,5 +1,5 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Route } from '~/app/routes/_auth/categories/$categoryId'
+import { Route } from '~/app/routes/_auth/categories/$slug'
 import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
 import { QUERIES } from '~/common/constants/quries'
@@ -13,18 +13,18 @@ const deleteSubcategory = async (id: string) => {
 
 export const useDeleteSubcategoryMutation = (id: string) => {
 	const queryClient = useQueryClient()
-	const { categoryId } = Route.useParams()
+	const { slug } = Route.useParams()
 
 	return useMutation({
 		mutationKey: MUTATIONS.DELETE_SUBCATEGORY(id),
 		mutationFn: () => deleteSubcategory(id),
 		onSuccess: (data) => {
 			const prevSubcategories = queryClient.getQueryData<Subcategory[]>(
-				QUERIES.GET_SUBCATEGORIES(categoryId)
+				QUERIES.GET_SUBCATEGORIES(slug)
 			)
 
 			queryClient.setQueryData(
-				QUERIES.GET_SUBCATEGORIES(categoryId),
+				QUERIES.GET_SUBCATEGORIES(slug),
 				prevSubcategories?.filter((subcategory) => subcategory.id !== data.id)
 			)
 

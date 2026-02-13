@@ -122,18 +122,11 @@ export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof To
 
 export const ProductScalarFieldEnum = {
   id: 'id',
-  slug: 'slug',
-  name: 'name',
   description: 'description',
-  price: 'price',
-  compareAtPrice: 'compareAtPrice',
-  inStock: 'inStock',
-  isFeatured: 'isFeatured',
-  thumbnail: 'thumbnail',
-  images: 'images',
-  subcategoryId: 'subcategoryId',
   filterValues: 'filterValues',
+  variantAttributes: 'variantAttributes',
   specifications: 'specifications',
+  subcategoryId: 'subcategoryId',
   createdAt: 'createdAt'
 } as const
 
@@ -142,14 +135,16 @@ export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeo
 
 export const ProductVariantScalarFieldEnum = {
   id: 'id',
+  slug: 'slug',
+  name: 'name',
   sku: 'sku',
   stock: 'stock',
   price: 'price',
   compareAtPrice: 'compareAtPrice',
-  thumbnail: 'thumbnail',
   images: 'images',
-  productId: 'productId',
+  isFeatured: 'isFeatured',
   attributes: 'attributes',
+  productId: 'productId',
   createdAt: 'createdAt'
 } as const
 
@@ -216,6 +211,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

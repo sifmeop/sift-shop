@@ -19,9 +19,9 @@ import { SubcategoryService } from './subcategory.service'
 export class SubcategoryController {
   constructor(private readonly subcategoryService: SubcategoryService) {}
 
-  @Get(':id')
-  async getSubcategoriesByCategory(@Param('id') id: string) {
-    return await this.subcategoryService.getSubcategories(id)
+  @Get(':slug')
+  async getSubcategoriesByCategory(@Param('slug') slug: string) {
+    return await this.subcategoryService.getSubcategories(slug)
   }
 
   @Post(':id/create')

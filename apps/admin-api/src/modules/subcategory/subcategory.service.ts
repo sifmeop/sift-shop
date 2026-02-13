@@ -10,10 +10,23 @@ import { CreateSubcategoryDto } from './dto/create-subcategory.dto'
 export class SubcategoryService {
   constructor(private readonly s3Service: S3Service) {}
 
-  async getSubcategories(categoryId?: string) {
+  async getSubcategories(slug: string) {
+    const category = await prisma.category.findUnique({
+      where: {
+        slug
+      }
+    })
+
+    if (!category) {
+      throw new BadRequestException({
+        code: 'CATEGORY_NOT_FOUND',
+        message: 'Category not found'
+      })
+    }
+
     const subcategories = await prisma.subcategory.findMany({
       where: {
-        categoryId
+        categoryId: category.id
       }
     })
 
@@ -38,13 +51,13 @@ export class SubcategoryService {
   }
 
   async createSubcategory(
-    categoryId: string,
+    slug: string,
     file: Express.MulterFile,
     dto: CreateSubcategoryDto
   ) {
     const category = await prisma.category.findFirst({
       where: {
-        id: categoryId
+        slug
       }
     })
 

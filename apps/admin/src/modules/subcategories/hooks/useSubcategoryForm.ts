@@ -3,7 +3,7 @@ import { useForm, useStore } from '@tanstack/react-form'
 import type { CoreRow } from '@tanstack/react-table'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import { toast } from 'sonner'
-import { Route } from '~/app/routes/_auth/categories/$categoryId'
+import { Route } from '~/app/routes/_auth/categories/$slug'
 import { handleApiError } from '~/common/api/errorHandler'
 import { validateImageFile } from '~/common/utils/validateImageFile'
 import { createSubcategorySchema } from '../schemas/createSubcategory.schema'
@@ -22,7 +22,7 @@ export const useSubcategoryForm = ({
 	defaultValues,
 	onClose
 }: UseSubcategoryFormOptions) => {
-	const { categoryId } = Route.useParams()
+	const { slug } = Route.useParams()
 	const isEditMode = mode === 'edit'
 
 	const createMutation = useCreateSubcategoryMutation()
@@ -82,7 +82,7 @@ export const useSubcategoryForm = ({
 				const formData = new FormData()
 				formData.append('name', value.name)
 				formData.append('slug', value.slug)
-				formData.append('categoryId', categoryId)
+				formData.append('category', slug)
 
 				if (file) {
 					formData.append('image', file)

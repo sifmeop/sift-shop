@@ -15,8 +15,7 @@ export const SubcategoriesHeader = () => {
 					variant='ghost'
 					onClick={() =>
 						navigate({
-							to: '/categories',
-							search: { redirect: window.location.pathname }
+							to: '/categories'
 						})
 					}>
 					<ArrowLeftIcon />

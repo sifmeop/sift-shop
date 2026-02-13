@@ -7,6 +7,7 @@ import {
 	type SortingState
 } from '@tanstack/react-table'
 import { useState } from 'react'
+import { CenterLoader } from '~/common/ui/CenterLoader'
 import {
 	Table,
 	TableBody,
@@ -15,7 +16,6 @@ import {
 	TableHeader,
 	TableRow
 } from '~/common/ui/Table'
-import { TableLoader } from '~/common/ui/TableLoader'
 import { useGetCategoriesQuery } from '../hooks/useGetCategoriesQuery'
 import { columns } from './columns'
 
@@ -40,7 +40,7 @@ export const CategoriesTable = () => {
 		getSortedRowModel: getSortedRowModel()
 	})
 
-	if (isLoading) return <TableLoader />
+	if (isLoading) return <CenterLoader />
 	if (isError) return <div>Ошибка загрузки</div>
 
 	return (
@@ -52,8 +52,6 @@ export const CategoriesTable = () => {
 							{headerGroup.headers.map((header) => {
 								const column = header.column
 								const canSort = column.getCanSort()
-
-								console.debug('canSort', canSort)
 
 								return (
 									<TableHead
@@ -92,8 +90,8 @@ export const CategoriesTable = () => {
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={columns.length} className='h-24 text-center'>
-								No results.
+							<TableCell colSpan={columns.length} className='h-20 text-center'>
+								No results
 							</TableCell>
 						</TableRow>
 					)}

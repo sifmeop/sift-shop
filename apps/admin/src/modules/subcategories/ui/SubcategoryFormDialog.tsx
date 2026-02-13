@@ -5,7 +5,6 @@ import { Button } from '~/common/ui/Button'
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
@@ -22,17 +21,17 @@ import { Input } from '~/common/ui/Input'
 import { useSubcategoryForm } from '../hooks/useSubcategoryForm'
 import type { Subcategory } from '../types/subcategory.types'
 
-interface SubcategoryDialogProps {
+interface SubcategoryFormDialogProps {
 	mode: 'create' | 'edit'
 	defaultValues?: CoreRow<Subcategory>['original']
 	children: React.ReactNode
 }
 
-export const SubcategoryDialog = ({
+export const SubcategoryFormDialog = ({
 	mode,
 	defaultValues,
 	children: trigger
-}: SubcategoryDialogProps) => {
+}: SubcategoryFormDialogProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [preview, setPreview] = useState<string | null>(
 		defaultValues?.image
@@ -111,7 +110,6 @@ export const SubcategoryDialog = ({
 			<DialogContent aria-describedby={undefined}>
 				<DialogHeader>
 					<DialogTitle>{title}</DialogTitle>
-					{isEdit && <DialogDescription />}
 				</DialogHeader>
 
 				<form id={formId} onSubmit={onSubmit}>

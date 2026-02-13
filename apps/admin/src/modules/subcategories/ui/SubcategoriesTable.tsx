@@ -4,7 +4,8 @@ import {
 	getPaginationRowModel,
 	useReactTable
 } from '@tanstack/react-table'
-import { Route } from '~/app/routes/_auth/categories/$categoryId'
+import { Route } from '~/app/routes/_auth/categories/$slug'
+import { CenterLoader } from '~/common/ui/CenterLoader'
 import {
 	Table,
 	TableBody,
@@ -13,13 +14,12 @@ import {
 	TableHeader,
 	TableRow
 } from '~/common/ui/Table'
-import { TableLoader } from '~/common/ui/TableLoader'
 import { useGetSubcategoriesQuery } from '../hooks/useGetSubcategoriesQuery'
 import { columns } from './columns'
 
 export const SubcategoriesTable = () => {
-	const { categoryId } = Route.useParams()
-	const { data, isLoading, isError } = useGetSubcategoriesQuery(categoryId)
+	const { slug } = Route.useParams()
+	const { data, isLoading, isError } = useGetSubcategoriesQuery(slug)
 
 	const table = useReactTable({
 		data: data ?? [],
@@ -28,7 +28,7 @@ export const SubcategoriesTable = () => {
 		getPaginationRowModel: getPaginationRowModel()
 	})
 
-	if (isLoading) return <TableLoader />
+	if (isLoading) return <CenterLoader />
 	if (isError) return <div>Ошибка загрузки</div>
 
 	return (
@@ -75,8 +75,8 @@ export const SubcategoriesTable = () => {
 						))
 					) : (
 						<TableRow>
-							<TableCell colSpan={columns.length} className='h-24 text-center'>
-								No results.
+							<TableCell colSpan={columns.length} className='h-20 text-center'>
+								No results
 							</TableCell>
 						</TableRow>
 					)}

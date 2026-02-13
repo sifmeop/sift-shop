@@ -4,7 +4,7 @@ import { CategoryDialog } from '../CategoryFormDialog'
 export const AddCategory = () => {
 	return (
 		<CategoryDialog mode='create'>
-			<Button>Add</Button>
+			<Button variant='secondary'>Add</Button>
 		</CategoryDialog>
 	)
 }

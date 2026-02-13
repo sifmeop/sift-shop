@@ -1,6 +1,7 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import type { Category } from '../types/category.types'
 import { Actions } from './cells/Actions'
+import { ProductsCountCell } from './cells/ProductsCountCell'
 import { SubcategoriesCountCell } from './cells/SubcategoriesCountCell'
 import { ActionsHeader } from './headers/ActionsHeader'
 import { NameHeader } from './headers/NameHeader'
@@ -27,7 +28,7 @@ export const columns: ColumnDef<Category>[] = [
 	{
 		accessorKey: 'productsCount',
 		header: ProductsCountHeader,
-		sortingFn: 'alphanumeric',
+		cell: ProductsCountCell,
 		enableSorting: true
 	},
 	{

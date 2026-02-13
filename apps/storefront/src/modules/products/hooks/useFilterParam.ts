@@ -18,9 +18,13 @@ export const useFilterParam = () => {
     return pathname + '?' + params.toString()
   }
 
+  const cleanUrl = () => {
+    return pathname
+  }
+
   const isChecked = (filterKey: string, value: string) => {
     return searchParams.getAll(filterKey).includes(value)
   }
 
-  return { createFilterUrl, isChecked }
+  return { createFilterUrl, cleanUrl, isChecked }
 }

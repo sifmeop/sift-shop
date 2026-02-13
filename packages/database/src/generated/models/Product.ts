@@ -20,121 +20,57 @@ export type ProductModel = runtime.Types.Result.DefaultSelection<Prisma.$Product
 
 export type AggregateProduct = {
   _count: ProductCountAggregateOutputType | null
-  _avg: ProductAvgAggregateOutputType | null
-  _sum: ProductSumAggregateOutputType | null
   _min: ProductMinAggregateOutputType | null
   _max: ProductMaxAggregateOutputType | null
 }
 
-export type ProductAvgAggregateOutputType = {
-  price: runtime.Decimal | null
-  compareAtPrice: runtime.Decimal | null
-}
-
-export type ProductSumAggregateOutputType = {
-  price: runtime.Decimal | null
-  compareAtPrice: runtime.Decimal | null
-}
-
 export type ProductMinAggregateOutputType = {
   id: string | null
-  slug: string | null
-  name: string | null
   description: string | null
-  price: runtime.Decimal | null
-  compareAtPrice: runtime.Decimal | null
-  inStock: boolean | null
-  isFeatured: boolean | null
-  thumbnail: string | null
   subcategoryId: string | null
   createdAt: Date | null
 }
 
 export type ProductMaxAggregateOutputType = {
   id: string | null
-  slug: string | null
-  name: string | null
   description: string | null
-  price: runtime.Decimal | null
-  compareAtPrice: runtime.Decimal | null
-  inStock: boolean | null
-  isFeatured: boolean | null
-  thumbnail: string | null
   subcategoryId: string | null
   createdAt: Date | null
 }
 
 export type ProductCountAggregateOutputType = {
   id: number
-  slug: number
-  name: number
   description: number
-  price: number
-  compareAtPrice: number
-  inStock: number
-  isFeatured: number
-  thumbnail: number
-  images: number
-  subcategoryId: number
   filterValues: number
+  variantAttributes: number
   specifications: number
+  subcategoryId: number
   createdAt: number
   _all: number
 }
 
 
-export type ProductAvgAggregateInputType = {
-  price?: true
-  compareAtPrice?: true
-}
-
-export type ProductSumAggregateInputType = {
-  price?: true
-  compareAtPrice?: true
-}
-
 export type ProductMinAggregateInputType = {
   id?: true
-  slug?: true
-  name?: true
   description?: true
-  price?: true
-  compareAtPrice?: true
-  inStock?: true
-  isFeatured?: true
-  thumbnail?: true
   subcategoryId?: true
   createdAt?: true
 }
 
 export type ProductMaxAggregateInputType = {
   id?: true
-  slug?: true
-  name?: true
   description?: true
-  price?: true
-  compareAtPrice?: true
-  inStock?: true
-  isFeatured?: true
-  thumbnail?: true
   subcategoryId?: true
   createdAt?: true
 }
 
 export type ProductCountAggregateInputType = {
   id?: true
-  slug?: true
-  name?: true
   description?: true
-  price?: true
-  compareAtPrice?: true
-  inStock?: true
-  isFeatured?: true
-  thumbnail?: true
-  images?: true
-  subcategoryId?: true
   filterValues?: true
+  variantAttributes?: true
   specifications?: true
+  subcategoryId?: true
   createdAt?: true
   _all?: true
 }
@@ -177,18 +113,6 @@ export type ProductAggregateArgs<ExtArgs extends runtime.Types.Extensions.Intern
   /**
    * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
    * 
-   * Select which fields to average
-  **/
-  _avg?: ProductAvgAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
-   * Select which fields to sum
-  **/
-  _sum?: ProductSumAggregateInputType
-  /**
-   * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-   * 
    * Select which fields to find the minimum value
   **/
   _min?: ProductMinAggregateInputType
@@ -219,30 +143,19 @@ export type ProductGroupByArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   _count?: ProductCountAggregateInputType | true
-  _avg?: ProductAvgAggregateInputType
-  _sum?: ProductSumAggregateInputType
   _min?: ProductMinAggregateInputType
   _max?: ProductMaxAggregateInputType
 }
 
 export type ProductGroupByOutputType = {
   id: string
-  slug: string
-  name: string
   description: string | null
-  price: runtime.Decimal
-  compareAtPrice: runtime.Decimal | null
-  inStock: boolean
-  isFeatured: boolean
-  thumbnail: string
-  images: string[]
-  subcategoryId: string
   filterValues: runtime.JsonValue
-  specifications: runtime.JsonValue
+  variantAttributes: string[]
+  specifications: runtime.JsonValue | null
+  subcategoryId: string
   createdAt: Date
   _count: ProductCountAggregateOutputType | null
-  _avg: ProductAvgAggregateOutputType | null
-  _sum: ProductSumAggregateOutputType | null
   _min: ProductMinAggregateOutputType | null
   _max: ProductMaxAggregateOutputType | null
 }
@@ -267,84 +180,54 @@ export type ProductWhereInput = {
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   id?: Prisma.StringFilter<"Product"> | string
-  slug?: Prisma.StringFilter<"Product"> | string
-  name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringNullableFilter<"Product"> | string | null
-  price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFilter<"Product"> | boolean
-  isFeatured?: Prisma.BoolFilter<"Product"> | boolean
-  thumbnail?: Prisma.StringFilter<"Product"> | string
-  images?: Prisma.StringNullableListFilter<"Product">
-  subcategoryId?: Prisma.StringFilter<"Product"> | string
   filterValues?: Prisma.JsonFilter<"Product">
-  specifications?: Prisma.JsonFilter<"Product">
+  variantAttributes?: Prisma.StringNullableListFilter<"Product">
+  specifications?: Prisma.JsonNullableFilter<"Product">
+  subcategoryId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
-  subcategory?: Prisma.XOR<Prisma.SubcategoryScalarRelationFilter, Prisma.SubcategoryWhereInput>
   variants?: Prisma.ProductVariantListRelationFilter
+  subcategory?: Prisma.XOR<Prisma.SubcategoryScalarRelationFilter, Prisma.SubcategoryWhereInput>
 }
 
 export type ProductOrderByWithRelationInput = {
   id?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
-  inStock?: Prisma.SortOrder
-  isFeatured?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
-  images?: Prisma.SortOrder
-  subcategoryId?: Prisma.SortOrder
   filterValues?: Prisma.SortOrder
-  specifications?: Prisma.SortOrder
+  variantAttributes?: Prisma.SortOrder
+  specifications?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-  subcategory?: Prisma.SubcategoryOrderByWithRelationInput
   variants?: Prisma.ProductVariantOrderByRelationAggregateInput
+  subcategory?: Prisma.SubcategoryOrderByWithRelationInput
 }
 
 export type ProductWhereUniqueInput = Prisma.AtLeast<{
   id?: string
-  slug?: string
   AND?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
   OR?: Prisma.ProductWhereInput[]
   NOT?: Prisma.ProductWhereInput | Prisma.ProductWhereInput[]
-  name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringNullableFilter<"Product"> | string | null
-  price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFilter<"Product"> | boolean
-  isFeatured?: Prisma.BoolFilter<"Product"> | boolean
-  thumbnail?: Prisma.StringFilter<"Product"> | string
-  images?: Prisma.StringNullableListFilter<"Product">
-  subcategoryId?: Prisma.StringFilter<"Product"> | string
   filterValues?: Prisma.JsonFilter<"Product">
-  specifications?: Prisma.JsonFilter<"Product">
+  variantAttributes?: Prisma.StringNullableListFilter<"Product">
+  specifications?: Prisma.JsonNullableFilter<"Product">
+  subcategoryId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
-  subcategory?: Prisma.XOR<Prisma.SubcategoryScalarRelationFilter, Prisma.SubcategoryWhereInput>
   variants?: Prisma.ProductVariantListRelationFilter
-}, "id" | "slug">
+  subcategory?: Prisma.XOR<Prisma.SubcategoryScalarRelationFilter, Prisma.SubcategoryWhereInput>
+}, "id">
 
 export type ProductOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrderInput | Prisma.SortOrder
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrderInput | Prisma.SortOrder
-  inStock?: Prisma.SortOrder
-  isFeatured?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
-  images?: Prisma.SortOrder
-  subcategoryId?: Prisma.SortOrder
   filterValues?: Prisma.SortOrder
-  specifications?: Prisma.SortOrder
+  variantAttributes?: Prisma.SortOrder
+  specifications?: Prisma.SortOrderInput | Prisma.SortOrder
+  subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   _count?: Prisma.ProductCountOrderByAggregateInput
-  _avg?: Prisma.ProductAvgOrderByAggregateInput
   _max?: Prisma.ProductMaxOrderByAggregateInput
   _min?: Prisma.ProductMinOrderByAggregateInput
-  _sum?: Prisma.ProductSumOrderByAggregateInput
 }
 
 export type ProductScalarWhereWithAggregatesInput = {
@@ -352,140 +235,84 @@ export type ProductScalarWhereWithAggregatesInput = {
   OR?: Prisma.ProductScalarWhereWithAggregatesInput[]
   NOT?: Prisma.ProductScalarWhereWithAggregatesInput | Prisma.ProductScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  slug?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  name?: Prisma.StringWithAggregatesFilter<"Product"> | string
   description?: Prisma.StringNullableWithAggregatesFilter<"Product"> | string | null
-  price?: Prisma.DecimalWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.DecimalNullableWithAggregatesFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
-  isFeatured?: Prisma.BoolWithAggregatesFilter<"Product"> | boolean
-  thumbnail?: Prisma.StringWithAggregatesFilter<"Product"> | string
-  images?: Prisma.StringNullableListFilter<"Product">
-  subcategoryId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   filterValues?: Prisma.JsonWithAggregatesFilter<"Product">
-  specifications?: Prisma.JsonWithAggregatesFilter<"Product">
+  variantAttributes?: Prisma.StringNullableListFilter<"Product">
+  specifications?: Prisma.JsonNullableWithAggregatesFilter<"Product">
+  subcategoryId?: Prisma.StringWithAggregatesFilter<"Product"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Product"> | Date | string
 }
 
 export type ProductCreateInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
-  subcategory: Prisma.SubcategoryCreateNestedOneWithoutProductsInput
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
+  subcategory: Prisma.SubcategoryCreateNestedOneWithoutProductsInput
 }
 
 export type ProductUncheckedCreateInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
-  subcategoryId: string
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  subcategoryId: string
   createdAt?: Date | string
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
 }
 
 export type ProductUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
-  subcategory?: Prisma.SubcategoryUpdateOneRequiredWithoutProductsNestedInput
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
+  subcategory?: Prisma.SubcategoryUpdateOneRequiredWithoutProductsNestedInput
 }
 
 export type ProductUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
-  subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductCreateManyInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
-  subcategoryId: string
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  subcategoryId: string
   createdAt?: Date | string
 }
 
 export type ProductUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProductUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
-  subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -499,57 +326,26 @@ export type StringNullableListFilter<$PrismaModel = never> = {
 
 export type ProductCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrder
-  inStock?: Prisma.SortOrder
-  isFeatured?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
-  images?: Prisma.SortOrder
-  subcategoryId?: Prisma.SortOrder
   filterValues?: Prisma.SortOrder
+  variantAttributes?: Prisma.SortOrder
   specifications?: Prisma.SortOrder
+  subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type ProductAvgOrderByAggregateInput = {
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrder
 }
 
 export type ProductMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrder
-  inStock?: Prisma.SortOrder
-  isFeatured?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
 }
 
 export type ProductMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
-  slug?: Prisma.SortOrder
-  name?: Prisma.SortOrder
   description?: Prisma.SortOrder
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrder
-  inStock?: Prisma.SortOrder
-  isFeatured?: Prisma.SortOrder
-  thumbnail?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type ProductSumOrderByAggregateInput = {
-  price?: Prisma.SortOrder
-  compareAtPrice?: Prisma.SortOrder
 }
 
 export type ProductScalarRelationFilter = {
@@ -567,27 +363,11 @@ export type ProductOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
-export type ProductCreateimagesInput = {
+export type ProductCreatevariantAttributesInput = {
   set: string[]
 }
 
-export type DecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type NullableDecimalFieldUpdateOperationsInput = {
-  set?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  increment?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  decrement?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  multiply?: runtime.Decimal | runtime.DecimalJsLike | number | string
-  divide?: runtime.Decimal | runtime.DecimalJsLike | number | string
-}
-
-export type ProductUpdateimagesInput = {
+export type ProductUpdatevariantAttributesInput = {
   set?: string[]
   push?: string | string[]
 }
@@ -650,35 +430,21 @@ export type ProductUncheckedUpdateManyWithoutSubcategoryNestedInput = {
 
 export type ProductCreateWithoutVariantsInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   subcategory: Prisma.SubcategoryCreateNestedOneWithoutProductsInput
 }
 
 export type ProductUncheckedCreateWithoutVariantsInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
-  subcategoryId: string
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  subcategoryId: string
   createdAt?: Date | string
 }
 
@@ -700,68 +466,40 @@ export type ProductUpdateToOneWithWhereWithoutVariantsInput = {
 
 export type ProductUpdateWithoutVariantsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subcategory?: Prisma.SubcategoryUpdateOneRequiredWithoutProductsNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutVariantsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
-  subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
+  subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type ProductCreateWithoutSubcategoryInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   variants?: Prisma.ProductVariantCreateNestedManyWithoutProductInput
 }
 
 export type ProductUncheckedCreateWithoutSubcategoryInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
   variants?: Prisma.ProductVariantUncheckedCreateNestedManyWithoutProductInput
 }
@@ -797,84 +535,49 @@ export type ProductScalarWhereInput = {
   OR?: Prisma.ProductScalarWhereInput[]
   NOT?: Prisma.ProductScalarWhereInput | Prisma.ProductScalarWhereInput[]
   id?: Prisma.StringFilter<"Product"> | string
-  slug?: Prisma.StringFilter<"Product"> | string
-  name?: Prisma.StringFilter<"Product"> | string
   description?: Prisma.StringNullableFilter<"Product"> | string | null
-  price?: Prisma.DecimalFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.DecimalNullableFilter<"Product"> | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFilter<"Product"> | boolean
-  isFeatured?: Prisma.BoolFilter<"Product"> | boolean
-  thumbnail?: Prisma.StringFilter<"Product"> | string
-  images?: Prisma.StringNullableListFilter<"Product">
-  subcategoryId?: Prisma.StringFilter<"Product"> | string
   filterValues?: Prisma.JsonFilter<"Product">
-  specifications?: Prisma.JsonFilter<"Product">
+  variantAttributes?: Prisma.StringNullableListFilter<"Product">
+  specifications?: Prisma.JsonNullableFilter<"Product">
+  subcategoryId?: Prisma.StringFilter<"Product"> | string
   createdAt?: Prisma.DateTimeFilter<"Product"> | Date | string
 }
 
 export type ProductCreateManySubcategoryInput = {
   id?: string
-  slug: string
-  name: string
   description?: string | null
-  price: runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail: string
-  images?: Prisma.ProductCreateimagesInput | string[]
   filterValues: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductCreatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Date | string
 }
 
 export type ProductUpdateWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   variants?: Prisma.ProductVariantUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   variants?: Prisma.ProductVariantUncheckedUpdateManyWithoutProductNestedInput
 }
 
 export type ProductUncheckedUpdateManyWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
-  slug?: Prisma.StringFieldUpdateOperationsInput | string
-  name?: Prisma.StringFieldUpdateOperationsInput | string
   description?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
-  price?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
-  compareAtPrice?: Prisma.NullableDecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string | null
-  inStock?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  isFeatured?: Prisma.BoolFieldUpdateOperationsInput | boolean
-  thumbnail?: Prisma.StringFieldUpdateOperationsInput | string
-  images?: Prisma.ProductUpdateimagesInput | string[]
   filterValues?: Prisma.JsonNullValueInput | runtime.InputJsonValue
-  specifications?: Prisma.JsonNullValueInput | runtime.InputJsonValue
+  variantAttributes?: Prisma.ProductUpdatevariantAttributesInput | string[]
+  specifications?: Prisma.NullableJsonNullValueInput | runtime.InputJsonValue
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
@@ -911,81 +614,53 @@ export type ProductCountOutputTypeCountVariantsArgs<ExtArgs extends runtime.Type
 
 export type ProductSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  slug?: boolean
-  name?: boolean
   description?: boolean
-  price?: boolean
-  compareAtPrice?: boolean
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail?: boolean
-  images?: boolean
-  subcategoryId?: boolean
   filterValues?: boolean
+  variantAttributes?: boolean
   specifications?: boolean
+  subcategoryId?: boolean
   createdAt?: boolean
-  subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
+  subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  slug?: boolean
-  name?: boolean
   description?: boolean
-  price?: boolean
-  compareAtPrice?: boolean
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail?: boolean
-  images?: boolean
-  subcategoryId?: boolean
   filterValues?: boolean
+  variantAttributes?: boolean
   specifications?: boolean
+  subcategoryId?: boolean
   createdAt?: boolean
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
-  slug?: boolean
-  name?: boolean
   description?: boolean
-  price?: boolean
-  compareAtPrice?: boolean
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail?: boolean
-  images?: boolean
-  subcategoryId?: boolean
   filterValues?: boolean
+  variantAttributes?: boolean
   specifications?: boolean
+  subcategoryId?: boolean
   createdAt?: boolean
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["product"]>
 
 export type ProductSelectScalar = {
   id?: boolean
-  slug?: boolean
-  name?: boolean
   description?: boolean
-  price?: boolean
-  compareAtPrice?: boolean
-  inStock?: boolean
-  isFeatured?: boolean
-  thumbnail?: boolean
-  images?: boolean
-  subcategoryId?: boolean
   filterValues?: boolean
+  variantAttributes?: boolean
   specifications?: boolean
+  subcategoryId?: boolean
   createdAt?: boolean
 }
 
-export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "slug" | "name" | "description" | "price" | "compareAtPrice" | "inStock" | "isFeatured" | "thumbnail" | "images" | "subcategoryId" | "filterValues" | "specifications" | "createdAt", ExtArgs["result"]["product"]>
+export type ProductOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "description" | "filterValues" | "variantAttributes" | "specifications" | "subcategoryId" | "createdAt", ExtArgs["result"]["product"]>
 export type ProductInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-  subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
   variants?: boolean | Prisma.Product$variantsArgs<ExtArgs>
+  subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.ProductCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type ProductIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -998,23 +673,16 @@ export type ProductIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
 export type $ProductPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "Product"
   objects: {
-    subcategory: Prisma.$SubcategoryPayload<ExtArgs>
     variants: Prisma.$ProductVariantPayload<ExtArgs>[]
+    subcategory: Prisma.$SubcategoryPayload<ExtArgs>
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
-    slug: string
-    name: string
     description: string | null
-    price: runtime.Decimal
-    compareAtPrice: runtime.Decimal | null
-    inStock: boolean
-    isFeatured: boolean
-    thumbnail: string
-    images: string[]
-    subcategoryId: string
     filterValues: runtime.JsonValue
-    specifications: runtime.JsonValue
+    variantAttributes: string[]
+    specifications: runtime.JsonValue | null
+    subcategoryId: string
     createdAt: Date
   }, ExtArgs["result"]["product"]>
   composites: {}
@@ -1410,8 +1078,8 @@ readonly fields: ProductFieldRefs;
  */
 export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
-  subcategory<T extends Prisma.SubcategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubcategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__SubcategoryClient<runtime.Types.Result.GetResult<Prisma.$SubcategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   variants<T extends Prisma.Product$variantsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Product$variantsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductVariantPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  subcategory<T extends Prisma.SubcategoryDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.SubcategoryDefaultArgs<ExtArgs>>): Prisma.Prisma__SubcategoryClient<runtime.Types.Result.GetResult<Prisma.$SubcategoryPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1442,18 +1110,11 @@ export interface Prisma__ProductClient<T, Null = never, ExtArgs extends runtime.
  */
 export interface ProductFieldRefs {
   readonly id: Prisma.FieldRef<"Product", 'String'>
-  readonly slug: Prisma.FieldRef<"Product", 'String'>
-  readonly name: Prisma.FieldRef<"Product", 'String'>
   readonly description: Prisma.FieldRef<"Product", 'String'>
-  readonly price: Prisma.FieldRef<"Product", 'Decimal'>
-  readonly compareAtPrice: Prisma.FieldRef<"Product", 'Decimal'>
-  readonly inStock: Prisma.FieldRef<"Product", 'Boolean'>
-  readonly isFeatured: Prisma.FieldRef<"Product", 'Boolean'>
-  readonly thumbnail: Prisma.FieldRef<"Product", 'String'>
-  readonly images: Prisma.FieldRef<"Product", 'String[]'>
-  readonly subcategoryId: Prisma.FieldRef<"Product", 'String'>
   readonly filterValues: Prisma.FieldRef<"Product", 'Json'>
+  readonly variantAttributes: Prisma.FieldRef<"Product", 'String[]'>
   readonly specifications: Prisma.FieldRef<"Product", 'Json'>
+  readonly subcategoryId: Prisma.FieldRef<"Product", 'String'>
   readonly createdAt: Prisma.FieldRef<"Product", 'DateTime'>
 }
     
