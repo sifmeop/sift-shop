@@ -6,10 +6,8 @@ import {
 	BreadcrumbPage,
 	BreadcrumbSeparator
 } from '~/common/ui/Breadcrumb'
-import { LanguageSwitcher } from '~/common/ui/LanguageSwitcher'
 import { Separator } from '~/common/ui/Separator'
 import { SidebarTrigger } from '~/common/ui/Sidebar'
-import { ThemeToggle } from '~/common/ui/ThemeToggle'
 import { capitalize } from '~/common/utils/capitalize'
 import { LogoutButton } from '~/modules/logout'
 
@@ -39,8 +37,7 @@ export const Header = () => {
 				</Breadcrumb>
 				<div className='flex-1' />
 				<div className='flex gap-2'>
-					<ThemeToggle />
-					<LanguageSwitcher />
+					{/* <ThemeToggle /> */}
 					<LogoutButton />
 				</div>
 			</div>

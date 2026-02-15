@@ -27,10 +27,17 @@ export class SubcategoryService {
     const subcategories = await prisma.subcategory.findMany({
       where: {
         categoryId: category.id
+      },
+      include: {
+        _count: {
+          select: {
+            filters: true
+          }
+        }
       }
     })
 
-    const promise = subcategories.map(async (subcategory) => {
+    const promise = subcategories.map(async ({ _count, ...subcategory }) => {
       const productsCount = await prisma.product.count({
         where: {
           subcategory: {
@@ -41,6 +48,7 @@ export class SubcategoryService {
 
       return {
         ...subcategory,
+        filtersCount: _count.filters,
         productsCount
       }
     })

@@ -1,5 +1,6 @@
 import { useStore } from '@tanstack/react-form'
 import type { CoreRow } from '@tanstack/react-table'
+import { BackButton } from '~/common/ui/BackButton'
 import { Button } from '~/common/ui/Button'
 import {
 	Card,
@@ -34,6 +35,7 @@ export const ProductsForm = ({ mode, defaultValues }: ProductsFormProps) => {
 	return (
 		<Card className='w-full max-w-xl mx-auto'>
 			<CardHeader>
+				<BackButton to='/products' />
 				<CardTitle className='text-center font-bold text-2xl'>
 					{title}
 				</CardTitle>

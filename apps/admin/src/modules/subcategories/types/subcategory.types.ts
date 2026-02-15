@@ -3,6 +3,7 @@ export interface Subcategory {
 	name: string
 	image: string
 	slug: string
+	filtersCount: number
 	productsCount: number
 	categoryId: string
 	createdAt: string

@@ -6,7 +6,7 @@ import type { Subcategory } from '../../types/subcategory.types'
 type ImageCellProps = CellContext<Subcategory, unknown>
 
 export const ImageCell = ({ cell }: ImageCellProps) => {
-	const key = cell.getValue() as string
+	const key = cell.getValue<Subcategory['image']>()
 
 	const image = env.VITE_S3_BASE_URL + '/' + key
 

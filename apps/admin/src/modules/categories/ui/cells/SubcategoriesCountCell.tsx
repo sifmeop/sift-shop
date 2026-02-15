@@ -9,15 +9,16 @@ export const SubcategoriesCountCell = ({
 	cell,
 	row
 }: SubcategoriesCountCellProps) => {
-	const count = cell.getValue() as number
+	const count = cell.getValue<Category['subcategoriesCount']>()
 	const { slug } = row.original
 
 	return (
-		<div className='flex items-center gap-2'>
+		<Link
+			to='/categories/$slug'
+			params={{ slug }}
+			className='flex items-center gap-2'>
 			<span>{count}</span>
-			<Link to='/categories/$slug' params={{ slug }}>
-				<LinkIcon size={18} strokeWidth={2.5} />
-			</Link>
-		</div>
+			<LinkIcon size={18} strokeWidth={2.5} />
+		</Link>
 	)
 }

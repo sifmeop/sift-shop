@@ -3,7 +3,6 @@ import { tanstackRouter } from '@tanstack/router-plugin/vite'
 import react from '@vitejs/plugin-react'
 import path from 'path'
 import { defineConfig } from 'vite'
-import { intlayer } from 'vite-intlayer'
 
 export default defineConfig({
 	plugins: [
@@ -15,7 +14,6 @@ export default defineConfig({
 		}),
 		react(),
 		tailwindcss(),
-		intlayer()
 	],
 	resolve: {
 		alias: {

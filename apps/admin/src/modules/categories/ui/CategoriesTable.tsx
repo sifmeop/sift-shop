@@ -1,12 +1,8 @@
 import {
 	flexRender,
 	getCoreRowModel,
-	getPaginationRowModel,
-	getSortedRowModel,
-	useReactTable,
-	type SortingState
+	useReactTable
 } from '@tanstack/react-table'
-import { useState } from 'react'
 import { CenterLoader } from '~/common/ui/CenterLoader'
 import {
 	Table,
@@ -22,22 +18,10 @@ import { columns } from './columns'
 export const CategoriesTable = () => {
 	const { data, isLoading, isError } = useGetCategoriesQuery()
 
-	const [sorting, setSorting] = useState<SortingState>([
-		{ id: 'productsCount', desc: true }
-	])
-
 	const table = useReactTable({
 		data: data ?? [],
 		columns,
-		state: {
-			sorting
-		},
-		manualSorting: true,
-		enableSortingRemoval: false,
-		onSortingChange: setSorting,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel(),
-		getSortedRowModel: getSortedRowModel()
+		getCoreRowModel: getCoreRowModel()
 	})
 
 	if (isLoading) return <CenterLoader />
@@ -49,29 +33,14 @@ export const CategoriesTable = () => {
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>
-							{headerGroup.headers.map((header) => {
-								const column = header.column
-								const canSort = column.getCanSort()
-
-								return (
-									<TableHead
-										key={header.id}
-										style={{
-											width: column.getSize(),
-											cursor: column.getCanSort() ? 'pointer' : 'default'
-										}}
-										onClick={
-											canSort ? column.getToggleSortingHandler() : undefined
-										}>
-										{/* <SortingArrows sort={column.getIsSorted()}> */}
-										{flexRender(
-											header.column.columnDef.header,
-											header.getContext()
-										)}
-										{/* </SortingArrows> */}
-									</TableHead>
-								)
-							})}
+							{headerGroup.headers.map((header) => (
+								<TableHead key={header.id}>
+									{flexRender(
+										header.column.columnDef.header,
+										header.getContext()
+									)}
+								</TableHead>
+							))}
 						</TableRow>
 					))}
 				</TableHeader>

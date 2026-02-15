@@ -1,16 +1,14 @@
 import type { ColumnDef } from '@tanstack/react-table'
 import type { Subcategory } from '../types/subcategory.types'
 import { Actions } from './Actions'
+import { FiltersCell } from './cells/FiltersCell'
 import { ImageCell } from './cells/ImageCell'
 import { ProductsCountCell } from './cells/ProductsCountCell'
-import { ActionsHeader } from './headers/ActionsHeader'
-import { NameHeader } from './headers/NameHeader'
-import { ProductsCountHeader } from './headers/ProductsCountHeader'
 
 export const columns: ColumnDef<Subcategory>[] = [
 	{
 		accessorKey: 'name',
-		header: NameHeader
+		header: 'Name'
 	},
 	{
 		accessorKey: 'slug',
@@ -23,12 +21,17 @@ export const columns: ColumnDef<Subcategory>[] = [
 	},
 	{
 		accessorKey: 'productsCount',
-		header: ProductsCountHeader,
+		header: 'Products count',
 		cell: ProductsCountCell
 	},
 	{
+		accessorKey: 'filtersCount',
+		header: 'Filters',
+		cell: FiltersCell
+	},
+	{
 		accessorKey: 'actions',
-		header: ActionsHeader,
+		header: () => <p className='text-end'>Actions</p>,
 		cell: Actions
 	}
 ]

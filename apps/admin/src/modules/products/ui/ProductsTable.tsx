@@ -1,7 +1,6 @@
 import {
 	flexRender,
 	getCoreRowModel,
-	getPaginationRowModel,
 	useReactTable
 } from '@tanstack/react-table'
 import { CenterLoader } from '~/common/ui/CenterLoader'
@@ -22,8 +21,7 @@ export const ProductsTable = () => {
 	const table = useReactTable({
 		data: data ?? [],
 		columns,
-		getCoreRowModel: getCoreRowModel(),
-		getPaginationRowModel: getPaginationRowModel()
+		getCoreRowModel: getCoreRowModel()
 	})
 
 	if (isLoading) return <CenterLoader />
@@ -35,22 +33,14 @@ export const ProductsTable = () => {
 				<TableHeader>
 					{table.getHeaderGroups().map((headerGroup) => (
 						<TableRow key={headerGroup.id}>
-							{headerGroup.headers.map((header) => {
-								return (
-									<TableHead
-										key={header.id}
-										style={{
-											width: header.column.getSize()
-										}}>
-										{header.isPlaceholder
-											? null
-											: flexRender(
-													header.column.columnDef.header,
-													header.getContext()
-												)}
-									</TableHead>
-								)
-							})}
+							{headerGroup.headers.map((header) => (
+								<TableHead key={header.id}>
+									{flexRender(
+										header.column.columnDef.header,
+										header.getContext()
+									)}
+								</TableHead>
+							))}
 						</TableRow>
 					))}
 				</TableHeader>
@@ -61,11 +51,7 @@ export const ProductsTable = () => {
 								key={row.id}
 								data-state={row.getIsSelected() && 'selected'}>
 								{row.getVisibleCells().map((cell) => (
-									<TableCell
-										key={cell.id}
-										style={{
-											width: cell.column.getSize()
-										}}>
+									<TableCell key={cell.id}>
 										{flexRender(cell.column.columnDef.cell, cell.getContext())}
 									</TableCell>
 								))}

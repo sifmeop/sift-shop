@@ -1,13 +1,17 @@
+import { useNavigate } from '@tanstack/react-router'
 import { EditIcon } from 'lucide-react'
 import { Button } from '~/common/ui/Button'
-import { ProductsForm } from '../../modules/product-form/ui/ProductForm'
 
 export const UpdateProduct = () => {
+	const navigate = useNavigate()
+
 	return (
-		<ProductsForm mode='edit'>
-			<Button variant='default' size='icon' color='yellow'>
-				<EditIcon />
-			</Button>
-		</ProductsForm>
+		<Button
+			variant='default'
+			size='icon'
+			color='yellow'
+			onClick={() => navigate({ to: '/products/form' })}>
+			<EditIcon />
+		</Button>
 	)
 }

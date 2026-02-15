@@ -23,16 +23,7 @@ export const useCreateCategoryMutation = () => {
 
 			queryClient.setQueryData(
 				QUERIES.GET_CATEGORIES,
-				prevCategories
-					? [
-							...prevCategories,
-							{
-								...data,
-								subcategoriesCount: 0,
-								productsCount: 0
-							}
-						]
-					: []
+				prevCategories ? [data, ...prevCategories] : []
 			)
 		}
 	})

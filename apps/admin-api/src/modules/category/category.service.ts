@@ -6,7 +6,7 @@ import { CreateCategoryDto } from './dto/create-category.dto'
 @Injectable()
 export class CategoryService {
   async getCategories() {
-    const categories = await prisma.category.findMany({})
+    const categories = await prisma.category.findMany()
 
     const promise = categories.map(async (category) => {
       const subcategoriesCount = await prisma.subcategory.count({
@@ -76,9 +76,15 @@ export class CategoryService {
       })
     }
 
-    return await prisma.category.create({
+    const result = await prisma.category.create({
       data: dto
     })
+
+    return {
+      ...result,
+      subcategoriesCount: 0,
+      productsCount: 0
+    }
   }
 
   async updateCategory(id: string, dto: CreateCategoryDto) {

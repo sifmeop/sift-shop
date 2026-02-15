@@ -9,6 +9,7 @@ import { OrderModule } from './modules/order/order.module'
 import { ProductModule } from './modules/product/product.module'
 import { SubcategoryModule } from './modules/subcategory/subcategory.module'
 import { UserModule } from './modules/user/user.module'
+import { FilterModule } from './modules/filter/filter.module';
 
 @Module({
   imports: [
@@ -20,7 +21,8 @@ import { UserModule } from './modules/user/user.module'
     SubcategoryModule,
     ProductModule,
     OrderModule,
-    S3Module
+    S3Module,
+    FilterModule
   ],
   controllers: []
   // providers: [

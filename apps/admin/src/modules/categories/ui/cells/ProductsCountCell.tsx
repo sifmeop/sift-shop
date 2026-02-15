@@ -6,14 +6,12 @@ import type { Category } from '../../types/category.types'
 type ProductsCountCellProps = CellContext<Category, unknown>
 
 export const ProductsCountCell = ({ cell }: ProductsCountCellProps) => {
-	const count = cell.getValue() as number
+	const count = cell.getValue<Category['productsCount']>()
 
 	return (
-		<div className='flex items-center gap-2'>
+		<Link to='/products' className='flex items-center gap-2'>
 			<span>{count}</span>
-			<Link to='/products'>
-				<LinkIcon size={18} strokeWidth={2.5} />
-			</Link>
-		</div>
+			<LinkIcon size={18} strokeWidth={2.5} />
+		</Link>
 	)
 }

@@ -18,6 +18,7 @@ import { Route as AuthCustomersRouteImport } from './../app/routes/_auth/custome
 import { Route as AuthProductsIndexRouteImport } from './../app/routes/_auth/products/index'
 import { Route as AuthCategoriesIndexRouteImport } from './../app/routes/_auth/categories/index'
 import { Route as AuthProductsFormRouteImport } from './../app/routes/_auth/products/form'
+import { Route as AuthFiltersSlugRouteImport } from './../app/routes/_auth/filters/$slug'
 import { Route as AuthCategoriesSlugRouteImport } from './../app/routes/_auth/categories/$slug'
 
 const AuthRoute = AuthRouteImport.update({
@@ -64,6 +65,11 @@ const AuthProductsFormRoute = AuthProductsFormRouteImport.update({
   path: '/products/form',
   getParentRoute: () => AuthRoute,
 } as any)
+const AuthFiltersSlugRoute = AuthFiltersSlugRouteImport.update({
+  id: '/filters/$slug',
+  path: '/filters/$slug',
+  getParentRoute: () => AuthRoute,
+} as any)
 const AuthCategoriesSlugRoute = AuthCategoriesSlugRouteImport.update({
   id: '/categories/$slug',
   path: '/categories/$slug',
@@ -77,6 +83,7 @@ export interface FileRoutesByFullPath {
   '/orders': typeof AuthOrdersRoute
   '/reviews': typeof AuthReviewsRoute
   '/categories/$slug': typeof AuthCategoriesSlugRoute
+  '/filters/$slug': typeof AuthFiltersSlugRoute
   '/products/form': typeof AuthProductsFormRoute
   '/categories/': typeof AuthCategoriesIndexRoute
   '/products/': typeof AuthProductsIndexRoute
@@ -88,6 +95,7 @@ export interface FileRoutesByTo {
   '/orders': typeof AuthOrdersRoute
   '/reviews': typeof AuthReviewsRoute
   '/categories/$slug': typeof AuthCategoriesSlugRoute
+  '/filters/$slug': typeof AuthFiltersSlugRoute
   '/products/form': typeof AuthProductsFormRoute
   '/categories': typeof AuthCategoriesIndexRoute
   '/products': typeof AuthProductsIndexRoute
@@ -101,6 +109,7 @@ export interface FileRoutesById {
   '/_auth/orders': typeof AuthOrdersRoute
   '/_auth/reviews': typeof AuthReviewsRoute
   '/_auth/categories/$slug': typeof AuthCategoriesSlugRoute
+  '/_auth/filters/$slug': typeof AuthFiltersSlugRoute
   '/_auth/products/form': typeof AuthProductsFormRoute
   '/_auth/categories/': typeof AuthCategoriesIndexRoute
   '/_auth/products/': typeof AuthProductsIndexRoute
@@ -114,6 +123,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/reviews'
     | '/categories/$slug'
+    | '/filters/$slug'
     | '/products/form'
     | '/categories/'
     | '/products/'
@@ -125,6 +135,7 @@ export interface FileRouteTypes {
     | '/orders'
     | '/reviews'
     | '/categories/$slug'
+    | '/filters/$slug'
     | '/products/form'
     | '/categories'
     | '/products'
@@ -137,6 +148,7 @@ export interface FileRouteTypes {
     | '/_auth/orders'
     | '/_auth/reviews'
     | '/_auth/categories/$slug'
+    | '/_auth/filters/$slug'
     | '/_auth/products/form'
     | '/_auth/categories/'
     | '/_auth/products/'
@@ -212,6 +224,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthProductsFormRouteImport
       parentRoute: typeof AuthRoute
     }
+    '/_auth/filters/$slug': {
+      id: '/_auth/filters/$slug'
+      path: '/filters/$slug'
+      fullPath: '/filters/$slug'
+      preLoaderRoute: typeof AuthFiltersSlugRouteImport
+      parentRoute: typeof AuthRoute
+    }
     '/_auth/categories/$slug': {
       id: '/_auth/categories/$slug'
       path: '/categories/$slug'
@@ -228,6 +247,7 @@ interface AuthRouteChildren {
   AuthOrdersRoute: typeof AuthOrdersRoute
   AuthReviewsRoute: typeof AuthReviewsRoute
   AuthCategoriesSlugRoute: typeof AuthCategoriesSlugRoute
+  AuthFiltersSlugRoute: typeof AuthFiltersSlugRoute
   AuthProductsFormRoute: typeof AuthProductsFormRoute
   AuthCategoriesIndexRoute: typeof AuthCategoriesIndexRoute
   AuthProductsIndexRoute: typeof AuthProductsIndexRoute
@@ -239,6 +259,7 @@ const AuthRouteChildren: AuthRouteChildren = {
   AuthOrdersRoute: AuthOrdersRoute,
   AuthReviewsRoute: AuthReviewsRoute,
   AuthCategoriesSlugRoute: AuthCategoriesSlugRoute,
+  AuthFiltersSlugRoute: AuthFiltersSlugRoute,
   AuthProductsFormRoute: AuthProductsFormRoute,
   AuthCategoriesIndexRoute: AuthCategoriesIndexRoute,
   AuthProductsIndexRoute: AuthProductsIndexRoute,

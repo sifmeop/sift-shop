@@ -3,15 +3,11 @@ import type { Category } from '../types/category.types'
 import { Actions } from './cells/Actions'
 import { ProductsCountCell } from './cells/ProductsCountCell'
 import { SubcategoriesCountCell } from './cells/SubcategoriesCountCell'
-import { ActionsHeader } from './headers/ActionsHeader'
-import { NameHeader } from './headers/NameHeader'
-import { ProductsCountHeader } from './headers/ProductsCountHeader'
-import { SubcategoriesCountHeader } from './headers/SubcategoriesCountHeader'
 
 export const columns: ColumnDef<Category>[] = [
 	{
 		accessorKey: 'name',
-		header: NameHeader,
+		header: 'Name',
 		enableSorting: false
 	},
 	{
@@ -21,19 +17,19 @@ export const columns: ColumnDef<Category>[] = [
 	},
 	{
 		accessorKey: 'subcategoriesCount',
-		header: SubcategoriesCountHeader,
+		header: 'Subcategories count',
 		cell: SubcategoriesCountCell,
 		enableSorting: true
 	},
 	{
 		accessorKey: 'productsCount',
-		header: ProductsCountHeader,
+		header: 'Products count',
 		cell: ProductsCountCell,
 		enableSorting: true
 	},
 	{
 		accessorKey: 'actions',
-		header: ActionsHeader,
+		header: () => <p className='text-end'>Actions</p>,
 		cell: Actions,
 		enableSorting: false
 	}
