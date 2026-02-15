@@ -8,13 +8,11 @@ import {
 	SelectValue
 } from '~/common/ui/Select'
 import { useGetCategoriesQuery } from '~/modules/categories'
+import { useFormContext } from '../contexts/form-context'
 
-interface SelectCategoryProps {
-	form: any
-}
-
-export const SelectCategory = ({ form }: SelectCategoryProps) => {
+export const SelectCategory = () => {
 	const { data: categories } = useGetCategoriesQuery()
+	const form = useFormContext()
 
 	return (
 		<form.Field

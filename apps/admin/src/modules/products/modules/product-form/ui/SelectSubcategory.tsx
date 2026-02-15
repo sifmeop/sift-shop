@@ -10,17 +10,17 @@ import {
 	SelectValue
 } from '~/common/ui/Select'
 import { useGetSubcategoriesQuery } from '~/modules/subcategories'
+import { useFormContext } from '../contexts/form-context'
+import { useWizard } from '../contexts/wizard-context'
 
 interface SelectSubcategoryProps {
-	form: any
 	category: string
 }
 
-export const SelectSubcategory = ({
-	form,
-	category
-}: SelectSubcategoryProps) => {
+export const SelectSubcategory = ({ category }: SelectSubcategoryProps) => {
 	const { data: subcategories, isLoading } = useGetSubcategoriesQuery(category)
+	const form = useFormContext()
+	const { markStepComplete } = useWizard()
 
 	if (isLoading) {
 		return <CenterLoader />
@@ -50,7 +50,10 @@ export const SelectSubcategory = ({
 						<Select
 							name={field.name}
 							value={field.state.value}
-							onValueChange={field.handleChange}>
+							onValueChange={(value) => {
+								field.handleChange(value)
+								markStepComplete(0)
+							}}>
 							<SelectTrigger aria-invalid={isInvalid}>
 								<SelectValue placeholder='Select subcategory' />
 							</SelectTrigger>

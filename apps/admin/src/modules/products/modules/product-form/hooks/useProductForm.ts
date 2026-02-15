@@ -1,10 +1,22 @@
-import { useForm } from '@tanstack/react-form'
+import { createFormHook } from '@tanstack/react-form'
+import { fieldContext, formContext } from '../contexts/form-context'
 import { productSchema } from '../schemas/product.schema'
+import { ProductBasicInfo } from '../ui/steps/ProductBasicInfo'
+
+const { useAppForm } = createFormHook({
+	fieldContext,
+	formContext,
+	fieldComponents: {},
+	formComponents: {
+		ProductBasicInfo
+	}
+})
 
 export const useProductForm = () => {
-	const form = useForm({
+	const form = useAppForm({
 		defaultValues: {
-			category: ''
+			category: '',
+			description: ''
 		},
 		validators: {
 			onSubmit: productSchema
