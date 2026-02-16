@@ -2,10 +2,10 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
 import { QUERIES } from '~/common/constants/quries'
-import type { CreateCategorySchema } from '../schemas/createCategory.schema'
+import type { CategorySchema } from '../schemas/createCategory.schema'
 import type { Category } from '../types/category.types'
 
-const updateCategory = async (id: string, body: CreateCategorySchema) => {
+const updateCategory = async (id: string, body: CategorySchema) => {
 	const { data } = await api.put<Category>(`/categories/${id}/update`, body)
 	return data
 }
@@ -15,7 +15,7 @@ export const useUpdateCategoryMutation = (id: string) => {
 
 	return useMutation({
 		mutationKey: MUTATIONS.UPDATE_CATEGORY(id),
-		mutationFn: (body: CreateCategorySchema) => updateCategory(id, body),
+		mutationFn: (body: CategorySchema) => updateCategory(id, body),
 		onSuccess: (data) => {
 			const prevCategories = queryClient.getQueryData<Category[]>(
 				QUERIES.GET_CATEGORIES
