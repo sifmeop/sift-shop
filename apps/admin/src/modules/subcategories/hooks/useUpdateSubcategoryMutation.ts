@@ -8,12 +8,7 @@ import type { Subcategory } from '../types/subcategory.types'
 const updateSubcategory = async (id: string, body: FormData) => {
 	const { data } = await api.put<Subcategory>(
 		`/subcategories/${id}/update`,
-		body,
-		{
-			headers: {
-				'Content-Type': 'multipart/form-data'
-			}
-		}
+		body
 	)
 	return data
 }

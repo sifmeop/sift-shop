@@ -39,8 +39,10 @@ export type FilterOptionMinAggregateOutputType = {
   value: string | null
   label: string | null
   position: number | null
+  isActive: boolean | null
   filterId: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type FilterOptionMaxAggregateOutputType = {
@@ -48,8 +50,10 @@ export type FilterOptionMaxAggregateOutputType = {
   value: string | null
   label: string | null
   position: number | null
+  isActive: boolean | null
   filterId: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type FilterOptionCountAggregateOutputType = {
@@ -57,8 +61,10 @@ export type FilterOptionCountAggregateOutputType = {
   value: number
   label: number
   position: number
+  isActive: number
   filterId: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -76,8 +82,10 @@ export type FilterOptionMinAggregateInputType = {
   value?: true
   label?: true
   position?: true
+  isActive?: true
   filterId?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type FilterOptionMaxAggregateInputType = {
@@ -85,8 +93,10 @@ export type FilterOptionMaxAggregateInputType = {
   value?: true
   label?: true
   position?: true
+  isActive?: true
   filterId?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type FilterOptionCountAggregateInputType = {
@@ -94,8 +104,10 @@ export type FilterOptionCountAggregateInputType = {
   value?: true
   label?: true
   position?: true
+  isActive?: true
   filterId?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -190,8 +202,10 @@ export type FilterOptionGroupByOutputType = {
   value: string
   label: string
   position: number
+  isActive: boolean
   filterId: string
   createdAt: Date
+  updatedAt: Date
   _count: FilterOptionCountAggregateOutputType | null
   _avg: FilterOptionAvgAggregateOutputType | null
   _sum: FilterOptionSumAggregateOutputType | null
@@ -222,9 +236,12 @@ export type FilterOptionWhereInput = {
   value?: Prisma.StringFilter<"FilterOption"> | string
   label?: Prisma.StringFilter<"FilterOption"> | string
   position?: Prisma.IntFilter<"FilterOption"> | number
+  isActive?: Prisma.BoolFilter<"FilterOption"> | boolean
   filterId?: Prisma.StringFilter<"FilterOption"> | string
   createdAt?: Prisma.DateTimeFilter<"FilterOption"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"FilterOption"> | Date | string
   filter?: Prisma.XOR<Prisma.FilterScalarRelationFilter, Prisma.FilterWhereInput>
+  products?: Prisma.ProductFilterValueListRelationFilter
 }
 
 export type FilterOptionOrderByWithRelationInput = {
@@ -232,31 +249,40 @@ export type FilterOptionOrderByWithRelationInput = {
   value?: Prisma.SortOrder
   label?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   filterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   filter?: Prisma.FilterOrderByWithRelationInput
+  products?: Prisma.ProductFilterValueOrderByRelationAggregateInput
 }
 
 export type FilterOptionWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  filterId_value?: Prisma.FilterOptionFilterIdValueCompoundUniqueInput
   AND?: Prisma.FilterOptionWhereInput | Prisma.FilterOptionWhereInput[]
   OR?: Prisma.FilterOptionWhereInput[]
   NOT?: Prisma.FilterOptionWhereInput | Prisma.FilterOptionWhereInput[]
   value?: Prisma.StringFilter<"FilterOption"> | string
   label?: Prisma.StringFilter<"FilterOption"> | string
   position?: Prisma.IntFilter<"FilterOption"> | number
+  isActive?: Prisma.BoolFilter<"FilterOption"> | boolean
   filterId?: Prisma.StringFilter<"FilterOption"> | string
   createdAt?: Prisma.DateTimeFilter<"FilterOption"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"FilterOption"> | Date | string
   filter?: Prisma.XOR<Prisma.FilterScalarRelationFilter, Prisma.FilterWhereInput>
-}, "id">
+  products?: Prisma.ProductFilterValueListRelationFilter
+}, "id" | "filterId_value">
 
 export type FilterOptionOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   value?: Prisma.SortOrder
   label?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   filterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.FilterOptionCountOrderByAggregateInput
   _avg?: Prisma.FilterOptionAvgOrderByAggregateInput
   _max?: Prisma.FilterOptionMaxOrderByAggregateInput
@@ -272,8 +298,10 @@ export type FilterOptionScalarWhereWithAggregatesInput = {
   value?: Prisma.StringWithAggregatesFilter<"FilterOption"> | string
   label?: Prisma.StringWithAggregatesFilter<"FilterOption"> | string
   position?: Prisma.IntWithAggregatesFilter<"FilterOption"> | number
+  isActive?: Prisma.BoolWithAggregatesFilter<"FilterOption"> | boolean
   filterId?: Prisma.StringWithAggregatesFilter<"FilterOption"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"FilterOption"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"FilterOption"> | Date | string
 }
 
 export type FilterOptionCreateInput = {
@@ -281,8 +309,11 @@ export type FilterOptionCreateInput = {
   value: string
   label: string
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
   filter: Prisma.FilterCreateNestedOneWithoutOptionsInput
+  products?: Prisma.ProductFilterValueCreateNestedManyWithoutFilterOptionInput
 }
 
 export type FilterOptionUncheckedCreateInput = {
@@ -290,8 +321,11 @@ export type FilterOptionUncheckedCreateInput = {
   value: string
   label: string
   position?: number
+  isActive?: boolean
   filterId: string
   createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductFilterValueUncheckedCreateNestedManyWithoutFilterOptionInput
 }
 
 export type FilterOptionUpdateInput = {
@@ -299,8 +333,11 @@ export type FilterOptionUpdateInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   filter?: Prisma.FilterUpdateOneRequiredWithoutOptionsNestedInput
+  products?: Prisma.ProductFilterValueUpdateManyWithoutFilterOptionNestedInput
 }
 
 export type FilterOptionUncheckedUpdateInput = {
@@ -308,8 +345,11 @@ export type FilterOptionUncheckedUpdateInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   filterId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductFilterValueUncheckedUpdateManyWithoutFilterOptionNestedInput
 }
 
 export type FilterOptionCreateManyInput = {
@@ -317,8 +357,10 @@ export type FilterOptionCreateManyInput = {
   value: string
   label: string
   position?: number
+  isActive?: boolean
   filterId: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type FilterOptionUpdateManyMutationInput = {
@@ -326,7 +368,9 @@ export type FilterOptionUpdateManyMutationInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FilterOptionUncheckedUpdateManyInput = {
@@ -334,8 +378,15 @@ export type FilterOptionUncheckedUpdateManyInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   filterId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
+export type FilterOptionScalarRelationFilter = {
+  is?: Prisma.FilterOptionWhereInput
+  isNot?: Prisma.FilterOptionWhereInput
 }
 
 export type FilterOptionListRelationFilter = {
@@ -348,13 +399,20 @@ export type FilterOptionOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type FilterOptionFilterIdValueCompoundUniqueInput = {
+  filterId: string
+  value: string
+}
+
 export type FilterOptionCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   value?: Prisma.SortOrder
   label?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   filterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type FilterOptionAvgOrderByAggregateInput = {
@@ -366,8 +424,10 @@ export type FilterOptionMaxOrderByAggregateInput = {
   value?: Prisma.SortOrder
   label?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   filterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type FilterOptionMinOrderByAggregateInput = {
@@ -375,12 +435,28 @@ export type FilterOptionMinOrderByAggregateInput = {
   value?: Prisma.SortOrder
   label?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   filterId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type FilterOptionSumOrderByAggregateInput = {
   position?: Prisma.SortOrder
+}
+
+export type FilterOptionCreateNestedOneWithoutProductsInput = {
+  create?: Prisma.XOR<Prisma.FilterOptionCreateWithoutProductsInput, Prisma.FilterOptionUncheckedCreateWithoutProductsInput>
+  connectOrCreate?: Prisma.FilterOptionCreateOrConnectWithoutProductsInput
+  connect?: Prisma.FilterOptionWhereUniqueInput
+}
+
+export type FilterOptionUpdateOneRequiredWithoutProductsNestedInput = {
+  create?: Prisma.XOR<Prisma.FilterOptionCreateWithoutProductsInput, Prisma.FilterOptionUncheckedCreateWithoutProductsInput>
+  connectOrCreate?: Prisma.FilterOptionCreateOrConnectWithoutProductsInput
+  upsert?: Prisma.FilterOptionUpsertWithoutProductsInput
+  connect?: Prisma.FilterOptionWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.FilterOptionUpdateToOneWithWhereWithoutProductsInput, Prisma.FilterOptionUpdateWithoutProductsInput>, Prisma.FilterOptionUncheckedUpdateWithoutProductsInput>
 }
 
 export type FilterOptionCreateNestedManyWithoutFilterInput = {
@@ -425,12 +501,75 @@ export type FilterOptionUncheckedUpdateManyWithoutFilterNestedInput = {
   deleteMany?: Prisma.FilterOptionScalarWhereInput | Prisma.FilterOptionScalarWhereInput[]
 }
 
+export type FilterOptionCreateWithoutProductsInput = {
+  id?: string
+  value: string
+  label: string
+  position?: number
+  isActive?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  filter: Prisma.FilterCreateNestedOneWithoutOptionsInput
+}
+
+export type FilterOptionUncheckedCreateWithoutProductsInput = {
+  id?: string
+  value: string
+  label: string
+  position?: number
+  isActive?: boolean
+  filterId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+}
+
+export type FilterOptionCreateOrConnectWithoutProductsInput = {
+  where: Prisma.FilterOptionWhereUniqueInput
+  create: Prisma.XOR<Prisma.FilterOptionCreateWithoutProductsInput, Prisma.FilterOptionUncheckedCreateWithoutProductsInput>
+}
+
+export type FilterOptionUpsertWithoutProductsInput = {
+  update: Prisma.XOR<Prisma.FilterOptionUpdateWithoutProductsInput, Prisma.FilterOptionUncheckedUpdateWithoutProductsInput>
+  create: Prisma.XOR<Prisma.FilterOptionCreateWithoutProductsInput, Prisma.FilterOptionUncheckedCreateWithoutProductsInput>
+  where?: Prisma.FilterOptionWhereInput
+}
+
+export type FilterOptionUpdateToOneWithWhereWithoutProductsInput = {
+  where?: Prisma.FilterOptionWhereInput
+  data: Prisma.XOR<Prisma.FilterOptionUpdateWithoutProductsInput, Prisma.FilterOptionUncheckedUpdateWithoutProductsInput>
+}
+
+export type FilterOptionUpdateWithoutProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  filter?: Prisma.FilterUpdateOneRequiredWithoutOptionsNestedInput
+}
+
+export type FilterOptionUncheckedUpdateWithoutProductsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  value?: Prisma.StringFieldUpdateOperationsInput | string
+  label?: Prisma.StringFieldUpdateOperationsInput | string
+  position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  filterId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+}
+
 export type FilterOptionCreateWithoutFilterInput = {
   id?: string
   value: string
   label: string
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductFilterValueCreateNestedManyWithoutFilterOptionInput
 }
 
 export type FilterOptionUncheckedCreateWithoutFilterInput = {
@@ -438,7 +577,10 @@ export type FilterOptionUncheckedCreateWithoutFilterInput = {
   value: string
   label: string
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
+  products?: Prisma.ProductFilterValueUncheckedCreateNestedManyWithoutFilterOptionInput
 }
 
 export type FilterOptionCreateOrConnectWithoutFilterInput = {
@@ -475,8 +617,10 @@ export type FilterOptionScalarWhereInput = {
   value?: Prisma.StringFilter<"FilterOption"> | string
   label?: Prisma.StringFilter<"FilterOption"> | string
   position?: Prisma.IntFilter<"FilterOption"> | number
+  isActive?: Prisma.BoolFilter<"FilterOption"> | boolean
   filterId?: Prisma.StringFilter<"FilterOption"> | string
   createdAt?: Prisma.DateTimeFilter<"FilterOption"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"FilterOption"> | Date | string
 }
 
 export type FilterOptionCreateManyFilterInput = {
@@ -484,7 +628,9 @@ export type FilterOptionCreateManyFilterInput = {
   value: string
   label: string
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type FilterOptionUpdateWithoutFilterInput = {
@@ -492,7 +638,10 @@ export type FilterOptionUpdateWithoutFilterInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductFilterValueUpdateManyWithoutFilterOptionNestedInput
 }
 
 export type FilterOptionUncheckedUpdateWithoutFilterInput = {
@@ -500,7 +649,10 @@ export type FilterOptionUncheckedUpdateWithoutFilterInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  products?: Prisma.ProductFilterValueUncheckedUpdateManyWithoutFilterOptionNestedInput
 }
 
 export type FilterOptionUncheckedUpdateManyWithoutFilterInput = {
@@ -508,9 +660,40 @@ export type FilterOptionUncheckedUpdateManyWithoutFilterInput = {
   value?: Prisma.StringFieldUpdateOperationsInput | string
   label?: Prisma.StringFieldUpdateOperationsInput | string
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
+
+/**
+ * Count Type FilterOptionCountOutputType
+ */
+
+export type FilterOptionCountOutputType = {
+  products: number
+}
+
+export type FilterOptionCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  products?: boolean | FilterOptionCountOutputTypeCountProductsArgs
+}
+
+/**
+ * FilterOptionCountOutputType without action
+ */
+export type FilterOptionCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the FilterOptionCountOutputType
+   */
+  select?: Prisma.FilterOptionCountOutputTypeSelect<ExtArgs> | null
+}
+
+/**
+ * FilterOptionCountOutputType without action
+ */
+export type FilterOptionCountOutputTypeCountProductsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ProductFilterValueWhereInput
+}
 
 
 export type FilterOptionSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -518,9 +701,13 @@ export type FilterOptionSelect<ExtArgs extends runtime.Types.Extensions.Internal
   value?: boolean
   label?: boolean
   position?: boolean
+  isActive?: boolean
   filterId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   filter?: boolean | Prisma.FilterDefaultArgs<ExtArgs>
+  products?: boolean | Prisma.FilterOption$productsArgs<ExtArgs>
+  _count?: boolean | Prisma.FilterOptionCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["filterOption"]>
 
 export type FilterOptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -528,8 +715,10 @@ export type FilterOptionSelectCreateManyAndReturn<ExtArgs extends runtime.Types.
   value?: boolean
   label?: boolean
   position?: boolean
+  isActive?: boolean
   filterId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   filter?: boolean | Prisma.FilterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["filterOption"]>
 
@@ -538,8 +727,10 @@ export type FilterOptionSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.
   value?: boolean
   label?: boolean
   position?: boolean
+  isActive?: boolean
   filterId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   filter?: boolean | Prisma.FilterDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["filterOption"]>
 
@@ -548,13 +739,17 @@ export type FilterOptionSelectScalar = {
   value?: boolean
   label?: boolean
   position?: boolean
+  isActive?: boolean
   filterId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type FilterOptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "value" | "label" | "position" | "filterId" | "createdAt", ExtArgs["result"]["filterOption"]>
+export type FilterOptionOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "value" | "label" | "position" | "isActive" | "filterId" | "createdAt" | "updatedAt", ExtArgs["result"]["filterOption"]>
 export type FilterOptionInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   filter?: boolean | Prisma.FilterDefaultArgs<ExtArgs>
+  products?: boolean | Prisma.FilterOption$productsArgs<ExtArgs>
+  _count?: boolean | Prisma.FilterOptionCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type FilterOptionIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   filter?: boolean | Prisma.FilterDefaultArgs<ExtArgs>
@@ -567,14 +762,17 @@ export type $FilterOptionPayload<ExtArgs extends runtime.Types.Extensions.Intern
   name: "FilterOption"
   objects: {
     filter: Prisma.$FilterPayload<ExtArgs>
+    products: Prisma.$ProductFilterValuePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     value: string
     label: string
     position: number
+    isActive: boolean
     filterId: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["filterOption"]>
   composites: {}
 }
@@ -970,6 +1168,7 @@ readonly fields: FilterOptionFieldRefs;
 export interface Prisma__FilterOptionClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   filter<T extends Prisma.FilterDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FilterDefaultArgs<ExtArgs>>): Prisma.Prisma__FilterClient<runtime.Types.Result.GetResult<Prisma.$FilterPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
+  products<T extends Prisma.FilterOption$productsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.FilterOption$productsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ProductFilterValuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1003,8 +1202,10 @@ export interface FilterOptionFieldRefs {
   readonly value: Prisma.FieldRef<"FilterOption", 'String'>
   readonly label: Prisma.FieldRef<"FilterOption", 'String'>
   readonly position: Prisma.FieldRef<"FilterOption", 'Int'>
+  readonly isActive: Prisma.FieldRef<"FilterOption", 'Boolean'>
   readonly filterId: Prisma.FieldRef<"FilterOption", 'String'>
   readonly createdAt: Prisma.FieldRef<"FilterOption", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"FilterOption", 'DateTime'>
 }
     
 
@@ -1398,6 +1599,30 @@ export type FilterOptionDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.
    * Limit how many FilterOptions to delete.
    */
   limit?: number
+}
+
+/**
+ * FilterOption.products
+ */
+export type FilterOption$productsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ProductFilterValue
+   */
+  select?: Prisma.ProductFilterValueSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ProductFilterValue
+   */
+  omit?: Prisma.ProductFilterValueOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ProductFilterValueInclude<ExtArgs> | null
+  where?: Prisma.ProductFilterValueWhereInput
+  orderBy?: Prisma.ProductFilterValueOrderByWithRelationInput | Prisma.ProductFilterValueOrderByWithRelationInput[]
+  cursor?: Prisma.ProductFilterValueWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ProductFilterValueScalarFieldEnum | Prisma.ProductFilterValueScalarFieldEnum[]
 }
 
 /**

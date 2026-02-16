@@ -1,12 +1,16 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import slugify from '@sindresorhus/slugify'
-import { useForm, useStore } from '@tanstack/react-form'
 import type { CoreRow } from '@tanstack/react-table'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { Route } from '~/app/routes/_auth/categories/$slug'
 import { handleApiError } from '~/common/api/errorHandler'
 import { validateImageFile } from '~/common/utils/validateImageFile'
-import { createSubcategorySchema } from '../schemas/createSubcategory.schema'
+import {
+	subcategorySchema,
+	type SubcategorySchema
+} from '../schemas/subcategory.schema'
 import type { Subcategory } from '../types/subcategory.types'
 import { useCreateSubcategoryMutation } from './useCreateSubcategoryMutation'
 import { useUpdateSubcategoryMutation } from './useUpdateSubcategoryMutation'
@@ -32,91 +36,73 @@ export const useSubcategoryForm = ({
 	const [file, setFile] = useState<File | null>(null)
 	const [fileError, setFileError] = useState<string | null>(null)
 
-	const resetFileState = useCallback(() => {
+	const resetFileState = () => {
 		setFile(null)
 		setFileError(null)
-	}, [])
+	}
 
-	const handleValidateFile = useCallback(
-		(fileToValidate: File | null): boolean => {
-			const result = validateImageFile(fileToValidate)
+	const handleValidateFile = (fileToValidate: File | null): boolean => {
+		const result = validateImageFile(fileToValidate)
 
-			setFileError(result.error)
+		setFileError(result.error)
 
-			if (!result.isValid && fileToValidate) {
-				setFile(null)
-			}
-
-			return result.isValid
-		},
-		[]
-	)
-
-	const formDefaultValues = useMemo(
-		() => ({
-			name: defaultValues?.name ?? '',
-			slug: defaultValues?.slug ?? ''
-		}),
-		[defaultValues?.name, defaultValues?.slug]
-	)
-
-	const form = useForm({
-		defaultValues: formDefaultValues,
-		validators: {
-			onSubmit: createSubcategorySchema
-		},
-		onSubmit: async ({ value }) => {
-			if (mutation.isPending) return
-
-			if (isEditMode && value.name === defaultValues?.name) {
-				onClose()
-				resetFileState()
-				return
-			}
-
-			if (!(isEditMode && !file) && !handleValidateFile(file)) {
-				return
-			}
-
-			try {
-				const formData = new FormData()
-				formData.append('name', value.name)
-				formData.append('slug', value.slug)
-				formData.append('category', slug)
-
-				if (file) {
-					formData.append('image', file)
-				}
-
-				await mutation.mutateAsync(formData)
-
-				form.reset()
-				onClose()
-				resetFileState()
-
-				toast.success(
-					`Subcategory ${isEditMode ? 'updated' : 'created'} successfully`
-				)
-			} catch (err) {
-				toast.error(handleApiError(err))
-			}
+		if (!result.isValid && fileToValidate) {
+			setFile(null)
 		}
+
+		return result.isValid
+	}
+
+	const form = useForm<SubcategorySchema>({
+		defaultValues: {
+			name: defaultValues?.name ?? ''
+		},
+		resolver: zodResolver(subcategorySchema)
 	})
 
-	const nameValue = useStore(form.store, (state) => state.values.name)
+	const onSubmit = form.handleSubmit(async (values) => {
+		if (mutation.isPending) return
 
-	useEffect(() => {
-		form.setFieldValue('slug', slugify(nameValue))
-	}, [nameValue, form])
+		if (isEditMode && values.name === defaultValues?.name) {
+			onClose()
+			resetFileState()
+			return
+		}
 
-	const onSubmit = useCallback(
-		(e: React.ChangeEvent<HTMLFormElement>) => {
-			e.preventDefault()
-			e.stopPropagation()
-			form.handleSubmit()
-		},
-		[form]
-	)
+		if (!(isEditMode && !file) && !handleValidateFile(file)) {
+			return
+		}
+
+		const body = {
+			name: values.name,
+			slug: slugify(values.name, {
+				decamelize: false
+			})
+		}
+
+		try {
+			const formData = new FormData()
+			formData.append('name', body.name)
+			formData.append('slug', body.slug)
+			formData.append('category', slug)
+
+			if (file) {
+				formData.append('files', file)
+			}
+
+			await mutation.mutateAsync(formData)
+
+			form.reset()
+			onClose()
+			resetFileState()
+
+			toast.success(
+				`Subcategory ${isEditMode ? 'updated' : 'created'} successfully`
+			)
+		} catch (err) {
+			toast.error(handleApiError(err))
+		}
+	})
 
 	return {
 		onSubmit,

@@ -1,5 +1,5 @@
 import { BadRequestException } from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
+import { FilesInterceptor } from '@nestjs/platform-express'
 import { MulterOptions } from '@nestjs/platform-express/multer/interfaces/multer-options.interface'
 import { memoryStorage } from 'multer'
 
@@ -10,8 +10,8 @@ const ACCEPTED_MIME_TYPES = [
   'image/webp'
 ]
 
-export const createFileInterceptor = (options?: Partial<MulterOptions>) => {
-  return FileInterceptor('image', {
+export const createFilesInterceptor = (options?: Partial<MulterOptions>) => {
+  return FilesInterceptor('files', 10, {
     storage: memoryStorage(),
     limits: {
       fileSize: 5 * 1024 * 1024
@@ -26,7 +26,6 @@ export const createFileInterceptor = (options?: Partial<MulterOptions>) => {
           false
         )
       }
-
       cb(null, true)
     },
     ...options

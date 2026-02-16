@@ -1,5 +1,4 @@
 import { cva, type VariantProps } from 'class-variance-authority'
-import { useMemo } from 'react'
 import { cn } from '../utils/cn'
 import { Label } from './Label'
 import { Separator } from './Separator'
@@ -196,39 +195,12 @@ export const FieldSeparator = ({
 export const FieldError = ({
 	className,
 	children,
-	errors,
+	error,
 	...props
 }: React.ComponentProps<'div'> & {
-	errors?: Array<{ message?: string } | undefined>
+	error?: string | null
 }) => {
-	const content = useMemo(() => {
-		if (children) {
-			return children
-		}
-
-		if (!errors?.length) {
-			return null
-		}
-
-		const uniqueErrors = [
-			...new Map(Object.entries(errors.filter(Boolean))).values()
-		]
-
-		if (uniqueErrors?.length == 1) {
-			return uniqueErrors[0]?.message
-		}
-
-		return (
-			<ul className='ml-4 flex list-disc flex-col gap-1'>
-				{uniqueErrors.map(
-					(error, index) =>
-						error?.message && <li key={index}>{error.message}</li>
-				)}
-			</ul>
-		)
-	}, [children, errors])
-
-	if (!content) {
+	if (!error) {
 		return null
 	}
 
@@ -238,7 +210,7 @@ export const FieldError = ({
 			data-slot='field-error'
 			className={cn('text-destructive text-sm font-normal', className)}
 			{...props}>
-			{content}
+			{children ?? error}
 		</div>
 	)
 }

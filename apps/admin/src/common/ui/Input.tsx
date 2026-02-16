@@ -3,6 +3,7 @@
 import { EyeIcon, EyeOffIcon, SearchIcon } from 'lucide-react'
 import { useState } from 'react'
 import { cn } from '../utils/cn'
+import { parseNumericInput } from '../utils/parseNumericInput'
 import { InputGroup, InputGroupAddon, InputGroupInput } from './InputGroup'
 
 export const Input = ({
@@ -66,5 +67,74 @@ export const SearchInput = (props: React.ComponentProps<'input'>) => {
 				<SearchIcon />
 			</InputGroupAddon>
 		</InputGroup>
+	)
+}
+
+interface InputNumber extends React.ComponentProps<'input'> {
+	value: string
+	onChangeValue: (value: string) => void
+	min?: number
+	max?: number
+	allowFloat?: boolean
+	decimalPlaces?: number
+}
+
+export const InputNumber = ({
+	value,
+	onChangeValue,
+	allowFloat = false,
+	min,
+	max,
+	decimalPlaces = 2,
+	...props
+}: InputNumber) => {
+	const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+		const rawValue = e.target.value
+
+		const pattern = allowFloat ? /^\d*\.?\d*$/ : /^\d*$/
+
+		if (rawValue !== '' && !pattern.test(rawValue)) {
+			return
+		}
+
+		if (allowFloat && rawValue.includes('.')) {
+			const [, decimal] = rawValue.split('.')
+			if (decimal && decimal.length > decimalPlaces) {
+				return
+			}
+		}
+
+		onChangeValue(rawValue)
+	}
+
+	const handleBlur = () => {
+		if (value === '' || value === '.') {
+			onChangeValue('')
+			return
+		}
+
+		const parsed = parseNumericInput(value, {
+			allowFloat,
+			min,
+			max
+		})
+
+		let finalValue = parsed === '' ? value : parsed
+
+		if (allowFloat && finalValue !== '' && !isNaN(Number(finalValue))) {
+			finalValue = Number(Number(finalValue).toFixed(decimalPlaces))
+		}
+
+		onChangeValue(String(finalValue))
+	}
+
+	return (
+		<Input
+			value={value}
+			onChange={handleChange}
+			onBlur={handleBlur}
+			inputMode='decimal'
+			{...props}
+		/>
 	)
 }

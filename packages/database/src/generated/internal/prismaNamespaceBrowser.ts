@@ -55,7 +55,7 @@ export const ModelName = {
   Account: 'Account',
   Token: 'Token',
   Product: 'Product',
-  ProductVariant: 'ProductVariant',
+  ProductFilterValue: 'ProductFilterValue',
   Category: 'Category',
   Subcategory: 'Subcategory',
   Filter: 'Filter',
@@ -122,40 +122,44 @@ export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof To
 
 export const ProductScalarFieldEnum = {
   id: 'id',
-  description: 'description',
-  filterValues: 'filterValues',
-  variantAttributes: 'variantAttributes',
-  specifications: 'specifications',
-  subcategoryId: 'subcategoryId',
-  createdAt: 'createdAt'
-} as const
-
-export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
-
-
-export const ProductVariantScalarFieldEnum = {
-  id: 'id',
   slug: 'slug',
   name: 'name',
   sku: 'sku',
+  description: 'description',
   stock: 'stock',
   price: 'price',
   compareAtPrice: 'compareAtPrice',
   images: 'images',
   isFeatured: 'isFeatured',
-  attributes: 'attributes',
+  isActive: 'isActive',
+  specifications: 'specifications',
+  subcategoryId: 'subcategoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductFilterValueScalarFieldEnum = {
+  id: 'id',
   productId: 'productId',
+  filterOptionId: 'filterOptionId',
   createdAt: 'createdAt'
 } as const
 
-export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
+export type ProductFilterValueScalarFieldEnum = (typeof ProductFilterValueScalarFieldEnum)[keyof typeof ProductFilterValueScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   name: 'name',
-  createdAt: 'createdAt'
+  description: 'description',
+  position: 'position',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -166,8 +170,12 @@ export const SubcategoryScalarFieldEnum = {
   slug: 'slug',
   name: 'name',
   image: 'image',
+  description: 'description',
+  position: 'position',
+  isActive: 'isActive',
   categoryId: 'categoryId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type SubcategoryScalarFieldEnum = (typeof SubcategoryScalarFieldEnum)[keyof typeof SubcategoryScalarFieldEnum]
@@ -176,11 +184,13 @@ export type SubcategoryScalarFieldEnum = (typeof SubcategoryScalarFieldEnum)[key
 export const FilterScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  value: 'value',
+  slug: 'slug',
   type: 'type',
   position: 'position',
+  isActive: 'isActive',
   subcategoryId: 'subcategoryId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type FilterScalarFieldEnum = (typeof FilterScalarFieldEnum)[keyof typeof FilterScalarFieldEnum]
@@ -191,8 +201,10 @@ export const FilterOptionScalarFieldEnum = {
   value: 'value',
   label: 'label',
   position: 'position',
+  isActive: 'isActive',
   filterId: 'filterId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type FilterOptionScalarFieldEnum = (typeof FilterOptionScalarFieldEnum)[keyof typeof FilterOptionScalarFieldEnum]
@@ -211,14 +223,6 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
-export const NullableJsonNullValueInput = {
-  DbNull: DbNull,
-  JsonNull: JsonNull
-} as const
-
-export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

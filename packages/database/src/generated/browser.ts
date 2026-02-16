@@ -38,10 +38,10 @@ export type Token = Prisma.TokenModel
  */
 export type Product = Prisma.ProductModel
 /**
- * Model ProductVariant
+ * Model ProductFilterValue
  * 
  */
-export type ProductVariant = Prisma.ProductVariantModel
+export type ProductFilterValue = Prisma.ProductFilterValueModel
 /**
  * Model Category
  * 

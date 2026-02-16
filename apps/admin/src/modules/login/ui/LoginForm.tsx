@@ -1,5 +1,6 @@
 'use client'
 
+import { Controller } from 'react-hook-form'
 import { Button } from '~/common/ui/Button'
 import { Card, CardContent, CardFooter, CardTitle } from '~/common/ui/Card'
 import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/Field'
@@ -18,47 +19,47 @@ export const LoginForm = () => {
 			<CardContent>
 				<form id='login-form' onSubmit={onSubmit}>
 					<FieldGroup className='flex flex-col gap-4'>
-						<form.Field
+						<Controller
 							name='email'
-							children={(field) => {
-								const isInvalid = !field.state.meta.isValid
-
+							control={form.control}
+							render={({ field, fieldState }) => {
+								const isInvalid = fieldState.invalid
 								return (
 									<Field className='space-x-2' data-invalid={isInvalid}>
-										<FieldLabel htmlFor={field.name}></FieldLabel>
+										<FieldLabel htmlFor={field.name}>Email</FieldLabel>
 										<Input
 											aria-invalid={isInvalid}
 											id={field.name}
 											name={field.name}
 											type='email'
 											autoComplete='email'
-											value={field.state.value}
-											onChange={(e) => field.handleChange(e.target.value)}
-											onBlur={field.handleBlur}
+											value={field.value}
+											onChange={(e) => field.onChange(e.target.value)}
+											onBlur={field.onBlur}
 											placeholder='Enter email'
 										/>
-										<FieldError errors={field.state.meta.errors} />
+										<FieldError error={fieldState.error?.message} />
 									</Field>
 								)
 							}}
 						/>
-						<form.Field
+						<Controller
 							name='password'
-							children={(field) => {
-								const isInvalid = !field.state.meta.isValid
-
+							control={form.control}
+							render={({ field, fieldState }) => {
+								const isInvalid = fieldState.invalid
 								return (
 									<Field className='space-x-2' data-invalid={isInvalid}>
-										<FieldLabel htmlFor={field.name}></FieldLabel>
+										<FieldLabel htmlFor={field.name}>Password</FieldLabel>
 										<PasswordInput
 											aria-invalid={isInvalid}
 											id={field.name}
 											name={field.name}
-											value={field.state.value}
-											onChange={(e) => field.handleChange(e.target.value)}
-											onBlur={field.handleBlur}
+											value={field.value}
+											onChange={(e) => field.onChange(e.target.value)}
+											onBlur={field.onBlur}
 										/>
-										<FieldError errors={[field.state.meta.errors[0]]} />
+										<FieldError error={fieldState.error?.message} />
 									</Field>
 								)
 							}}

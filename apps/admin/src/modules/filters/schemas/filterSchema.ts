@@ -23,7 +23,7 @@ export const filterSchema = z.object({
 			options.forEach((option, index) => {
 				if (index > 0 && labels.indexOf(option.label) < index) {
 					ctx.addIssue({
-						code: z.ZodIssueCode.custom,
+						code: 'custom',
 						message: 'Option labels must be unique',
 						path: [index, 'label']
 					})

@@ -1,3 +1,4 @@
+import { Controller, useFormContext } from 'react-hook-form'
 import { Field, FieldError, FieldLabel } from '~/common/ui/Field'
 import {
 	Select,
@@ -8,25 +9,33 @@ import {
 	SelectValue
 } from '~/common/ui/Select'
 import { useGetCategoriesQuery } from '~/modules/categories'
-import { useFormContext } from '../contexts/form-context'
+import type { ProductSchema } from '../schemas/product.schema'
 
 export const SelectCategory = () => {
 	const { data: categories } = useGetCategoriesQuery()
-	const form = useFormContext()
+	const { control } = useFormContext<ProductSchema>()
 
 	return (
-		<form.Field
+		<Controller
 			name='category'
-			children={(field) => {
-				const isInvalid =
-					field.state.meta.isTouched && !field.state.meta.isValid
+			control={control}
+			render={({ field, fieldState }) => {
+				const isInvalid = fieldState.invalid
 				return (
 					<Field aria-invalid={isInvalid}>
 						<FieldLabel>Category</FieldLabel>
 						<Select
 							name={field.name}
-							value={field.state.value}
-							onValueChange={field.handleChange}>
+							value={field.value?.slug}
+							onValueChange={(value) => {
+								const category = categories!.find((c) => c.slug === value)!
+
+								field.onChange({
+									id: category.id,
+									name: category.name,
+									slug: value
+								})
+							}}>
 							<SelectTrigger aria-invalid={isInvalid}>
 								<SelectValue placeholder='Select category' />
 							</SelectTrigger>
@@ -40,7 +49,7 @@ export const SelectCategory = () => {
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{isInvalid && <FieldError errors={field.state.meta.errors} />}
+						<FieldError error={fieldState.error?.message} />
 					</Field>
 				)
 			}}

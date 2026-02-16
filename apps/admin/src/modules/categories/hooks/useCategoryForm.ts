@@ -1,10 +1,13 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import slugify from '@sindresorhus/slugify'
-import { useForm, useStore } from '@tanstack/react-form'
 import type { CoreRow } from '@tanstack/react-table'
-import { useEffect } from 'react'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { handleApiError } from '~/common/api/errorHandler'
-import { createCategorySchema } from '../schemas/createCategory.schema'
+import {
+	categorySchema,
+	type CategorySchema
+} from '../schemas/createCategory.schema'
 import type { Category } from '../types/category.types'
 import { useCreateCategoryMutation } from './useCreateCategoryMutation'
 import { useUpdateCategoryMutation } from './useUpdateCategoryMutation'
@@ -26,58 +29,51 @@ export const useCategoryForm = ({
 	const mutation = mode === 'edit' ? updateMutation : createMutation
 	const isPending = mutation.isPending
 
-	const form = useForm({
+	const form = useForm<CategorySchema>({
 		defaultValues: {
-			name: defaultValues?.name ?? '',
-			slug: defaultValues?.slug ?? ''
+			name: defaultValues?.name ?? ''
 		},
-		validators: {
-			onSubmit: createCategorySchema
-		},
-		onSubmit: async ({ value }) => {
-			if (isPending) return
-
-			if (mode === 'edit') {
-				const nameIsChanged = value.name !== defaultValues?.name
-
-				if (!nameIsChanged) {
-					onClose()
-					return
-				}
-			}
-
-			try {
-				if (mode === 'edit') {
-					await updateMutation.mutateAsync(value)
-				} else {
-					await createMutation.mutateAsync(value)
-				}
-
-				form.reset()
-				onClose()
-				toast.success(
-					mode === 'edit'
-						? 'Category updated successfully'
-						: 'Category created successfully'
-				)
-			} catch (err) {
-				const message = handleApiError(err)
-				toast.error(message)
-			}
-		}
+		resolver: zodResolver(categorySchema)
 	})
 
-	const nameValue = useStore(form.store, (state) => state.values.name)
+	const onSubmit = form.handleSubmit(async (values) => {
+		if (isPending) return
 
-	useEffect(() => {
-		form.setFieldValue('slug', slugify(nameValue))
-	}, [nameValue, mode])
+		if (mode === 'edit') {
+			const nameIsChanged = values.name !== defaultValues?.name
 
-	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
-		form.handleSubmit()
-	}
+			if (!nameIsChanged) {
+				onClose()
+				return
+			}
+		}
+
+		const body = {
+			name: values.name,
+			slug: slugify(values.name, {
+				decamelize: false
+			})
+		}
+
+		try {
+			if (mode === 'edit') {
+				await updateMutation.mutateAsync(body)
+			} else {
+				await createMutation.mutateAsync(body)
+			}
+
+			form.reset()
+			onClose()
+			toast.success(
+				mode === 'edit'
+					? 'Category updated successfully'
+					: 'Category created successfully'
+			)
+		} catch (err) {
+			const message = handleApiError(err)
+			toast.error(message)
+		}
+	})
 
 	return { onSubmit, form, isLoading: isPending }
 }

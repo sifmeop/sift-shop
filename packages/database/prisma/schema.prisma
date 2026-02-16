@@ -70,76 +70,107 @@ model Token {
 }
 
 model Product {
-  id                String           @id @default(uuid())
-  description       String?          @db.Text
-  filterValues      Json // { "brand": "Apple", "category": "Smartphones" }
-  variantAttributes String[] // ["color", "storage"] - какие атрибуты используются для вариаций
-  specifications    Json? // { "processor": "A17", "screen": "6.1 inch" } - общие характеристики
-  variants          ProductVariant[]
-  subcategoryId     String
-  subcategory       Subcategory      @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
-  createdAt         DateTime         @default(now())
+  id             String               @id @default(uuid())
+  slug           String               @unique
+  name           String
+  sku            String               @unique
+  description    String?              @db.Text
+  stock          Int                  @default(0)
+  price          Decimal              @db.Decimal(10, 2)
+  compareAtPrice Decimal?             @db.Decimal(10, 2)
+  images         String[]
+  isFeatured     Boolean              @default(false) // ⭐ Для главной страницы
+  isActive       Boolean              @default(true) // ⭐ Скрыть/показать товар
+  specifications Json
+  filterValues   ProductFilterValue[]
+  subcategoryId  String
+  subcategory    Subcategory          @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  createdAt      DateTime             @default(now())
+  updatedAt      DateTime             @updatedAt // ⭐ Отслеживание изменений
+
+  @@index([slug])
+  @@index([subcategoryId])
+  @@index([isFeatured])
+  @@index([subcategoryId, isActive])
+  @@index([subcategoryId, price])
 }
 
-model ProductVariant {
-  id             String   @id @default(uuid())
-  slug           String   @unique // "iphone-15-pro-128gb-blue"
-  name           String // "iPhone 15 Pro 128GB Синий"
-  sku            String   @unique
-  stock          Int      @default(0)
-  price          Decimal  @db.Decimal(10, 2)
-  compareAtPrice Decimal? @db.Decimal(10, 2)
-  images         String[]
-  isFeatured     Boolean  @default(false)
-  attributes     Json // { "color": "blue", "storage": "128GB" }
+model ProductFilterValue {
+  id             String       @id @default(uuid())
   productId      String
-  product        Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
-  createdAt      DateTime @default(now())
+  product        Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
+  filterOptionId String
+  filterOption   FilterOption @relation(fields: [filterOptionId], references: [id], onDelete: Restrict)
+  createdAt      DateTime     @default(now())
 
+  @@unique([productId, filterOptionId])
   @@index([productId])
-  @@index([slug])
-  @@index([isFeatured])
-  @@index([productId, stock])
+  @@index([filterOptionId])
 }
 
 model Category {
   id            String        @id @default(uuid())
   slug          String        @unique
   name          String
+  description   String?       @db.Text // ⭐ SEO описание
+  position      Int           @default(0) // ⭐ Порядок отображения
+  isActive      Boolean       @default(true) // ⭐ Скрыть/показать
   subcategories Subcategory[]
   createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  @@index([position])
 }
 
 model Subcategory {
-  id         String    @id @default(uuid())
-  slug       String    @unique
-  name       String
-  image      String
-  categoryId String
-  category   Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  products   Product[]
-  filters    Filter[]
-  createdAt  DateTime  @default(now())
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String
+  image       String
+  description String?   @db.Text // ⭐ SEO описание
+  position    Int       @default(0) // ⭐ Порядок в категории
+  isActive    Boolean   @default(true) // ⭐ Скрыть/показать
+  categoryId  String
+  category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  products    Product[]
+  filters     Filter[]
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  @@index([categoryId])
+  @@index([categoryId, position])
 }
 
 model Filter {
   id            String         @id @default(uuid())
   name          String
-  value         String
+  slug          String
   type          FilterType
   position      Int            @default(0)
+  isActive      Boolean        @default(true) // ⭐ Включить/выключить фильтр
   options       FilterOption[]
   subcategoryId String
   subcategory   Subcategory    @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
   createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@unique([subcategoryId, slug])
+  @@index([subcategoryId, position])
 }
 
 model FilterOption {
-  id        String   @id @default(uuid())
+  id        String               @id @default(uuid())
   value     String
   label     String
-  position  Int      @default(0)
+  position  Int                  @default(0)
+  isActive  Boolean              @default(true) // ⭐ Скрыть/показать опцию
   filterId  String
-  filter    Filter   @relation(fields: [filterId], references: [id], onDelete: Cascade)
-  createdAt DateTime @default(now())
+  filter    Filter               @relation(fields: [filterId], references: [id], onDelete: Cascade)
+  products  ProductFilterValue[]
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+
+  @@unique([filterId, value])
+  @@index([filterId])
+  @@index([filterId, position])
 }

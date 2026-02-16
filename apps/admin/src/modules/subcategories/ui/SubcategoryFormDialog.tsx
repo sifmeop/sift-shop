@@ -1,5 +1,6 @@
 import type { CoreRow } from '@tanstack/react-table'
 import { useCallback, useEffect, useState } from 'react'
+import { Controller } from 'react-hook-form'
 import { env } from '~/common/constants/env'
 import { Button } from '~/common/ui/Button'
 import {
@@ -114,10 +115,11 @@ export const SubcategoryFormDialog = ({
 
 				<form id={formId} onSubmit={onSubmit}>
 					<FieldGroup className='mb-4'>
-						<form.Field name='name'>
-							{(field) => {
-								const isInvalid = !field.state.meta.isValid
-
+						<Controller
+							name='name'
+							control={form.control}
+							render={({ field, fieldState }) => {
+								const isInvalid = fieldState.invalid
 								return (
 									<Field data-invalid={isInvalid}>
 										<FieldLabel htmlFor={field.name}>Name</FieldLabel>
@@ -125,35 +127,15 @@ export const SubcategoryFormDialog = ({
 											aria-invalid={isInvalid}
 											id={field.name}
 											name={field.name}
-											value={field.state.value}
-											onChange={(e) => field.handleChange(e.target.value)}
-											onBlur={field.handleBlur}
+											value={field.value}
+											onChange={(e) => field.onChange(e.target.value)}
+											onBlur={field.onBlur}
 										/>
-										<FieldError errors={field.state.meta.errors} />
+										<FieldError error={fieldState.error?.message} />
 									</Field>
 								)
 							}}
-						</form.Field>
-
-						<form.Field name='slug'>
-							{(field) => {
-								const isInvalid = !field.state.meta.isValid
-
-								return (
-									<Field data-invalid={isInvalid}>
-										<FieldLabel htmlFor={field.name}>Slug</FieldLabel>
-										<Input
-											aria-invalid={isInvalid}
-											id={field.name}
-											name={field.name}
-											value={field.state.value}
-											disabled
-										/>
-										<FieldError errors={field.state.meta.errors} />
-									</Field>
-								)
-							}}
-						</form.Field>
+						/>
 
 						<Field>
 							<FieldLabel htmlFor='image'>Image</FieldLabel>
@@ -176,9 +158,7 @@ export const SubcategoryFormDialog = ({
 									/>
 								</div>
 							)}
-							<FieldError
-								errors={fileError ? [{ message: fileError }] : undefined}
-							/>
+							<FieldError error={fileError} />
 						</Field>
 					</FieldGroup>
 

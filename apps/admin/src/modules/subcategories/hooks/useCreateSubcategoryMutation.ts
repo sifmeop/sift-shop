@@ -9,12 +9,7 @@ import type { Subcategory } from '../types/subcategory.types'
 const createSubcategory = async (slug: string, body: FormData) => {
 	const { data } = await api.post<Subcategory>(
 		`/subcategories/${slug}/create`,
-		body,
-		{
-			headers: {
-				'Content-Type': 'multipart/form-data'
-			}
-		}
+		body
 	)
 	return data
 }

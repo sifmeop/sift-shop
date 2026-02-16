@@ -37,31 +37,37 @@ export type FilterSumAggregateOutputType = {
 export type FilterMinAggregateOutputType = {
   id: string | null
   name: string | null
-  value: string | null
+  slug: string | null
   type: $Enums.FilterType | null
   position: number | null
+  isActive: boolean | null
   subcategoryId: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type FilterMaxAggregateOutputType = {
   id: string | null
   name: string | null
-  value: string | null
+  slug: string | null
   type: $Enums.FilterType | null
   position: number | null
+  isActive: boolean | null
   subcategoryId: string | null
   createdAt: Date | null
+  updatedAt: Date | null
 }
 
 export type FilterCountAggregateOutputType = {
   id: number
   name: number
-  value: number
+  slug: number
   type: number
   position: number
+  isActive: number
   subcategoryId: number
   createdAt: number
+  updatedAt: number
   _all: number
 }
 
@@ -77,31 +83,37 @@ export type FilterSumAggregateInputType = {
 export type FilterMinAggregateInputType = {
   id?: true
   name?: true
-  value?: true
+  slug?: true
   type?: true
   position?: true
+  isActive?: true
   subcategoryId?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type FilterMaxAggregateInputType = {
   id?: true
   name?: true
-  value?: true
+  slug?: true
   type?: true
   position?: true
+  isActive?: true
   subcategoryId?: true
   createdAt?: true
+  updatedAt?: true
 }
 
 export type FilterCountAggregateInputType = {
   id?: true
   name?: true
-  value?: true
+  slug?: true
   type?: true
   position?: true
+  isActive?: true
   subcategoryId?: true
   createdAt?: true
+  updatedAt?: true
   _all?: true
 }
 
@@ -194,11 +206,13 @@ export type FilterGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalA
 export type FilterGroupByOutputType = {
   id: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position: number
+  isActive: boolean
   subcategoryId: string
   createdAt: Date
+  updatedAt: Date
   _count: FilterCountAggregateOutputType | null
   _avg: FilterAvgAggregateOutputType | null
   _sum: FilterSumAggregateOutputType | null
@@ -227,11 +241,13 @@ export type FilterWhereInput = {
   NOT?: Prisma.FilterWhereInput | Prisma.FilterWhereInput[]
   id?: Prisma.StringFilter<"Filter"> | string
   name?: Prisma.StringFilter<"Filter"> | string
-  value?: Prisma.StringFilter<"Filter"> | string
+  slug?: Prisma.StringFilter<"Filter"> | string
   type?: Prisma.EnumFilterTypeFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntFilter<"Filter"> | number
+  isActive?: Prisma.BoolFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringFilter<"Filter"> | string
   createdAt?: Prisma.DateTimeFilter<"Filter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Filter"> | Date | string
   options?: Prisma.FilterOptionListRelationFilter
   subcategory?: Prisma.XOR<Prisma.SubcategoryScalarRelationFilter, Prisma.SubcategoryWhereInput>
 }
@@ -239,38 +255,45 @@ export type FilterWhereInput = {
 export type FilterOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   options?: Prisma.FilterOptionOrderByRelationAggregateInput
   subcategory?: Prisma.SubcategoryOrderByWithRelationInput
 }
 
 export type FilterWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  subcategoryId_slug?: Prisma.FilterSubcategoryIdSlugCompoundUniqueInput
   AND?: Prisma.FilterWhereInput | Prisma.FilterWhereInput[]
   OR?: Prisma.FilterWhereInput[]
   NOT?: Prisma.FilterWhereInput | Prisma.FilterWhereInput[]
   name?: Prisma.StringFilter<"Filter"> | string
-  value?: Prisma.StringFilter<"Filter"> | string
+  slug?: Prisma.StringFilter<"Filter"> | string
   type?: Prisma.EnumFilterTypeFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntFilter<"Filter"> | number
+  isActive?: Prisma.BoolFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringFilter<"Filter"> | string
   createdAt?: Prisma.DateTimeFilter<"Filter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Filter"> | Date | string
   options?: Prisma.FilterOptionListRelationFilter
   subcategory?: Prisma.XOR<Prisma.SubcategoryScalarRelationFilter, Prisma.SubcategoryWhereInput>
-}, "id">
+}, "id" | "subcategoryId_slug">
 
 export type FilterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
   _count?: Prisma.FilterCountOrderByAggregateInput
   _avg?: Prisma.FilterAvgOrderByAggregateInput
   _max?: Prisma.FilterMaxOrderByAggregateInput
@@ -284,20 +307,24 @@ export type FilterScalarWhereWithAggregatesInput = {
   NOT?: Prisma.FilterScalarWhereWithAggregatesInput | Prisma.FilterScalarWhereWithAggregatesInput[]
   id?: Prisma.StringWithAggregatesFilter<"Filter"> | string
   name?: Prisma.StringWithAggregatesFilter<"Filter"> | string
-  value?: Prisma.StringWithAggregatesFilter<"Filter"> | string
+  slug?: Prisma.StringWithAggregatesFilter<"Filter"> | string
   type?: Prisma.EnumFilterTypeWithAggregatesFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntWithAggregatesFilter<"Filter"> | number
+  isActive?: Prisma.BoolWithAggregatesFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringWithAggregatesFilter<"Filter"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Filter"> | Date | string
+  updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Filter"> | Date | string
 }
 
 export type FilterCreateInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
   options?: Prisma.FilterOptionCreateNestedManyWithoutFilterInput
   subcategory: Prisma.SubcategoryCreateNestedOneWithoutFiltersInput
 }
@@ -305,21 +332,25 @@ export type FilterCreateInput = {
 export type FilterUncheckedCreateInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   subcategoryId: string
   createdAt?: Date | string
+  updatedAt?: Date | string
   options?: Prisma.FilterOptionUncheckedCreateNestedManyWithoutFilterInput
 }
 
 export type FilterUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   options?: Prisma.FilterOptionUpdateManyWithoutFilterNestedInput
   subcategory?: Prisma.SubcategoryUpdateOneRequiredWithoutFiltersNestedInput
 }
@@ -327,41 +358,49 @@ export type FilterUpdateInput = {
 export type FilterUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   options?: Prisma.FilterOptionUncheckedUpdateManyWithoutFilterNestedInput
 }
 
 export type FilterCreateManyInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   subcategoryId: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type FilterUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FilterUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FilterListRelationFilter = {
@@ -374,14 +413,21 @@ export type FilterOrderByRelationAggregateInput = {
   _count?: Prisma.SortOrder
 }
 
+export type FilterSubcategoryIdSlugCompoundUniqueInput = {
+  subcategoryId: string
+  slug: string
+}
+
 export type FilterCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type FilterAvgOrderByAggregateInput = {
@@ -391,21 +437,25 @@ export type FilterAvgOrderByAggregateInput = {
 export type FilterMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type FilterMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
-  value?: Prisma.SortOrder
+  slug?: Prisma.SortOrder
   type?: Prisma.SortOrder
   position?: Prisma.SortOrder
+  isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  updatedAt?: Prisma.SortOrder
 }
 
 export type FilterSumOrderByAggregateInput = {
@@ -480,20 +530,24 @@ export type FilterUpdateOneRequiredWithoutOptionsNestedInput = {
 export type FilterCreateWithoutSubcategoryInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
   options?: Prisma.FilterOptionCreateNestedManyWithoutFilterInput
 }
 
 export type FilterUncheckedCreateWithoutSubcategoryInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
   options?: Prisma.FilterOptionUncheckedCreateNestedManyWithoutFilterInput
 }
 
@@ -529,31 +583,37 @@ export type FilterScalarWhereInput = {
   NOT?: Prisma.FilterScalarWhereInput | Prisma.FilterScalarWhereInput[]
   id?: Prisma.StringFilter<"Filter"> | string
   name?: Prisma.StringFilter<"Filter"> | string
-  value?: Prisma.StringFilter<"Filter"> | string
+  slug?: Prisma.StringFilter<"Filter"> | string
   type?: Prisma.EnumFilterTypeFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntFilter<"Filter"> | number
+  isActive?: Prisma.BoolFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringFilter<"Filter"> | string
   createdAt?: Prisma.DateTimeFilter<"Filter"> | Date | string
+  updatedAt?: Prisma.DateTimeFilter<"Filter"> | Date | string
 }
 
 export type FilterCreateWithoutOptionsInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
   subcategory: Prisma.SubcategoryCreateNestedOneWithoutFiltersInput
 }
 
 export type FilterUncheckedCreateWithoutOptionsInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   subcategoryId: string
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type FilterCreateOrConnectWithoutOptionsInput = {
@@ -575,59 +635,71 @@ export type FilterUpdateToOneWithWhereWithoutOptionsInput = {
 export type FilterUpdateWithoutOptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   subcategory?: Prisma.SubcategoryUpdateOneRequiredWithoutFiltersNestedInput
 }
 
 export type FilterUncheckedUpdateWithoutOptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 export type FilterCreateManySubcategoryInput = {
   id?: string
   name: string
-  value: string
+  slug: string
   type: $Enums.FilterType
   position?: number
+  isActive?: boolean
   createdAt?: Date | string
+  updatedAt?: Date | string
 }
 
 export type FilterUpdateWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   options?: Prisma.FilterOptionUpdateManyWithoutFilterNestedInput
 }
 
 export type FilterUncheckedUpdateWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   options?: Prisma.FilterOptionUncheckedUpdateManyWithoutFilterNestedInput
 }
 
 export type FilterUncheckedUpdateManyWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
-  value?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
   type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
+  isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
 
 
@@ -664,11 +736,13 @@ export type FilterCountOutputTypeCountOptionsArgs<ExtArgs extends runtime.Types.
 export type FilterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  value?: boolean
+  slug?: boolean
   type?: boolean
   position?: boolean
+  isActive?: boolean
   subcategoryId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   options?: boolean | Prisma.Filter$optionsArgs<ExtArgs>
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
   _count?: boolean | Prisma.FilterCountOutputTypeDefaultArgs<ExtArgs>
@@ -677,36 +751,42 @@ export type FilterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
 export type FilterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  value?: boolean
+  slug?: boolean
   type?: boolean
   position?: boolean
+  isActive?: boolean
   subcategoryId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["filter"]>
 
 export type FilterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
   name?: boolean
-  value?: boolean
+  slug?: boolean
   type?: boolean
   position?: boolean
+  isActive?: boolean
   subcategoryId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["filter"]>
 
 export type FilterSelectScalar = {
   id?: boolean
   name?: boolean
-  value?: boolean
+  slug?: boolean
   type?: boolean
   position?: boolean
+  isActive?: boolean
   subcategoryId?: boolean
   createdAt?: boolean
+  updatedAt?: boolean
 }
 
-export type FilterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "value" | "type" | "position" | "subcategoryId" | "createdAt", ExtArgs["result"]["filter"]>
+export type FilterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "type" | "position" | "isActive" | "subcategoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["filter"]>
 export type FilterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   options?: boolean | Prisma.Filter$optionsArgs<ExtArgs>
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
@@ -728,11 +808,13 @@ export type $FilterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
     name: string
-    value: string
+    slug: string
     type: $Enums.FilterType
     position: number
+    isActive: boolean
     subcategoryId: string
     createdAt: Date
+    updatedAt: Date
   }, ExtArgs["result"]["filter"]>
   composites: {}
 }
@@ -1160,11 +1242,13 @@ export interface Prisma__FilterClient<T, Null = never, ExtArgs extends runtime.T
 export interface FilterFieldRefs {
   readonly id: Prisma.FieldRef<"Filter", 'String'>
   readonly name: Prisma.FieldRef<"Filter", 'String'>
-  readonly value: Prisma.FieldRef<"Filter", 'String'>
+  readonly slug: Prisma.FieldRef<"Filter", 'String'>
   readonly type: Prisma.FieldRef<"Filter", 'FilterType'>
   readonly position: Prisma.FieldRef<"Filter", 'Int'>
+  readonly isActive: Prisma.FieldRef<"Filter", 'Boolean'>
   readonly subcategoryId: Prisma.FieldRef<"Filter", 'String'>
   readonly createdAt: Prisma.FieldRef<"Filter", 'DateTime'>
+  readonly updatedAt: Prisma.FieldRef<"Filter", 'DateTime'>
 }
     
 

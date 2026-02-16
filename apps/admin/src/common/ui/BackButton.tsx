@@ -6,9 +6,14 @@ import { Button, buttonVariants } from './Button'
 
 interface BackButtonProps extends VariantProps<typeof buttonVariants> {
 	to: FileRouteTypes['to']
+	label?: string
 }
 
-export const BackButton = ({ to, variant = 'outline' }: BackButtonProps) => {
+export const BackButton = ({
+	to,
+	label = 'Back',
+	variant = 'outline'
+}: BackButtonProps) => {
 	const navigate = useNavigate()
 
 	return (
@@ -17,7 +22,7 @@ export const BackButton = ({ to, variant = 'outline' }: BackButtonProps) => {
 			onClick={() => navigate({ to })}
 			className='flex items-center gap-3 w-fit'>
 			<ArrowLeftIcon />
-			<span className='font-medium'>Back</span>
+			<span className='font-medium'>{label}</span>
 		</Button>
 	)
 }

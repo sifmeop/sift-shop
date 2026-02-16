@@ -1,6 +1,16 @@
-import { Controller, Get } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Get,
+  Post,
+  UploadedFiles,
+  UseInterceptors
+} from '@nestjs/common'
 import { Product } from '@sift-shop/database'
 
+import { createFilesInterceptor } from '~/common/config/upload.config'
+
+import { CreateProductDto } from './dto/create-product.dto'
 import { ProductService } from './product.service'
 
 @Controller('products')
@@ -10,5 +20,14 @@ export class ProductController {
   @Get()
   async getProducts(): Promise<Product[]> {
     return this.productService.getProducts()
+  }
+
+  @Post()
+  @UseInterceptors(createFilesInterceptor())
+  async createProduct(
+    @UploadedFiles() files: Express.MulterFile[],
+    @Body() dto: CreateProductDto
+  ): Promise<void> {
+    return this.productService.createProduct(files, dto)
   }
 }

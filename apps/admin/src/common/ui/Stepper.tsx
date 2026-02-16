@@ -41,7 +41,7 @@ export const Stepper = ({
 								className={cn(
 									'w-10 h-10 rounded-full flex items-center justify-center font-semibold shrink-0 transition-colors duration-300',
 									isActive
-										? 'bg-blue-500 text-white shadow-[0_0_0_4px_rgba(59,130,246,0.2)]'
+										? 'bg-primary text-white shadow-[0_0_0_4px_rgba(59,130,246,0.2)]'
 										: isCompleted
 											? 'bg-green-500 text-white'
 											: 'bg-gray-200 text-gray-500'

@@ -1,8 +1,9 @@
+import { zodResolver } from '@hookform/resolvers/zod'
 import slugify from '@sindresorhus/slugify'
-import { useForm } from '@tanstack/react-form'
+import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { handleApiError } from '~/common/api/errorHandler'
-import { filterSchema } from '../schemas/filterSchema'
+import { filterSchema, type FilterSchema } from '../schemas/filterSchema'
 import { FilterType, type Filter } from '../types/filters.types'
 import { useCreateFilterMutation } from './useCreateFilterMutation'
 import { useUpdateFilterMutation } from './useUpdateFilterMutation'
@@ -26,7 +27,7 @@ export const useFilterForm = ({
 
 	const isPending = mutation.isPending
 
-	const form = useForm({
+	const form = useForm<FilterSchema>({
 		defaultValues: {
 			name: defaultValues?.name ?? '',
 			type: defaultValues?.type ?? FilterType.CHECKBOX,
@@ -34,64 +35,61 @@ export const useFilterForm = ({
 				? defaultValues?.options.map(({ label }) => ({ label }))
 				: [{ label: '' }]
 		},
-		validators: {
-			onSubmit: filterSchema
-		},
-		onSubmit: async ({ value }) => {
-			if (isPending) return
-
-			const body = {
-				name: value.name,
-				value: slugify(value.name),
-				type: value.type,
-				options: value.options.map(({ label }, index) => ({
-					label,
-					value: slugify(label),
-					position: index + 1
-				}))
-			}
-
-			if (isEditMode && defaultValues) {
-				const isNameChanged = value.name !== defaultValues.name
-				const isTypeChanged = value.type !== defaultValues.type
-				const isOptionsChanged =
-					value.options.length !== defaultValues.options.length ||
-					value.options.some(
-						(opt, i) => opt.label !== defaultValues.options[i]?.label
-					)
-
-				if (!isNameChanged && !isTypeChanged && !isOptionsChanged) {
-					onClose()
-					return
-				}
-			}
-
-			try {
-				if (isEditMode) {
-					await updateMutation.mutateAsync(body)
-				} else {
-					await createMutation.mutateAsync(body)
-				}
-
-				form.reset()
-				onClose()
-				toast.success(
-					mode === 'edit'
-						? 'Filter updated successfully'
-						: 'Filter created successfully'
-				)
-			} catch (err) {
-				const message = handleApiError(err)
-				toast.error(message)
-			}
-		}
+		resolver: zodResolver(filterSchema)
 	})
 
-	const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
-		form.handleSubmit()
-	}
+	const onSubmit = form.handleSubmit(async (values) => {
+		if (isPending) return
+
+		const body = {
+			name: values.name,
+			value: slugify(values.name, {
+				decamelize: false
+			}),
+			type: values.type,
+			options: values.options.map(({ label }, index) => ({
+				label,
+				value: slugify(label, {
+					decamelize: false
+				}),
+				position: index + 1
+			}))
+		}
+
+		if (isEditMode && defaultValues) {
+			const isNameChanged = values.name !== defaultValues.name
+			const isTypeChanged = values.type !== defaultValues.type
+			const isOptionsChanged =
+				values.options.length !== defaultValues.options.length ||
+				values.options.some(
+					(opt, i) => opt.label !== defaultValues.options[i]?.label
+				)
+
+			if (!isNameChanged && !isTypeChanged && !isOptionsChanged) {
+				onClose()
+				return
+			}
+		}
+
+		try {
+			if (isEditMode) {
+				await updateMutation.mutateAsync(body)
+			} else {
+				await createMutation.mutateAsync(body)
+			}
+
+			form.reset()
+			onClose()
+			toast.success(
+				mode === 'edit'
+					? 'Filter updated successfully'
+					: 'Filter created successfully'
+			)
+		} catch (err) {
+			const message = handleApiError(err)
+			toast.error(message)
+		}
+	})
 
 	return { onSubmit, form, isLoading: isPending }
 }

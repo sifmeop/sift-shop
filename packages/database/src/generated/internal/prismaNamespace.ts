@@ -388,7 +388,7 @@ export const ModelName = {
   Account: 'Account',
   Token: 'Token',
   Product: 'Product',
-  ProductVariant: 'ProductVariant',
+  ProductFilterValue: 'ProductFilterValue',
   Category: 'Category',
   Subcategory: 'Subcategory',
   Filter: 'Filter',
@@ -408,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "token" | "product" | "productVariant" | "category" | "subcategory" | "filter" | "filterOption"
+    modelProps: "user" | "account" | "token" | "product" | "productFilterValue" | "category" | "subcategory" | "filter" | "filterOption"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -708,77 +708,77 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
-    ProductVariant: {
-      payload: Prisma.$ProductVariantPayload<ExtArgs>
-      fields: Prisma.ProductVariantFieldRefs
+    ProductFilterValue: {
+      payload: Prisma.$ProductFilterValuePayload<ExtArgs>
+      fields: Prisma.ProductFilterValueFieldRefs
       operations: {
         findUnique: {
-          args: Prisma.ProductVariantFindUniqueArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload> | null
+          args: Prisma.ProductFilterValueFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload> | null
         }
         findUniqueOrThrow: {
-          args: Prisma.ProductVariantFindUniqueOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
+          args: Prisma.ProductFilterValueFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>
         }
         findFirst: {
-          args: Prisma.ProductVariantFindFirstArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload> | null
+          args: Prisma.ProductFilterValueFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload> | null
         }
         findFirstOrThrow: {
-          args: Prisma.ProductVariantFindFirstOrThrowArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
+          args: Prisma.ProductFilterValueFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>
         }
         findMany: {
-          args: Prisma.ProductVariantFindManyArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>[]
+          args: Prisma.ProductFilterValueFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>[]
         }
         create: {
-          args: Prisma.ProductVariantCreateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
+          args: Prisma.ProductFilterValueCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>
         }
         createMany: {
-          args: Prisma.ProductVariantCreateManyArgs<ExtArgs>
+          args: Prisma.ProductFilterValueCreateManyArgs<ExtArgs>
           result: BatchPayload
         }
         createManyAndReturn: {
-          args: Prisma.ProductVariantCreateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>[]
+          args: Prisma.ProductFilterValueCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>[]
         }
         delete: {
-          args: Prisma.ProductVariantDeleteArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
+          args: Prisma.ProductFilterValueDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>
         }
         update: {
-          args: Prisma.ProductVariantUpdateArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
+          args: Prisma.ProductFilterValueUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>
         }
         deleteMany: {
-          args: Prisma.ProductVariantDeleteManyArgs<ExtArgs>
+          args: Prisma.ProductFilterValueDeleteManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateMany: {
-          args: Prisma.ProductVariantUpdateManyArgs<ExtArgs>
+          args: Prisma.ProductFilterValueUpdateManyArgs<ExtArgs>
           result: BatchPayload
         }
         updateManyAndReturn: {
-          args: Prisma.ProductVariantUpdateManyAndReturnArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>[]
+          args: Prisma.ProductFilterValueUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>[]
         }
         upsert: {
-          args: Prisma.ProductVariantUpsertArgs<ExtArgs>
-          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductVariantPayload>
+          args: Prisma.ProductFilterValueUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ProductFilterValuePayload>
         }
         aggregate: {
-          args: Prisma.ProductVariantAggregateArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.AggregateProductVariant>
+          args: Prisma.ProductFilterValueAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateProductFilterValue>
         }
         groupBy: {
-          args: Prisma.ProductVariantGroupByArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProductVariantGroupByOutputType>[]
+          args: Prisma.ProductFilterValueGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductFilterValueGroupByOutputType>[]
         }
         count: {
-          args: Prisma.ProductVariantCountArgs<ExtArgs>
-          result: runtime.Types.Utils.Optional<Prisma.ProductVariantCountAggregateOutputType> | number
+          args: Prisma.ProductFilterValueCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ProductFilterValueCountAggregateOutputType> | number
         }
       }
     }
@@ -1161,40 +1161,44 @@ export type TokenScalarFieldEnum = (typeof TokenScalarFieldEnum)[keyof typeof To
 
 export const ProductScalarFieldEnum = {
   id: 'id',
-  description: 'description',
-  filterValues: 'filterValues',
-  variantAttributes: 'variantAttributes',
-  specifications: 'specifications',
-  subcategoryId: 'subcategoryId',
-  createdAt: 'createdAt'
-} as const
-
-export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
-
-
-export const ProductVariantScalarFieldEnum = {
-  id: 'id',
   slug: 'slug',
   name: 'name',
   sku: 'sku',
+  description: 'description',
   stock: 'stock',
   price: 'price',
   compareAtPrice: 'compareAtPrice',
   images: 'images',
   isFeatured: 'isFeatured',
-  attributes: 'attributes',
+  isActive: 'isActive',
+  specifications: 'specifications',
+  subcategoryId: 'subcategoryId',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ProductScalarFieldEnum = (typeof ProductScalarFieldEnum)[keyof typeof ProductScalarFieldEnum]
+
+
+export const ProductFilterValueScalarFieldEnum = {
+  id: 'id',
   productId: 'productId',
+  filterOptionId: 'filterOptionId',
   createdAt: 'createdAt'
 } as const
 
-export type ProductVariantScalarFieldEnum = (typeof ProductVariantScalarFieldEnum)[keyof typeof ProductVariantScalarFieldEnum]
+export type ProductFilterValueScalarFieldEnum = (typeof ProductFilterValueScalarFieldEnum)[keyof typeof ProductFilterValueScalarFieldEnum]
 
 
 export const CategoryScalarFieldEnum = {
   id: 'id',
   slug: 'slug',
   name: 'name',
-  createdAt: 'createdAt'
+  description: 'description',
+  position: 'position',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type CategoryScalarFieldEnum = (typeof CategoryScalarFieldEnum)[keyof typeof CategoryScalarFieldEnum]
@@ -1205,8 +1209,12 @@ export const SubcategoryScalarFieldEnum = {
   slug: 'slug',
   name: 'name',
   image: 'image',
+  description: 'description',
+  position: 'position',
+  isActive: 'isActive',
   categoryId: 'categoryId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type SubcategoryScalarFieldEnum = (typeof SubcategoryScalarFieldEnum)[keyof typeof SubcategoryScalarFieldEnum]
@@ -1215,11 +1223,13 @@ export type SubcategoryScalarFieldEnum = (typeof SubcategoryScalarFieldEnum)[key
 export const FilterScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  value: 'value',
+  slug: 'slug',
   type: 'type',
   position: 'position',
+  isActive: 'isActive',
   subcategoryId: 'subcategoryId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type FilterScalarFieldEnum = (typeof FilterScalarFieldEnum)[keyof typeof FilterScalarFieldEnum]
@@ -1230,8 +1240,10 @@ export const FilterOptionScalarFieldEnum = {
   value: 'value',
   label: 'label',
   position: 'position',
+  isActive: 'isActive',
   filterId: 'filterId',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 } as const
 
 export type FilterOptionScalarFieldEnum = (typeof FilterOptionScalarFieldEnum)[keyof typeof FilterOptionScalarFieldEnum]
@@ -1250,14 +1262,6 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
-
-
-export const NullableJsonNullValueInput = {
-  DbNull: DbNull,
-  JsonNull: JsonNull
-} as const
-
-export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1369,20 +1373,6 @@ export type ListEnumTokenTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$Pr
 
 
 /**
- * Reference to a field of type 'Json'
- */
-export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
-    
-
-
-/**
- * Reference to a field of type 'QueryMode'
- */
-export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -1407,6 +1397,20 @@ export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel,
  * Reference to a field of type 'Decimal[]'
  */
 export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -1536,7 +1540,7 @@ export type GlobalOmitConfig = {
   account?: Prisma.AccountOmit
   token?: Prisma.TokenOmit
   product?: Prisma.ProductOmit
-  productVariant?: Prisma.ProductVariantOmit
+  productFilterValue?: Prisma.ProductFilterValueOmit
   category?: Prisma.CategoryOmit
   subcategory?: Prisma.SubcategoryOmit
   filter?: Prisma.FilterOmit

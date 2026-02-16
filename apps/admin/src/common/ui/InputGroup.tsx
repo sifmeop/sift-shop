@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from 'class-variance-authority'
 
+import { Slot } from 'radix-ui'
 import { cn } from '../utils/cn'
 import { Button } from './Button'
 import { Input } from './Input'
@@ -132,12 +133,19 @@ export const InputGroupText = ({
 	)
 }
 
+interface InputGroupInputProps extends React.ComponentProps<'input'> {
+	asChild?: boolean
+}
+
 export const InputGroupInput = ({
 	className,
+	asChild = false,
 	...props
-}: React.ComponentProps<'input'>) => {
+}: InputGroupInputProps) => {
+	const Comp = asChild ? Slot.Root : Input
+
 	return (
-		<Input
+		<Comp
 			data-slot='input-group-control'
 			className={cn(
 				'flex-1 rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 dark:bg-transparent',

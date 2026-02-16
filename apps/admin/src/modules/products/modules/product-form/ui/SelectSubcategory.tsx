@@ -1,4 +1,5 @@
 import { Link } from '@tanstack/react-router'
+import { Controller, useFormContext } from 'react-hook-form'
 import { CenterLoader } from '~/common/ui/CenterLoader'
 import { Field, FieldError, FieldLabel } from '~/common/ui/Field'
 import {
@@ -10,8 +11,7 @@ import {
 	SelectValue
 } from '~/common/ui/Select'
 import { useGetSubcategoriesQuery } from '~/modules/subcategories'
-import { useFormContext } from '../contexts/form-context'
-import { useWizard } from '../contexts/wizard-context'
+import type { ProductSchema } from '../schemas/product.schema'
 
 interface SelectSubcategoryProps {
 	category: string
@@ -19,8 +19,7 @@ interface SelectSubcategoryProps {
 
 export const SelectSubcategory = ({ category }: SelectSubcategoryProps) => {
 	const { data: subcategories, isLoading } = useGetSubcategoriesQuery(category)
-	const form = useFormContext()
-	const { markStepComplete } = useWizard()
+	const { control } = useFormContext<ProductSchema>()
 
 	if (isLoading) {
 		return <CenterLoader />
@@ -39,20 +38,25 @@ export const SelectSubcategory = ({ category }: SelectSubcategoryProps) => {
 	}
 
 	return (
-		<form.Field
+		<Controller
 			name='subcategory'
-			children={(field) => {
-				const isInvalid =
-					field.state.meta.isTouched && !field.state.meta.isValid
+			control={control}
+			render={({ field, fieldState }) => {
+				const isInvalid = fieldState.invalid
 				return (
 					<Field aria-invalid={isInvalid}>
 						<FieldLabel>Subcategory</FieldLabel>
 						<Select
 							name={field.name}
-							value={field.state.value}
+							value={field.value?.slug}
 							onValueChange={(value) => {
-								field.handleChange(value)
-								markStepComplete(0)
+								const category = subcategories!.find((c) => c.slug === value)!
+
+								field.onChange({
+									id: category.id,
+									name: category.name,
+									slug: value
+								})
 							}}>
 							<SelectTrigger aria-invalid={isInvalid}>
 								<SelectValue placeholder='Select subcategory' />
@@ -67,7 +71,7 @@ export const SelectSubcategory = ({ category }: SelectSubcategoryProps) => {
 								</SelectGroup>
 							</SelectContent>
 						</Select>
-						{isInvalid && <FieldError errors={field.state.meta.errors} />}
+						<FieldError error={fieldState.error?.message} />
 					</Field>
 				)
 			}}

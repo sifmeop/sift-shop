@@ -63,7 +63,7 @@ export class FilterService {
     const existingFilterByValue = await prisma.filter.findFirst({
       where: {
         subcategoryId: subcategory.id,
-        value: dto.value
+        slug: dto.value
       }
     })
 
@@ -103,7 +103,7 @@ export class FilterService {
     return await prisma.filter.create({
       data: {
         name: dto.name,
-        value: dto.value,
+        slug: dto.value,
         type: dto.type,
         position,
         options: {
@@ -153,7 +153,7 @@ export class FilterService {
     const existingFilterByValue = await prisma.filter.findFirst({
       where: {
         subcategoryId: filter.subcategoryId,
-        value: dto.value,
+        slug: dto.value,
         id: {
           not: id
         }
@@ -195,7 +195,7 @@ export class FilterService {
       },
       data: {
         name: dto.name,
-        value: dto.value,
+        slug: dto.value,
         type: dto.type,
         position: dto.position,
         options: {

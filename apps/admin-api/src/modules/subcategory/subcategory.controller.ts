@@ -10,7 +10,7 @@ import {
   UseInterceptors
 } from '@nestjs/common'
 
-import { createFileInterceptor } from '~/common/config/upload.config'
+import { createFilesInterceptor } from '~/common/config/upload.config'
 
 import { CreateSubcategoryDto } from './dto/create-subcategory.dto'
 import { SubcategoryService } from './subcategory.service'
@@ -25,23 +25,23 @@ export class SubcategoryController {
   }
 
   @Post(':id/create')
-  @UseInterceptors(createFileInterceptor())
+  @UseInterceptors(createFilesInterceptor())
   async createCategory(
     @Param('id') id: string,
-    @UploadedFile() file: Express.MulterFile,
+    @UploadedFile() files: Express.MulterFile[],
     @Body() dto: CreateSubcategoryDto
   ) {
-    return await this.subcategoryService.createSubcategory(id, file, dto)
+    return await this.subcategoryService.createSubcategory(id, files[0], dto)
   }
 
   @Put(':id/update')
-  @UseInterceptors(createFileInterceptor())
+  @UseInterceptors(createFilesInterceptor())
   async updateCategory(
     @Param('id') id: string,
     @Body() dto: CreateSubcategoryDto,
-    @UploadedFile() file?: Express.MulterFile
+    @UploadedFile() files?: Express.MulterFile[]
   ) {
-    return await this.subcategoryService.updateSubcategory(id, dto, file)
+    return await this.subcategoryService.updateSubcategory(id, dto, files?.[0])
   }
 
   @Delete(':id/delete')

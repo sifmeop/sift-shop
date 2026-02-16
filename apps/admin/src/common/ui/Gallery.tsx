@@ -41,17 +41,19 @@ export function Gallery({
 			{children ? (
 				children({ onClick: () => handleOpen() })
 			) : (
-				<div className={cn('rounded-lg overflow-hidden h-full', className)}>
+				<button
+					type='button'
+					className={cn('rounded-lg overflow-hidden h-full', className)}
+					onClick={() => handleOpen()}>
 					<img
 						src={imageArray[0]}
 						alt='Gallery image'
 						className={cn(
-							'cursor-zoom-in size-full object-cover',
+							'cursor-zoom-in size-full object-contain',
 							imageClassName
 						)}
-						onClick={() => handleOpen()}
 					/>
-				</div>
+				</button>
 			)}
 
 			<Lightbox
