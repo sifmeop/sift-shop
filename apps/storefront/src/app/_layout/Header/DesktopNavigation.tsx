@@ -37,7 +37,9 @@ export const DesktopNavigation = ({ data }: DesktopNavigationProps) => {
 
         {data && (
           <NavigationMenuItem>
-            <NavigationMenuTrigger>Categories</NavigationMenuTrigger>
+            <NavigationMenuTrigger disabled={data.categories.length === 0}>
+              Categories
+            </NavigationMenuTrigger>
             <NavigationMenuContent>
               <CategoriesMenu data={data} />
             </NavigationMenuContent>

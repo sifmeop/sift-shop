@@ -2,10 +2,7 @@ import { XIcon } from 'lucide-react'
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
-import {
-  FilterType,
-  ProductFiltersEntity
-} from '~/common/lib/graphql/generated/graphql'
+import { ProductFiltersEntity } from '~/common/lib/graphql/generated/graphql'
 
 import { useFilterParam } from '../hooks/useFilterParam'
 
@@ -26,14 +23,14 @@ export const AppliedFilters = ({ filters }: AppliedFiltersProps) => {
   const appliedFilters: AppliedFilter[] = Array.from(searchParams.entries())
     .map(([key, value]) => {
       const filter = filters.find(
-        (f) => f.value.toLowerCase().replace(/\s+/g, '-') === key
+        (f) => f.slug.toLowerCase().replace(/\s+/g, '-') === key
       )
 
       if (!filter) return null
 
       let label: string | null = null
 
-      const isRange = filter.type === FilterType.Range
+      const isRange = filter.slug === 'price'
 
       if (isRange) {
         label = value.split('-').join(' - ')

@@ -33,14 +33,3 @@ export const TokenType = {
 } as const
 
 export type TokenType = (typeof TokenType)[keyof typeof TokenType]
-
-
-export const FilterType = {
-  SELECT: 'SELECT',
-  CHECKBOX: 'CHECKBOX',
-  RANGE: 'RANGE',
-  RADIO: 'RADIO',
-  BOOLEAN: 'BOOLEAN'
-} as const
-
-export type FilterType = (typeof FilterType)[keyof typeof FilterType]

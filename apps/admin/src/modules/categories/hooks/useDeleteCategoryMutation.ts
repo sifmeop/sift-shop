@@ -5,7 +5,7 @@ import { QUERIES } from '~/common/constants/quries'
 import type { Category } from '../types/category.types'
 
 const deleteCategory = async (id: string) => {
-	const { data } = await api.delete<Category>(`/categories/${id}/delete`)
+	const { data } = await api.delete<Category>(`/categories/${id}`)
 	return data
 }
 

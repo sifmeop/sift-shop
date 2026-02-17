@@ -24,14 +24,6 @@ enum TokenType {
   PASSWORD_RESET
 }
 
-enum FilterType {
-  SELECT
-  CHECKBOX
-  RANGE
-  RADIO
-  BOOLEAN
-}
-
 model User {
   id                 String     @id @default(uuid())
   email              String     @unique
@@ -113,7 +105,7 @@ model Category {
   slug          String        @unique
   name          String
   description   String?       @db.Text // ⭐ SEO описание
-  position      Int           @default(0) // ⭐ Порядок отображения
+  position      Int           @default(1) // ⭐ Порядок отображения
   isActive      Boolean       @default(true) // ⭐ Скрыть/показать
   subcategories Subcategory[]
   createdAt     DateTime      @default(now())
@@ -128,7 +120,7 @@ model Subcategory {
   name        String
   image       String
   description String?   @db.Text // ⭐ SEO описание
-  position    Int       @default(0) // ⭐ Порядок в категории
+  position    Int       @default(1) // ⭐ Порядок в категории
   isActive    Boolean   @default(true) // ⭐ Скрыть/показать
   categoryId  String
   category    Category  @relation(fields: [categoryId], references: [id], onDelete: Cascade)
@@ -145,8 +137,7 @@ model Filter {
   id            String         @id @default(uuid())
   name          String
   slug          String
-  type          FilterType
-  position      Int            @default(0)
+  position      Int            @default(1)
   isActive      Boolean        @default(true) // ⭐ Включить/выключить фильтр
   options       FilterOption[]
   subcategoryId String
@@ -162,7 +153,7 @@ model FilterOption {
   id        String               @id @default(uuid())
   value     String
   label     String
-  position  Int                  @default(0)
+  position  Int                  @default(1)
   isActive  Boolean              @default(true) // ⭐ Скрыть/показать опцию
   filterId  String
   filter    Filter               @relation(fields: [filterId], references: [id], onDelete: Cascade)

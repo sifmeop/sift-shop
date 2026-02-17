@@ -1,10 +1,9 @@
 export const useAddToCart = () => {
-	const addToCart () => {
-	}
+  // const addToCart () => {
+  // }
 
-	const removeFromCart () => {
-	}
+  // const removeFromCart () => {
+  // }
 
   return {}
 }
-

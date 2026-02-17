@@ -7,7 +7,7 @@ import type { Category } from '~/modules/categories/types/category.types'
 import type { Subcategory } from '../types/subcategory.types'
 
 const deleteSubcategory = async (id: string) => {
-	const { data } = await api.delete<Subcategory>(`/subcategories/${id}/delete`)
+	const { data } = await api.delete<Subcategory>(`/subcategories/${id}`)
 	return data
 }
 

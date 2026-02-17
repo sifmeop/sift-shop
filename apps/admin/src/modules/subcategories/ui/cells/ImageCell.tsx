@@ -8,7 +8,7 @@ type ImageCellProps = CellContext<Subcategory, unknown>
 export const ImageCell = ({ cell }: ImageCellProps) => {
 	const key = cell.getValue<Subcategory['image']>()
 
-	const image = env.VITE_S3_BASE_URL + '/' + key
+	const image = env.VITE_S3_BASE_URL + key
 
 	return <Gallery images={image} className='max-w-25 aspect-video w-full' />
 }

@@ -9,8 +9,20 @@ export class CategoryService {
 
   async categories(): Promise<CategoryEntity[]> {
     const categories = await prisma.category.findMany({
+      where: {
+        subcategories: {
+          some: {
+            isActive: true
+          }
+        },
+        isActive: true
+      },
       include: {
-        subcategories: true
+        subcategories: {
+          where: {
+            isActive: true
+          }
+        }
       }
     })
 

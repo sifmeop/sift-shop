@@ -1,5 +1,4 @@
 import { z } from 'zod'
-import { filterTypeKeys } from '../types/filters.types'
 
 const filterOptionSchema = z.object({
 	label: z
@@ -13,7 +12,6 @@ export const filterSchema = z.object({
 		.string()
 		.min(1, 'Filter name is required')
 		.max(100, 'Filter name must be less than 100 characters'),
-	type: z.literal(filterTypeKeys, { error: 'Filter type is required' }),
 	options: z
 		.array(filterOptionSchema)
 		.min(1, 'At least one option is required')

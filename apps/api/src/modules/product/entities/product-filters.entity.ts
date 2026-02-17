@@ -1,12 +1,7 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
-import { Filter, FilterType } from '@sift-shop/database'
+import { Field, ObjectType } from '@nestjs/graphql'
+import { Filter } from '@sift-shop/database'
 
 import { FilterOptionEntity } from './filter-option.entity'
-
-registerEnumType(FilterType, {
-  name: 'FilterType',
-  description: 'Filter type'
-})
 
 @ObjectType()
 export class ProductFiltersEntity implements Partial<Filter> {
@@ -17,10 +12,7 @@ export class ProductFiltersEntity implements Partial<Filter> {
   name: string
 
   @Field()
-  value: string
-
-  @Field(() => FilterType)
-  type: FilterType
+  slug: string
 
   @Field(() => [FilterOptionEntity])
   options: FilterOptionEntity[]

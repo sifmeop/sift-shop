@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { prisma } from '@sift-shop/database'
 
 import { optimizationImage } from '~/common/utils/optimizationImage'
@@ -18,10 +18,7 @@ export class SubcategoryService {
     })
 
     if (!category) {
-      throw new BadRequestException({
-        code: 'CATEGORY_NOT_FOUND',
-        message: 'Category not found'
-      })
+      throw new HttpException('Category not found', 404)
     }
 
     const subcategories = await prisma.subcategory.findMany({
@@ -70,10 +67,7 @@ export class SubcategoryService {
     })
 
     if (!category) {
-      throw new BadRequestException({
-        code: 'CATEGORY_NOT_FOUND',
-        message: 'Category not found'
-      })
+      throw new HttpException('Category not found', 404)
     }
 
     const subcategory = await prisma.subcategory.findFirst({
@@ -83,10 +77,7 @@ export class SubcategoryService {
     })
 
     if (subcategory) {
-      throw new BadRequestException({
-        code: 'CATEGORY_ALREADY_EXISTS',
-        message: 'Category already exists'
-      })
+      throw new HttpException('Subcategory already exists', 400)
     }
 
     const optimizedBuffer = await optimizationImage(file)
@@ -100,7 +91,20 @@ export class SubcategoryService {
       data: {
         ...dto,
         image,
-        categoryId: category.id
+        categoryId: category.id,
+        filters: {
+          create: {
+            name: 'Price',
+            slug: 'price',
+            position: 1,
+            options: {
+              create: [
+                { label: '0', value: '0', position: 1 },
+                { label: '1', value: '1', position: 2 }
+              ]
+            }
+          }
+        }
       }
     })
   }
@@ -117,10 +121,7 @@ export class SubcategoryService {
     })
 
     if (!subcategory) {
-      throw new BadRequestException({
-        code: 'SUBCATEGORY_NOT_FOUND',
-        message: 'Subcategory not found'
-      })
+      throw new HttpException('Subcategory not found', 404)
     }
 
     let image = subcategory.image
@@ -140,6 +141,27 @@ export class SubcategoryService {
     })
   }
 
+  async updateSubcategoryStatus(id: string) {
+    const subcategory = await prisma.subcategory.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (!subcategory) {
+      throw new HttpException('Subcategory not found', 404)
+    }
+
+    return await prisma.subcategory.update({
+      where: {
+        id
+      },
+      data: {
+        isActive: !subcategory.isActive
+      }
+    })
+  }
+
   async deleteSubcategory(id: string) {
     const subcategory = await prisma.subcategory.findUnique({
       where: {
@@ -148,10 +170,7 @@ export class SubcategoryService {
     })
 
     if (!subcategory) {
-      throw new BadRequestException({
-        code: 'SUBCATEGORY_NOT_FOUND',
-        message: 'Subcategory not found'
-      })
+      throw new HttpException('Subcategory not found', 404)
     }
 
     void this.s3Service.deleteFile(subcategory.image)

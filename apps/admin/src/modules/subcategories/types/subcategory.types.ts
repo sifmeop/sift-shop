@@ -3,6 +3,7 @@ export interface Subcategory {
 	name: string
 	image: string
 	slug: string
+	isActive: boolean
 	filtersCount: number
 	productsCount: number
 	categoryId: string

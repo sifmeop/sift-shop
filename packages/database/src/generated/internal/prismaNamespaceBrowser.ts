@@ -185,7 +185,6 @@ export const FilterScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
-  type: 'type',
   position: 'position',
   isActive: 'isActive',
   subcategoryId: 'subcategoryId',

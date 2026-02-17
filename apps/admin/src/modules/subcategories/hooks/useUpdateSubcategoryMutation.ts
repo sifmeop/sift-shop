@@ -6,10 +6,7 @@ import { QUERIES } from '~/common/constants/quries'
 import type { Subcategory } from '../types/subcategory.types'
 
 const updateSubcategory = async (id: string, body: FormData) => {
-	const { data } = await api.put<Subcategory>(
-		`/subcategories/${id}/update`,
-		body
-	)
+	const { data } = await api.put<Subcategory>(`/subcategories/${id}`, body)
 	return data
 }
 

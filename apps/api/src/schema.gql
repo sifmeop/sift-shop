@@ -36,17 +36,7 @@ scalar DateTime
 type FilterOptionEntity {
   id: String!
   label: String!
-  position: Int!
   value: String!
-}
-
-"""Filter type"""
-enum FilterType {
-  BOOLEAN
-  CHECKBOX
-  RADIO
-  RANGE
-  SELECT
 }
 
 input ForgotPasswordInput {
@@ -83,24 +73,21 @@ type Mutation {
 type ProductEntity {
   compareAtPrice: Float
   description: String
-  filterValues: JSON!
   id: String!
   images: [String!]!
-  inStock: Boolean!
   isFeatured: Boolean!
   name: String!
   price: Float!
   slug: String!
   specifications: JSON!
-  thumbnail: String!
+  stock: Int!
 }
 
 type ProductFiltersEntity {
   id: String!
   name: String!
   options: [FilterOptionEntity!]!
-  type: FilterType!
-  value: String!
+  slug: String!
 }
 
 type ProductResponseEntity {

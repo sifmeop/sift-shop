@@ -4,6 +4,7 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
+import { env } from '~/common/constants/env'
 import {
   CategoryEntity,
   SubcategoryEntity
@@ -37,7 +38,7 @@ export const SubcategoryItem = ({
             <Image
               width={300}
               height={300}
-              src={subcategory.image}
+              src={env.NEXT_PUBLIC_IMAGE_BASE_URL + subcategory.image}
               alt={subcategory.name}
               className='size-full object-contain p-4'
             />

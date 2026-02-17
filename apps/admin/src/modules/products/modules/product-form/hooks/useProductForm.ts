@@ -102,9 +102,7 @@ export const useProductForm = (resetStep: () => void) => {
 			resetStep()
 			form.reset()
 
-			toast.success(
-				'Product created successfully! You can now add more products.'
-			)
+			toast.success('Product created successfully!')
 		} catch (err) {
 			toast.error(handleApiError(err))
 		}

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 import { handleApiError } from '~/common/api/errorHandler'
 import { filterSchema, type FilterSchema } from '../schemas/filterSchema'
-import { FilterType, type Filter } from '../types/filters.types'
+import { type Filter } from '../types/filters.types'
 import { useCreateFilterMutation } from './useCreateFilterMutation'
 import { useUpdateFilterMutation } from './useUpdateFilterMutation'
 
@@ -30,7 +30,6 @@ export const useFilterForm = ({
 	const form = useForm<FilterSchema>({
 		defaultValues: {
 			name: defaultValues?.name ?? '',
-			type: defaultValues?.type ?? FilterType.CHECKBOX,
 			options: defaultValues?.options
 				? defaultValues?.options.map(({ label }) => ({ label }))
 				: [{ label: '' }]
@@ -46,7 +45,6 @@ export const useFilterForm = ({
 			value: slugify(values.name, {
 				decamelize: false
 			}),
-			type: values.type,
 			options: values.options.map(({ label }, index) => ({
 				label,
 				value: slugify(label, {
@@ -58,14 +56,13 @@ export const useFilterForm = ({
 
 		if (isEditMode && defaultValues) {
 			const isNameChanged = values.name !== defaultValues.name
-			const isTypeChanged = values.type !== defaultValues.type
 			const isOptionsChanged =
 				values.options.length !== defaultValues.options.length ||
 				values.options.some(
 					(opt, i) => opt.label !== defaultValues.options[i]?.label
 				)
 
-			if (!isNameChanged && !isTypeChanged && !isOptionsChanged) {
+			if (!isNameChanged && !isOptionsChanged) {
 				onClose()
 				return
 			}

@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { prisma } from '@sift-shop/database'
 
 import { FilterDto } from './dto/filter.dto'
@@ -40,10 +40,7 @@ export class FilterService {
     })
 
     if (!subcategory) {
-      throw new BadRequestException({
-        code: 'SUBCATEGORY_NOT_FOUND',
-        message: 'Subcategory not found'
-      })
+      throw new HttpException('Subcategory not found', 404)
     }
 
     const existingFilterByName = await prisma.filter.findFirst({
@@ -54,10 +51,7 @@ export class FilterService {
     })
 
     if (existingFilterByName) {
-      throw new BadRequestException({
-        code: 'FILTER_NAME_EXISTS',
-        message: 'Filter with this name already exists'
-      })
+      throw new HttpException('Filter with this name already exists', 400)
     }
 
     const existingFilterByValue = await prisma.filter.findFirst({
@@ -68,10 +62,7 @@ export class FilterService {
     })
 
     if (existingFilterByValue) {
-      throw new BadRequestException({
-        code: 'FILTER_VALUE_EXISTS',
-        message: 'Filter with this value already exists'
-      })
+      throw new HttpException('Filter with this value already exists', 400)
     }
 
     if (dto.options && dto.options.length > 0) {
@@ -79,20 +70,14 @@ export class FilterService {
       const uniqueLabels = new Set(labels)
 
       if (labels.length !== uniqueLabels.size) {
-        throw new BadRequestException({
-          code: 'DUPLICATE_OPTION_LABELS',
-          message: 'Option labels must be unique'
-        })
+        throw new HttpException('Option labels must be unique', 400)
       }
 
       const values = dto.options.map((opt) => opt.value)
       const uniqueValues = new Set(values)
 
       if (values.length !== uniqueValues.size) {
-        throw new BadRequestException({
-          code: 'DUPLICATE_OPTION_VALUES',
-          message: 'Option values must be unique'
-        })
+        throw new HttpException('Option values must be unique', 400)
       }
     }
 
@@ -104,7 +89,6 @@ export class FilterService {
       data: {
         name: dto.name,
         slug: dto.value,
-        type: dto.type,
         position,
         options: {
           createMany: {
@@ -127,10 +111,7 @@ export class FilterService {
     })
 
     if (!filter) {
-      throw new BadRequestException({
-        code: 'FILTER_NOT_FOUND',
-        message: 'Filter not found'
-      })
+      throw new HttpException('Filter not found', 404)
     }
 
     const existingFilterByName = await prisma.filter.findFirst({
@@ -144,10 +125,7 @@ export class FilterService {
     })
 
     if (existingFilterByName) {
-      throw new BadRequestException({
-        code: 'FILTER_NAME_EXISTS',
-        message: 'Filter with this name already exists'
-      })
+      throw new HttpException('Filter with this name already exists', 400)
     }
 
     const existingFilterByValue = await prisma.filter.findFirst({
@@ -161,10 +139,7 @@ export class FilterService {
     })
 
     if (existingFilterByValue) {
-      throw new BadRequestException({
-        code: 'FILTER_VALUE_EXISTS',
-        message: 'Filter with this value already exists'
-      })
+      throw new HttpException('Filter with this value already exists', 400)
     }
 
     if (dto.options && dto.options.length > 0) {
@@ -172,20 +147,14 @@ export class FilterService {
       const uniqueLabels = new Set(labels)
 
       if (labels.length !== uniqueLabels.size) {
-        throw new BadRequestException({
-          code: 'DUPLICATE_OPTION_LABELS',
-          message: 'Option labels must be unique'
-        })
+        throw new HttpException('Option labels must be unique', 400)
       }
 
       const values = dto.options.map((opt) => opt.value)
       const uniqueValues = new Set(values)
 
       if (values.length !== uniqueValues.size) {
-        throw new BadRequestException({
-          code: 'DUPLICATE_OPTION_VALUES',
-          message: 'Option values must be unique'
-        })
+        throw new HttpException('Option values must be unique', 400)
       }
     }
 
@@ -196,7 +165,6 @@ export class FilterService {
       data: {
         name: dto.name,
         slug: dto.value,
-        type: dto.type,
         position: dto.position,
         options: {
           deleteMany: {},

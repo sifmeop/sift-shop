@@ -3,7 +3,10 @@ import Link from 'next/link'
 import { FilterOptionEntity } from '~/common/lib/graphql/generated/graphql'
 import { Checkbox } from '~/common/ui/Checkbox'
 import { Field, FieldGroup, FieldLabel } from '~/common/ui/field'
+import { cn } from '~/common/utils/cn'
 import { useFilterParam } from '~/modules/products/hooks/useFilterParam'
+
+const SCROLL_THRESHOLD = 8
 
 interface FilterCheckboxProps {
   filterKey: string
@@ -12,9 +15,14 @@ interface FilterCheckboxProps {
 
 export const FilterCheckbox = ({ filterKey, options }: FilterCheckboxProps) => {
   const { createFilterUrl, isChecked } = useFilterParam()
+  const needsScroll = options.length >= SCROLL_THRESHOLD
 
   return (
-    <FieldGroup className='gap-2'>
+    <FieldGroup
+      className={cn('gap-2', {
+        'max-h-62.5 overflow-y-auto overscroll-contain scrollbar-thin':
+          needsScroll
+      })}>
       {options.map((option) => {
         const href = createFilterUrl(filterKey, option.value)
         const checked = isChecked(filterKey, option.value)

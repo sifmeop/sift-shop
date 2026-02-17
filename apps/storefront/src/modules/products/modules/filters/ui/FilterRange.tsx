@@ -105,7 +105,7 @@ export const FilterRange = ({ filterKey, options }: FilterRangeProps) => {
   }
 
   return (
-    <div className='space-y-2'>
+    <div className='space-y-4'>
       <div className='items-center gap-2 grid grid-cols-[1fr_10%_1fr]'>
         <Input
           value={inputValues[0]}

@@ -1,6 +1,6 @@
 import { CheckIcon, MoonIcon, SunIcon } from 'lucide-react'
 import { useTheme, type Theme } from '~/common/providers/ThemeProvider'
-import { capitalize } from '../utils/capitalize'
+import { capitalizeFirstStrict } from '../utils/capitalize'
 import { Button } from './Button'
 import {
 	DropdownMenu,
@@ -26,7 +26,7 @@ export const ThemeToggle = () => {
 			<DropdownMenuContent align='end'>
 				{THEMES.map((theme) => (
 					<DropdownMenuItem key={theme} onClick={() => setTheme(theme)}>
-						{capitalize(theme)}
+						{capitalizeFirstStrict(theme)}
 						{currentTheme === theme && (
 							<CheckIcon className='ml-auto stroke-green-500' strokeWidth={3} />
 						)}

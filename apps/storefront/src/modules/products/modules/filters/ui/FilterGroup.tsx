@@ -18,14 +18,14 @@ export const FilterGroup = ({ filter }: FilterGroupProps) => {
   if (isEmpty) return
 
   const Filter =
-    FILTER_GROUPS[filter.type as keyof typeof FILTER_GROUPS] ?? null
+    filter.slug === 'price' ? FILTER_GROUPS.RANGE : FILTER_GROUPS.CHECKBOX
 
   if (!Filter) return
 
   return (
     <div>
       <p className='font-medium mb-4'>{filter.name}</p>
-      <Filter filterKey={filter.value} options={filter.options} />
+      <Filter filterKey={filter.slug} options={filter.options} />
     </div>
   )
 }

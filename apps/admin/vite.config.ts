@@ -13,7 +13,7 @@ export default defineConfig({
 			generatedRouteTree: './src/global/routeTree.gen.ts'
 		}),
 		react(),
-		tailwindcss(),
+		tailwindcss()
 	],
 	resolve: {
 		alias: {
@@ -21,9 +21,9 @@ export default defineConfig({
 		}
 	},
 	server: {
-		port: 3000
+		port: 3001
 	},
 	preview: {
-		port: 3000
+		port: 3001
 	}
 })

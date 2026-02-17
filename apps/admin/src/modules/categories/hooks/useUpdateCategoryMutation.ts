@@ -6,7 +6,7 @@ import type { CategorySchema } from '../schemas/createCategory.schema'
 import type { Category } from '../types/category.types'
 
 const updateCategory = async (id: string, body: CategorySchema) => {
-	const { data } = await api.put<Category>(`/categories/${id}/update`, body)
+	const { data } = await api.put<Category>(`/categories/${id}`, body)
 	return data
 }
 

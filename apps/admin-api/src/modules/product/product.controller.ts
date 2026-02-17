@@ -1,7 +1,9 @@
 import {
   Body,
   Controller,
+  Delete,
   Get,
+  Param,
   Post,
   UploadedFiles,
   UseInterceptors
@@ -29,5 +31,10 @@ export class ProductController {
     @Body() dto: CreateProductDto
   ): Promise<void> {
     return this.productService.createProduct(files, dto)
+  }
+
+  @Delete(':id')
+  async deleteProduct(@Param('id') id: string) {
+    return this.productService.deleteProduct(id)
   }
 }

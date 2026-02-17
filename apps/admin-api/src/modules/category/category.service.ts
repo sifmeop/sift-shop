@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { prisma } from '@sift-shop/database'
 
 import { CreateCategoryDto } from './dto/create-category.dto'
@@ -70,10 +70,7 @@ export class CategoryService {
     })
 
     if (category) {
-      throw new BadRequestException({
-        code: 'CATEGORY_ALREADY_EXISTS',
-        message: 'Category already exists'
-      })
+      throw new HttpException('Category already exists', 400)
     }
 
     const result = await prisma.category.create({
@@ -100,6 +97,27 @@ export class CategoryService {
     return await prisma.category.delete({
       where: {
         id
+      }
+    })
+  }
+
+  async updateCategoryStatus(id: string) {
+    const category = await prisma.category.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (!category) {
+      throw new HttpException('Category not found', 404)
+    }
+
+    return await prisma.category.update({
+      where: {
+        id
+      },
+      data: {
+        isActive: !category.isActive
       }
     })
   }

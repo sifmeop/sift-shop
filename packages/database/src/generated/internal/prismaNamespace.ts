@@ -1224,7 +1224,6 @@ export const FilterScalarFieldEnum = {
   id: 'id',
   name: 'name',
   slug: 'slug',
-  type: 'type',
   position: 'position',
   isActive: 'isActive',
   subcategoryId: 'subcategoryId',
@@ -1411,20 +1410,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'FilterType'
- */
-export type EnumFilterTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FilterType'>
-    
-
-
-/**
- * Reference to a field of type 'FilterType[]'
- */
-export type ListEnumFilterTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'FilterType[]'>
     
 
 

@@ -6,11 +6,13 @@ export const MUTATIONS = {
 	CREATE_CATEGORY: ['create-category'],
 	UPDATE_CATEGORY: (id: string) => ['update-category', id],
 	DELETE_CATEGORY: (id: string) => ['delete-category', id],
+	UPDATE_STATUS_CATEGORY: (id: string) => ['update-status-category', id],
 
 	GET_SUBCATEGORIES: ['get-subcategories'],
 	CREATE_SUBCATEGORY: ['create-subcategory'],
 	UPDATE_SUBCATEGORY: (id: string) => ['update-subcategory', id],
 	DELETE_SUBCATEGORY: (id: string) => ['delete-subcategory', id],
+	UPDATE_STATUS_SUBCATEGORY: (id: string) => ['update-status-subcategory', id],
 
 	CREATE_FILTER: ['create-filter'],
 	UPDATE_FILTER: (id: string) => ['update-filter', id],

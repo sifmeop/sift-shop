@@ -331,23 +331,6 @@ export type JsonWithAggregatesFilterBase<$PrismaModel = never> = {
   _max?: Prisma.NestedJsonFilter<$PrismaModel>
 }
 
-export type EnumFilterTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.FilterType | Prisma.EnumFilterTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFilterTypeFilter<$PrismaModel> | $Enums.FilterType
-}
-
-export type EnumFilterTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.FilterType | Prisma.EnumFilterTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFilterTypeWithAggregatesFilter<$PrismaModel> | $Enums.FilterType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumFilterTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumFilterTypeFilter<$PrismaModel>
-}
-
 export type NestedStringFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel>
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel>
@@ -649,23 +632,6 @@ export type NestedJsonFilterBase<$PrismaModel = never> = {
   gt?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   gte?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel>
   not?: runtime.InputJsonValue | Prisma.JsonFieldRefInput<$PrismaModel> | Prisma.JsonNullValueFilter
-}
-
-export type NestedEnumFilterTypeFilter<$PrismaModel = never> = {
-  equals?: $Enums.FilterType | Prisma.EnumFilterTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFilterTypeFilter<$PrismaModel> | $Enums.FilterType
-}
-
-export type NestedEnumFilterTypeWithAggregatesFilter<$PrismaModel = never> = {
-  equals?: $Enums.FilterType | Prisma.EnumFilterTypeFieldRefInput<$PrismaModel>
-  in?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  notIn?: $Enums.FilterType[] | Prisma.ListEnumFilterTypeFieldRefInput<$PrismaModel>
-  not?: Prisma.NestedEnumFilterTypeWithAggregatesFilter<$PrismaModel> | $Enums.FilterType
-  _count?: Prisma.NestedIntFilter<$PrismaModel>
-  _min?: Prisma.NestedEnumFilterTypeFilter<$PrismaModel>
-  _max?: Prisma.NestedEnumFilterTypeFilter<$PrismaModel>
 }
 
 

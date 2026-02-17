@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { prisma, User } from '@sift-shop/database'
 
 @Injectable()
@@ -16,10 +16,7 @@ export class UserService {
     })
 
     if (!user) {
-      throw new UnauthorizedException({
-        code: 'USER_NOT_FOUND',
-        message: 'User not found'
-      })
+      throw new HttpException('User not found', 404)
     }
 
     return user

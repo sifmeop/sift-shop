@@ -9,7 +9,7 @@ import {
 	SelectTrigger,
 	SelectValue
 } from '~/common/ui/Select'
-import { capitalize } from '~/common/utils/capitalize'
+import { capitalizeFirstStrict } from '~/common/utils/capitalize'
 import { useUpdatePositionMutation } from '../../hooks/useUpdatePositionMutation'
 import { type Filter } from '../../types/filters.types'
 
@@ -46,7 +46,7 @@ export const PositionCell = ({ cell, table }: PositionCellProps) => {
 				<SelectGroup>
 					{positions.map((position) => (
 						<SelectItem key={position} value={position}>
-							{capitalize(position)}
+							{capitalizeFirstStrict(position)}
 						</SelectItem>
 					))}
 				</SelectGroup>

@@ -1,5 +1,4 @@
-import { FilterType } from '@sift-shop/database'
-import { IsArray, IsEnum, IsOptional, IsString } from 'class-validator'
+import { IsArray, IsOptional, IsString } from 'class-validator'
 
 export class FilterDto {
   @IsString()
@@ -7,10 +6,6 @@ export class FilterDto {
 
   @IsString()
   value: string
-
-  @IsString()
-  @IsEnum(FilterType)
-  type: FilterType
 
   @IsString()
   @IsOptional()

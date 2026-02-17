@@ -23,7 +23,7 @@ export const ProductsContent = ({ data }: ProductsContentProps) => {
   return (
     <Container bgColor='white' className='py-8' innerClassName='flex gap-5'>
       <FiltersSidebar filters={filters} />
-      <div className='w-full'>
+      <div className='w-full space-y-4'>
         <AppliedFilters filters={filters} />
         <ProductsGrid products={products} />
       </div>

@@ -38,7 +38,6 @@ export type FilterMinAggregateOutputType = {
   id: string | null
   name: string | null
   slug: string | null
-  type: $Enums.FilterType | null
   position: number | null
   isActive: boolean | null
   subcategoryId: string | null
@@ -50,7 +49,6 @@ export type FilterMaxAggregateOutputType = {
   id: string | null
   name: string | null
   slug: string | null
-  type: $Enums.FilterType | null
   position: number | null
   isActive: boolean | null
   subcategoryId: string | null
@@ -62,7 +60,6 @@ export type FilterCountAggregateOutputType = {
   id: number
   name: number
   slug: number
-  type: number
   position: number
   isActive: number
   subcategoryId: number
@@ -84,7 +81,6 @@ export type FilterMinAggregateInputType = {
   id?: true
   name?: true
   slug?: true
-  type?: true
   position?: true
   isActive?: true
   subcategoryId?: true
@@ -96,7 +92,6 @@ export type FilterMaxAggregateInputType = {
   id?: true
   name?: true
   slug?: true
-  type?: true
   position?: true
   isActive?: true
   subcategoryId?: true
@@ -108,7 +103,6 @@ export type FilterCountAggregateInputType = {
   id?: true
   name?: true
   slug?: true
-  type?: true
   position?: true
   isActive?: true
   subcategoryId?: true
@@ -207,7 +201,6 @@ export type FilterGroupByOutputType = {
   id: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position: number
   isActive: boolean
   subcategoryId: string
@@ -242,7 +235,6 @@ export type FilterWhereInput = {
   id?: Prisma.StringFilter<"Filter"> | string
   name?: Prisma.StringFilter<"Filter"> | string
   slug?: Prisma.StringFilter<"Filter"> | string
-  type?: Prisma.EnumFilterTypeFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntFilter<"Filter"> | number
   isActive?: Prisma.BoolFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringFilter<"Filter"> | string
@@ -256,7 +248,6 @@ export type FilterOrderByWithRelationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   position?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
@@ -274,7 +265,6 @@ export type FilterWhereUniqueInput = Prisma.AtLeast<{
   NOT?: Prisma.FilterWhereInput | Prisma.FilterWhereInput[]
   name?: Prisma.StringFilter<"Filter"> | string
   slug?: Prisma.StringFilter<"Filter"> | string
-  type?: Prisma.EnumFilterTypeFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntFilter<"Filter"> | number
   isActive?: Prisma.BoolFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringFilter<"Filter"> | string
@@ -288,7 +278,6 @@ export type FilterOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   position?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
@@ -308,7 +297,6 @@ export type FilterScalarWhereWithAggregatesInput = {
   id?: Prisma.StringWithAggregatesFilter<"Filter"> | string
   name?: Prisma.StringWithAggregatesFilter<"Filter"> | string
   slug?: Prisma.StringWithAggregatesFilter<"Filter"> | string
-  type?: Prisma.EnumFilterTypeWithAggregatesFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntWithAggregatesFilter<"Filter"> | number
   isActive?: Prisma.BoolWithAggregatesFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringWithAggregatesFilter<"Filter"> | string
@@ -320,7 +308,6 @@ export type FilterCreateInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -333,7 +320,6 @@ export type FilterUncheckedCreateInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   subcategoryId: string
@@ -346,7 +332,6 @@ export type FilterUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -359,7 +344,6 @@ export type FilterUncheckedUpdateInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -372,7 +356,6 @@ export type FilterCreateManyInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   subcategoryId: string
@@ -384,7 +367,6 @@ export type FilterUpdateManyMutationInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -395,7 +377,6 @@ export type FilterUncheckedUpdateManyInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -422,7 +403,6 @@ export type FilterCountOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   position?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
@@ -438,7 +418,6 @@ export type FilterMaxOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   position?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
@@ -450,7 +429,6 @@ export type FilterMinOrderByAggregateInput = {
   id?: Prisma.SortOrder
   name?: Prisma.SortOrder
   slug?: Prisma.SortOrder
-  type?: Prisma.SortOrder
   position?: Prisma.SortOrder
   isActive?: Prisma.SortOrder
   subcategoryId?: Prisma.SortOrder
@@ -509,10 +487,6 @@ export type FilterUncheckedUpdateManyWithoutSubcategoryNestedInput = {
   deleteMany?: Prisma.FilterScalarWhereInput | Prisma.FilterScalarWhereInput[]
 }
 
-export type EnumFilterTypeFieldUpdateOperationsInput = {
-  set?: $Enums.FilterType
-}
-
 export type FilterCreateNestedOneWithoutOptionsInput = {
   create?: Prisma.XOR<Prisma.FilterCreateWithoutOptionsInput, Prisma.FilterUncheckedCreateWithoutOptionsInput>
   connectOrCreate?: Prisma.FilterCreateOrConnectWithoutOptionsInput
@@ -531,7 +505,6 @@ export type FilterCreateWithoutSubcategoryInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -543,7 +516,6 @@ export type FilterUncheckedCreateWithoutSubcategoryInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -584,7 +556,6 @@ export type FilterScalarWhereInput = {
   id?: Prisma.StringFilter<"Filter"> | string
   name?: Prisma.StringFilter<"Filter"> | string
   slug?: Prisma.StringFilter<"Filter"> | string
-  type?: Prisma.EnumFilterTypeFilter<"Filter"> | $Enums.FilterType
   position?: Prisma.IntFilter<"Filter"> | number
   isActive?: Prisma.BoolFilter<"Filter"> | boolean
   subcategoryId?: Prisma.StringFilter<"Filter"> | string
@@ -596,7 +567,6 @@ export type FilterCreateWithoutOptionsInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -608,7 +578,6 @@ export type FilterUncheckedCreateWithoutOptionsInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   subcategoryId: string
@@ -636,7 +605,6 @@ export type FilterUpdateWithoutOptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -648,7 +616,6 @@ export type FilterUncheckedUpdateWithoutOptionsInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   subcategoryId?: Prisma.StringFieldUpdateOperationsInput | string
@@ -660,7 +627,6 @@ export type FilterCreateManySubcategoryInput = {
   id?: string
   name: string
   slug: string
-  type: $Enums.FilterType
   position?: number
   isActive?: boolean
   createdAt?: Date | string
@@ -671,7 +637,6 @@ export type FilterUpdateWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -683,7 +648,6 @@ export type FilterUncheckedUpdateWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -695,7 +659,6 @@ export type FilterUncheckedUpdateManyWithoutSubcategoryInput = {
   id?: Prisma.StringFieldUpdateOperationsInput | string
   name?: Prisma.StringFieldUpdateOperationsInput | string
   slug?: Prisma.StringFieldUpdateOperationsInput | string
-  type?: Prisma.EnumFilterTypeFieldUpdateOperationsInput | $Enums.FilterType
   position?: Prisma.IntFieldUpdateOperationsInput | number
   isActive?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -737,7 +700,6 @@ export type FilterSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   id?: boolean
   name?: boolean
   slug?: boolean
-  type?: boolean
   position?: boolean
   isActive?: boolean
   subcategoryId?: boolean
@@ -752,7 +714,6 @@ export type FilterSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   slug?: boolean
-  type?: boolean
   position?: boolean
   isActive?: boolean
   subcategoryId?: boolean
@@ -765,7 +726,6 @@ export type FilterSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extens
   id?: boolean
   name?: boolean
   slug?: boolean
-  type?: boolean
   position?: boolean
   isActive?: boolean
   subcategoryId?: boolean
@@ -778,7 +738,6 @@ export type FilterSelectScalar = {
   id?: boolean
   name?: boolean
   slug?: boolean
-  type?: boolean
   position?: boolean
   isActive?: boolean
   subcategoryId?: boolean
@@ -786,7 +745,7 @@ export type FilterSelectScalar = {
   updatedAt?: boolean
 }
 
-export type FilterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "type" | "position" | "isActive" | "subcategoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["filter"]>
+export type FilterOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "slug" | "position" | "isActive" | "subcategoryId" | "createdAt" | "updatedAt", ExtArgs["result"]["filter"]>
 export type FilterInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   options?: boolean | Prisma.Filter$optionsArgs<ExtArgs>
   subcategory?: boolean | Prisma.SubcategoryDefaultArgs<ExtArgs>
@@ -809,7 +768,6 @@ export type $FilterPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs
     id: string
     name: string
     slug: string
-    type: $Enums.FilterType
     position: number
     isActive: boolean
     subcategoryId: string
@@ -1243,7 +1201,6 @@ export interface FilterFieldRefs {
   readonly id: Prisma.FieldRef<"Filter", 'String'>
   readonly name: Prisma.FieldRef<"Filter", 'String'>
   readonly slug: Prisma.FieldRef<"Filter", 'String'>
-  readonly type: Prisma.FieldRef<"Filter", 'FilterType'>
   readonly position: Prisma.FieldRef<"Filter", 'Int'>
   readonly isActive: Prisma.FieldRef<"Filter", 'Boolean'>
   readonly subcategoryId: Prisma.FieldRef<"Filter", 'String'>

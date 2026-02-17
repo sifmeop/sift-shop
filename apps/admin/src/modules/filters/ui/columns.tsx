@@ -1,5 +1,4 @@
 import type { ColumnDef } from '@tanstack/react-table'
-import { capitalize } from '~/common/utils/capitalize'
 import type { Filter } from '../types/filters.types'
 import { Actions } from './Actions'
 import { OptionsCell } from './cells/OptionsCell'
@@ -14,11 +13,6 @@ export const columns: ColumnDef<Filter>[] = [
 	{
 		accessorKey: 'name',
 		header: 'Name'
-	},
-	{
-		accessorKey: 'type',
-		header: 'Type',
-		cell: (cell) => <span>{capitalize(cell.getValue<Filter['type']>())}</span>
 	},
 	{
 		accessorKey: 'options',

@@ -12,18 +12,15 @@ const PRODUCTS_LIST = gql(`
   			description
   			price
   			compareAtPrice
-  			inStock
+  			stock
   			isFeatured
-  			thumbnail
   			images
-  			filterValues
   			specifications
 			}
 			filters {
 				id
 				name
-				value
-				type
+				slug
 				options {
 					id
 					label

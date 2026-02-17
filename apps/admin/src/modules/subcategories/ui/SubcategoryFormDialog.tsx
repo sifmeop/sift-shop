@@ -19,6 +19,7 @@ import {
 	FieldLabel
 } from '~/common/ui/Field'
 import { Input } from '~/common/ui/Input'
+import { capitalize } from '~/common/utils/capitalize'
 import { useSubcategoryForm } from '../hooks/useSubcategoryForm'
 import type { Subcategory } from '../types/subcategory.types'
 
@@ -35,9 +36,7 @@ export const SubcategoryFormDialog = ({
 }: SubcategoryFormDialogProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const [preview, setPreview] = useState<string | null>(
-		defaultValues?.image
-			? env.VITE_S3_BASE_URL + '/' + defaultValues.image
-			: null
+		defaultValues?.image ? env.VITE_S3_BASE_URL + defaultValues.image : null
 	)
 
 	const handleClose = useCallback(() => {
@@ -74,7 +73,7 @@ export const SubcategoryFormDialog = ({
 
 			if (open) {
 				if (defaultValues?.image) {
-					setPreview(env.VITE_S3_BASE_URL + '/' + defaultValues.image)
+					setPreview(env.VITE_S3_BASE_URL + defaultValues.image)
 				}
 			} else {
 				form.reset()
@@ -128,7 +127,9 @@ export const SubcategoryFormDialog = ({
 											id={field.name}
 											name={field.name}
 											value={field.value}
-											onChange={(e) => field.onChange(e.target.value)}
+											onChange={(e) =>
+												field.onChange(capitalize(e.target.value))
+											}
 											onBlur={field.onBlur}
 										/>
 										<FieldError error={fieldState.error?.message} />

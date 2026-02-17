@@ -1,4 +1,4 @@
-import { Field, Float, ObjectType } from '@nestjs/graphql'
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
 import { Prisma, Product } from '@sift-shop/database'
 import { GraphQLJSON } from 'graphql-scalars'
 
@@ -22,24 +22,15 @@ export class ProductEntity implements Partial<Product> {
   @Field(() => Float, { nullable: true })
   compareAtPrice: Prisma.Decimal | null
 
-  @Field(() => Boolean)
-  inStock: boolean
+  @Field(() => Int)
+  stock: number
 
   @Field(() => Boolean)
   isFeatured: boolean
-
-  @Field()
-  thumbnail: string
 
   @Field(() => [String])
   images: string[]
 
   @Field(() => GraphQLJSON)
-  filterValues: Prisma.JsonValue
-
-  @Field(() => GraphQLJSON)
   specifications: Prisma.JsonValue
-
-  // @Field(() => [ProductVariantEntity])
-  // variants: ProductVariant[]
 }

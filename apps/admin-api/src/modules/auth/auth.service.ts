@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  UnauthorizedException
-} from '@nestjs/common'
+import { HttpException, Injectable } from '@nestjs/common'
 import { User } from '@sift-shop/database'
 import { verify } from 'argon2'
 import { Request } from 'express'
@@ -19,26 +15,17 @@ export class AuthService {
     const user = await this.userService.findByEmail(dto.email)
 
     if (!user) {
-      throw new UnauthorizedException({
-        code: 'USER_NOT_FOUND',
-        message: 'User not found'
-      })
+      throw new HttpException('User not found', 404)
     }
 
     const isValidPassword = await verify(user.password, dto.password)
 
     if (!isValidPassword) {
-      throw new UnauthorizedException({
-        code: 'INVALID_PASSWORD',
-        message: 'Invalid password'
-      })
+      throw new HttpException('Invalid password', 400)
     }
 
     if (!user.isVerified) {
-      throw new UnauthorizedException({
-        code: 'USER_NOT_VERIFIED',
-        message: 'User is not verified'
-      })
+      throw new HttpException('User is not verified', 400)
     }
 
     return this.saveSession(req, user)
@@ -50,12 +37,7 @@ export class AuthService {
 
       req.session.save((error) => {
         if (error) {
-          return reject(
-            new InternalServerErrorException({
-              code: 'SESSION_SAVE_FAILED',
-              message: 'Failed to save session'
-            })
-          )
+          return reject(new HttpException('Failed to save session', 500))
         }
 
         resolve(user)

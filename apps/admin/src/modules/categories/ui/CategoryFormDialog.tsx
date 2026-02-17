@@ -5,7 +5,6 @@ import { Button } from '~/common/ui/Button'
 import {
 	Dialog,
 	DialogContent,
-	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
@@ -13,6 +12,7 @@ import {
 } from '~/common/ui/Dialog'
 import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/Field'
 import { Input } from '~/common/ui/Input'
+import { capitalize } from '~/common/utils/capitalize'
 import { useCategoryForm } from '../hooks/useCategoryForm'
 import type { Category } from '../types/category.types'
 
@@ -53,7 +53,6 @@ export const CategoryDialog = ({
 							{isEdit
 								? `Edit category: ${defaultValues?.name}`
 								: 'Create category'}
-							{isEdit && <DialogDescription></DialogDescription>}
 						</DialogTitle>
 					</DialogHeader>
 					<FieldGroup>
@@ -70,7 +69,9 @@ export const CategoryDialog = ({
 											id={field.name}
 											name={field.name}
 											value={field.value}
-											onChange={(e) => field.onChange(e.target.value)}
+											onChange={(e) =>
+												field.onChange(capitalize(e.target.value))
+											}
 											onBlur={field.onBlur}
 										/>
 										<FieldError error={fieldState.error?.message} />

@@ -36,9 +36,11 @@ export const ProductFilters = () => {
 		)
 	}
 
+	const filtersWithoutPrice = data.filter((f) => f.slug !== 'price')
+
 	return (
 		<div className='space-y-2'>
-			{data.map(({ id, name, options }, index) => (
+			{filtersWithoutPrice.map(({ id, name, options }, index) => (
 				<div
 					key={id}
 					className='rounded-lg border border-border grid grid-cols-[1fr_1px_1fr]'>

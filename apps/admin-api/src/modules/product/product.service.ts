@@ -80,5 +80,48 @@ export class ProductService {
     } catch (error) {
       console.debug('error', error)
     }
+
+    const priceFilter = await prisma.filter.findFirst({
+      where: { subcategoryId: subcategory.id, slug: 'price' },
+      include: { options: true }
+    })
+
+    let resolvedFilter = priceFilter
+
+    if (!resolvedFilter) {
+      resolvedFilter = await prisma.filter.create({
+        data: {
+          name: 'Price',
+          slug: 'price',
+          subcategoryId: subcategory.id,
+          options: {
+            createMany: {
+              data: [
+                { label: '0', value: '0', position: 1 },
+                { label: '1', value: '1', position: 2 }
+              ]
+            }
+          }
+        },
+        include: { options: true }
+      })
+    }
+
+    const maxPriceOption = resolvedFilter.options.find((o) => o.position === 2)
+
+    if (maxPriceOption && +maxPriceOption.value < +dto.price) {
+      await prisma.filterOption.update({
+        where: { id: maxPriceOption.id },
+        data: { label: dto.price, value: dto.price }
+      })
+    }
+  }
+
+  async deleteProduct(id: string) {
+    await prisma.product.delete({
+      where: {
+        id
+      }
+    })
   }
 }

@@ -47,7 +47,7 @@ export class S3Service {
 
     await this.s3.send(command)
 
-    return key
+    return '/' + key
   }
 
   async updateFile(key: string, file: Express.MulterFile): Promise<string> {

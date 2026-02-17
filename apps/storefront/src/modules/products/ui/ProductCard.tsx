@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 
 import { Eye, Heart, ShoppingCart } from 'lucide-react'
@@ -8,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+import { env } from '~/common/constants/env'
 import type { GetProductsQuery } from '~/common/lib/graphql/generated/graphql'
 import { formatPrice } from '~/common/utils/formatPrice'
 
@@ -34,7 +33,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <motion.div
-      className='group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:shadow-xl dark:border-gray-800 dark:bg-gray-900'
+      className='group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 h-full'
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       initial={{ opacity: 0, y: 20 }}
@@ -44,15 +43,15 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         href={productLink}
         className='relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800'>
         <Image
-          src={product.thumbnail}
+          src={env.NEXT_PUBLIC_IMAGE_BASE_URL + product.images[0]}
           alt={product.name}
           fill
-          className='object-cover transition-transform duration-500 group-hover:scale-110'
+          className='object-cover transition-transform duration-500 group-hover:scale-110 p-4'
           sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
         />
 
         <div className='absolute left-3 top-3 flex flex-col gap-2'>
-          {!product.inStock && (
+          {!product.stock && (
             <span className='rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white'>
               Out of Stock
             </span>
@@ -113,25 +112,19 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               // TODO: Add to cart logic
               console.log('Add to cart:', product.id)
             }}
-            disabled={!product.inStock}
+            disabled={!product.stock}
             aria-label='Add to cart'
             className='w-full bg-blue-600 py-3 font-medium text-white transition-colors hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-400'>
             <ShoppingCart className='mr-2 inline h-5 w-5' />
-            {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+            {product.stock ? 'Add to Cart' : 'Out of Stock'}
           </button>
         </motion.div>
       </Link>
 
       <div className='flex flex-1 flex-col p-4'>
-        {product.filterValues?.brand && (
-          <p className='text-xs font-medium uppercase tracking-wide text-gray-500 dark:text-gray-400'>
-            {product.filterValues.brand as string}
-          </p>
-        )}
-
         <Link
           href={productLink}
-          className='line-clamp-2 text-lg font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline'>
+          className='line-clamp-2 text-lg font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline mb-auto'>
           {product.name}
         </Link>
 

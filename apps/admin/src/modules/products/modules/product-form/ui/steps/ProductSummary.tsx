@@ -74,7 +74,7 @@ export const ProductSummary = ({ onEdit }: ProductSummaryProps) => {
 				{ label: 'Name', value: name },
 				{
 					label: 'Description',
-					value: description
+					value: description.length > 0 ? description : '-'
 				},
 				{
 					label: 'Price',

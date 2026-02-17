@@ -8,7 +8,8 @@ import {
 } from '~/common/ui/Breadcrumb'
 import { Separator } from '~/common/ui/Separator'
 import { SidebarTrigger } from '~/common/ui/Sidebar'
-import { capitalize } from '~/common/utils/capitalize'
+import { ThemeToggle } from '~/common/ui/ThemeToggle'
+import { capitalizeFirstStrict } from '~/common/utils/capitalize'
 import { LogoutButton } from '~/modules/logout'
 
 export const Header = () => {
@@ -30,14 +31,14 @@ export const Header = () => {
 						<BreadcrumbSeparator className='hidden md:block' />
 						<BreadcrumbItem>
 							<BreadcrumbPage className='font-semibold'>
-								{capitalize(title)}
+								{capitalizeFirstStrict(title)}
 							</BreadcrumbPage>
 						</BreadcrumbItem>
 					</BreadcrumbList>
 				</Breadcrumb>
 				<div className='flex-1' />
 				<div className='flex gap-2'>
-					{/* <ThemeToggle /> */}
+					<ThemeToggle />
 					<LogoutButton />
 				</div>
 			</div>
