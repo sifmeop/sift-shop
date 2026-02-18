@@ -5,15 +5,15 @@ import { getProducts } from '../api/getProducts'
 import { ProductsContent } from './ProductsContent'
 
 interface SubcategoryProductsProps {
-  category: string
   subcategory: string
+  filters?: Record<string, string>
 }
 
 export const SubcategoryProducts = ({
-  category,
-  subcategory
+  subcategory,
+  filters
 }: SubcategoryProductsProps) => {
-  const { data } = use(getProducts({ category, subcategory }))
+  const { data } = use(getProducts({ subcategory }, filters))
 
   return <ProductsContent data={data} />
 }

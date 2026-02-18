@@ -10,7 +10,8 @@ export const signUpSchema = z
       .max(50, 'Full name is too long'),
     email: z.email('Please enter a valid email address'),
     password: passwordValidation,
-    confirmPassword: passwordValidation
+    confirmPassword: passwordValidation,
+    recaptha: z.string('Recaptcha token is required')
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "Passwords don't match",

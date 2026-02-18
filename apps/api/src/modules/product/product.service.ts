@@ -8,10 +8,14 @@ import { GetProductsInput } from './inputs/get-products.input'
 export class ProductService {
   constructor() {}
 
-  async findAll(input: GetProductsInput): Promise<ProductResponseEntity> {
+  async findAll(
+    input: GetProductsInput,
+    filterParams?: Record<string, string | string[]>
+  ): Promise<ProductResponseEntity> {
     const subcategory = await prisma.subcategory.findUnique({
       where: {
-        slug: input.subcategory
+        slug: input.subcategory,
+        isActive: true
       }
     })
 
@@ -19,15 +23,44 @@ export class ProductService {
       throw new HttpException('Subcategory not found', 404)
     }
 
+    const { price, ...restFilters } = filterParams ?? {}
+    const [minPrice, maxPrice] =
+      price && typeof price === 'string' ? price.split('-').map(Number) : []
+
+    const filterEntries = Object.entries(restFilters)
+
     const products = await prisma.product.findMany({
       where: {
-        subcategoryId: subcategory.id
+        subcategoryId: subcategory.id,
+        ...(minPrice || maxPrice
+          ? {
+              price: {
+                ...(minPrice ? { gte: minPrice } : {}),
+                ...(maxPrice ? { lte: maxPrice } : {})
+              }
+            }
+          : {}),
+        AND: filterEntries.map(([filterSlug, optionValues]) => ({
+          filterValues: {
+            some: {
+              filterOption: {
+                value: {
+                  in: Array.isArray(optionValues)
+                    ? optionValues
+                    : [optionValues]
+                },
+                filter: { slug: filterSlug }
+              }
+            }
+          }
+        }))
       }
     })
 
     const filters = await prisma.filter.findMany({
       where: {
-        subcategoryId: subcategory.id
+        subcategoryId: subcategory.id,
+        isActive: true
       },
       include: {
         options: {

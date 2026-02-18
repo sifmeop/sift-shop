@@ -1,4 +1,6 @@
 export const QUERIES = {
+	VERIFY_SESSION: ['verify-session'],
+
 	GET_CATEGORIES: ['get-categories'],
 
 	GET_SUBCATEGORIES: (slug: string) => ['get-subcategories', slug],

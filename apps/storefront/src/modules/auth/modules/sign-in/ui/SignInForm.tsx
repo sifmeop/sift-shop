@@ -1,9 +1,9 @@
+'use client'
+
 import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
-import { useRouter } from 'next/navigation'
 
-import { ROUTES } from '~/common/constants/routes'
 import { Button } from '~/common/ui/button'
 import { EmailInput, PasswordInput } from '~/common/ui/input'
 import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
@@ -18,7 +18,6 @@ import { ForgotPassword } from './ForgotPassword'
 
 export const SignInForm = () => {
   const [signIn, { loading }] = useSignInMutation()
-  const router = useRouter()
 
   const {
     register,
@@ -37,7 +36,6 @@ export const SignInForm = () => {
       await signIn({
         variables: { input: data }
       })
-      router.push(ROUTES.HOME)
     } catch (error) {
       handleGraphQLError(error)
     }

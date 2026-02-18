@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Post, Req } from '@nestjs/common'
+import { Body, Controller, Get, Post, Req, Res } from '@nestjs/common'
 import { User } from '@sift-shop/database'
-import { type Request } from 'express'
+import { type Request, Response } from 'express'
 
 import { Authorized } from '~/common/decorators/authorized.decorator'
 import { Public } from '~/common/decorators/public.decorator'
@@ -21,5 +21,13 @@ export class AuthController {
   @Post('login')
   async login(@Req() req: Request, @Body() dto: LoginDto): Promise<User> {
     return await this.authService.login(req, dto)
+  }
+
+  @Post('logout')
+  async logout(
+    @Req() req: Request,
+    @Res({ passthrough: true }) res: Response
+  ): Promise<boolean> {
+    return await this.authService.logout(req, res)
   }
 }

@@ -1,8 +1,11 @@
 import { createRootRouteWithContext, Outlet } from '@tanstack/react-router'
-import { Suspense } from 'react'
-import type { UserContext } from '~/common/contexts/auth'
+import type { AuthContext } from '~/common/contexts/auth'
 
-export const Route = createRootRouteWithContext<UserContext>()({
+export interface RouterContext {
+	auth: AuthContext | null
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
 	component: RootComponent,
 	errorComponent: () => <div>404</div>,
 	pendingComponent: () => <div>Loading...</div>,
@@ -10,15 +13,5 @@ export const Route = createRootRouteWithContext<UserContext>()({
 })
 
 function RootComponent() {
-	// useAuthStateWatcher()
-
-	return (
-		<>
-			<Suspense fallback={<div>Loading...</div>}>
-				<Outlet />
-			</Suspense>
-
-			{/* <TanStackRouterDevtools position='bottom-right' /> */}
-		</>
-	)
+	return <Outlet />
 }

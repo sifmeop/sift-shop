@@ -36,4 +36,8 @@ export class SignUpInput implements Partial<User> {
   @IsString()
   @Match('password', { message: 'Passwords do not match' })
   confirmPassword: string
+
+  @Field()
+  @IsString()
+  recaptha: string
 }

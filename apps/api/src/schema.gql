@@ -9,17 +9,6 @@ type AuthEntity {
   fullName: String!
   id: ID!
   isTwoFactorEnabled: Boolean!
-  isVerified: Boolean!
-  method: AuthMethod!
-  password: String!
-  role: UserRole!
-}
-
-"""Authentication method"""
-enum AuthMethod {
-  CREDENTIALS
-  GITHUB
-  GOOGLE
 }
 
 type CategoryEntity {
@@ -33,6 +22,10 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 """
 scalar DateTime
 
+input EmailConfirmationInput {
+  token: String!
+}
+
 type FilterOptionEntity {
   id: String!
   label: String!
@@ -44,7 +37,6 @@ input ForgotPasswordInput {
 }
 
 input GetProductsInput {
-  category: String!
   subcategory: String!
 }
 
@@ -63,6 +55,7 @@ type LogoutEntity {
 }
 
 type Mutation {
+  emailConfirmation(input: EmailConfirmationInput!): AuthEntity!
   forgotPassword(input: ForgotPasswordInput!): SuccessEntity!
   resetPassword(input: ResetPasswordInput!): SuccessEntity!
   signIn(input: SignInInput!): AuthEntity!
@@ -98,8 +91,9 @@ type ProductResponseEntity {
 type Query {
   categories: [CategoryEntity!]!
   product: ProductEntity!
-  products(input: GetProductsInput!): ProductResponseEntity!
+  products(filters: JSON, input: GetProductsInput!): ProductResponseEntity!
   schema: String!
+  verifySession: AuthEntity!
 }
 
 input ResetPasswordInput {
@@ -118,6 +112,7 @@ input SignUpInput {
   email: String!
   fullName: String!
   password: String!
+  recaptha: String!
 }
 
 type SubcategoryEntity {
@@ -128,10 +123,4 @@ type SubcategoryEntity {
 
 type SuccessEntity {
   success: Boolean!
-}
-
-"""User role"""
-enum UserRole {
-  ADMIN
-  CUSTOMER
 }

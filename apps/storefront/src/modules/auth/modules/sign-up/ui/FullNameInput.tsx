@@ -1,9 +1,16 @@
 import { useId } from 'react'
 
-import { Field, FieldLabel } from '~/common/ui/field'
+import { Field, FieldError, FieldLabel } from '~/common/ui/field'
 import { Input } from '~/common/ui/input'
 
-export const FullNameInput = (props: React.ComponentProps<'input'>) => {
+interface FullNameInputProps extends React.ComponentProps<'input'> {
+  errorMessage?: string
+}
+
+export const FullNameInput = ({
+  errorMessage,
+  ...props
+}: FullNameInputProps) => {
   const id = useId()
   const inputId = `input-${id}`
 
@@ -19,8 +26,10 @@ export const FullNameInput = (props: React.ComponentProps<'input'>) => {
         spellCheck='true'
         placeholder='John Doe'
         aria-describedby='fullName-error'
+        aria-invalid={!!errorMessage}
         {...props}
       />
+      <FieldError error={errorMessage} />
     </Field>
   )
 }

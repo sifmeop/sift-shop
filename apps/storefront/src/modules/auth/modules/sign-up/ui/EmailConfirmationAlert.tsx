@@ -28,7 +28,9 @@ export const EmailConfirmationAlert = ({
           </AlertDialogDescription>
         </AlertDialogHeader>
         <AlertDialogFooter>
-          <AlertDialogAction onClick={onClose}>Got it</AlertDialogAction>
+          <AlertDialogAction onClick={onClose} className='px-5'>
+            Got it
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>

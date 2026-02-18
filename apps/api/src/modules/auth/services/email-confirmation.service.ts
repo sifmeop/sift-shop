@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid'
 import { MailService } from '~/common/libs/mail/mail.service'
 import { UserService } from '~/modules/user/user.service'
 
-import { EmailConfirmationDto } from '../dto/email-confirmation.dto'
+import { AuthEntity } from '../entities/auth.entity'
 
 import { SessionsService } from './sessions.service'
 
@@ -20,10 +20,10 @@ export class EmailConfirmationService {
     private readonly sessionService: SessionsService
   ) {}
 
-  async emailConfirmation(req: Request, body: EmailConfirmationDto) {
+  async emailConfirmation(req: Request, token: string): Promise<AuthEntity> {
     const existingToken = await prisma.token.findUnique({
       where: {
-        token: body.token,
+        token,
         type: TokenType.VERIFICATION
       }
     })

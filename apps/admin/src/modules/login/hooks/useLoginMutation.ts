@@ -1,7 +1,8 @@
 import { useMutation } from '@tanstack/react-query'
+import { useNavigate } from '@tanstack/react-router'
 import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
-import { setAuthUser, type User } from '~/common/contexts/auth'
+import { useAuth, type User } from '~/common/contexts/auth'
 import type { LoginSchema } from '../schemas/login.schema'
 
 const login = async (body: LoginSchema) => {
@@ -10,11 +11,15 @@ const login = async (body: LoginSchema) => {
 }
 
 export const useLoginMutation = () => {
+	const { setUser } = useAuth()
+	const navigate = useNavigate()
+
 	return useMutation({
 		mutationKey: MUTATIONS.LOGIN,
 		mutationFn: login,
 		onSuccess: (data) => {
-			setAuthUser(data)
+			setUser(data)
+			navigate({ to: '/dashboard' })
 		}
 	})
 }

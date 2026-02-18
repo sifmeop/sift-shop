@@ -1,4 +1,13 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  Put
+} from '@nestjs/common'
 
 import { FilterDto } from './dto/filter.dto'
 import { UpdateFilterPositionDto } from './dto/update-filter-position.dto'
@@ -23,12 +32,17 @@ export class FilterController {
     return this.filterService.updateFilter(id, dto)
   }
 
-  @Put(':slug/position')
+  @Patch(':slug/position')
   async updatePosition(
     @Param('slug') slug: string,
     @Body() dto: UpdateFilterPositionDto
   ) {
     return this.filterService.updatePosition(slug, dto)
+  }
+
+  @Patch(':id/status')
+  async updateFilterStatus(@Param('id') id: string) {
+    return await this.filterService.updateFilterStatus(id)
   }
 
   @Delete(':id')

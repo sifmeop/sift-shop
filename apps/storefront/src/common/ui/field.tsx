@@ -1,7 +1,5 @@
 'use client'
 
-import { useMemo } from 'react'
-
 import { cva, type VariantProps } from 'class-variance-authority'
 
 import { cn } from '~/common/utils/cn'
@@ -179,39 +177,12 @@ const FieldSeparator = ({
 const FieldError = ({
   className,
   children,
-  errors,
+  error,
   ...props
 }: React.ComponentProps<'div'> & {
-  errors?: Array<{ message?: string } | undefined>
+  error?: string
 }) => {
-  const content = useMemo(() => {
-    if (children) {
-      return children
-    }
-
-    if (!errors?.length) {
-      return null
-    }
-
-    const uniqueErrors = [
-      ...new Map(errors.map((error) => [error?.message, error])).values()
-    ]
-
-    if (uniqueErrors?.length == 1) {
-      return uniqueErrors[0]?.message
-    }
-
-    return (
-      <ul className='ml-4 flex list-disc flex-col gap-1'>
-        {uniqueErrors.map(
-          (error, index) =>
-            error?.message && <li key={index}>{error.message}</li>
-        )}
-      </ul>
-    )
-  }, [children, errors])
-
-  if (!content) {
+  if (!error) {
     return null
   }
 
@@ -221,7 +192,7 @@ const FieldError = ({
       data-slot='field-error'
       className={cn('text-destructive font-normal', className)}
       {...props}>
-      {content}
+      {children ?? error}
     </div>
   )
 }

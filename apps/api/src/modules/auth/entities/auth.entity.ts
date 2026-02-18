@@ -20,25 +20,13 @@ export class AuthEntity implements Partial<User> {
   email: string
 
   @Field()
-  password: string
-
-  @Field()
   fullName: string
-
-  @Field(() => AuthMethod)
-  method: AuthMethod
 
   @Field(() => String, { nullable: true })
   avatar: string | null
 
   @Field(() => Boolean)
   isTwoFactorEnabled: boolean
-
-  @Field(() => Boolean)
-  isVerified: boolean
-
-  @Field(() => UserRole)
-  role: UserRole
 
   @Field(() => Date)
   createdAt: Date

@@ -5,9 +5,5 @@ import { IsString } from 'class-validator'
 export class GetProductsInput {
   @Field()
   @IsString()
-  category: string
-
-  @Field()
-  @IsString()
   subcategory: string
 }

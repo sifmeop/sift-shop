@@ -17,6 +17,7 @@ export const MUTATIONS = {
 	CREATE_FILTER: ['create-filter'],
 	UPDATE_FILTER: (id: string) => ['update-filter', id],
 	DELETE_FILTER: (id: string) => ['delete-filter', id],
+	UPDATE_STATUS_FILTER: (id: string) => ['update-status-filter', id],
 	UPDATE_POSITION: ['update-position'],
 
 	CREATE_PRODUCT: ['create-product'],

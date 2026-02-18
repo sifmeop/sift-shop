@@ -5,13 +5,17 @@ import { Button } from '~/common/ui/Button'
 import { Card, CardContent, CardFooter, CardTitle } from '~/common/ui/Card'
 import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/Field'
 import { Input, PasswordInput } from '~/common/ui/Input'
+import { cn } from '~/common/utils/cn'
 import { useLoginForm } from '../hooks/useLoginForm'
 
 export const LoginForm = () => {
-	const { onSubmit, form } = useLoginForm()
+	const { onSubmit, form, isLoading } = useLoginForm()
 
 	return (
-		<Card className='w-full max-w-xs relative'>
+		<Card
+			className={cn('w-full max-w-xs relative', {
+				'pointer-events-none': isLoading
+			})}>
 			<CardTitle className='my-4 mb-8 flex items-center gap-2.5 justify-center'>
 				<img src='/assets/images/logo.svg' alt='logo' className='w-4 h-6.5' />
 				<span className='text-2xl font-extrabold '>Admin</span>
@@ -68,7 +72,12 @@ export const LoginForm = () => {
 				</form>
 			</CardContent>
 			<CardFooter className='flex-col gap-2'>
-				<Button form='login-form' type='submit' fullWidth>
+				<Button
+					form='login-form'
+					type='submit'
+					fullWidth
+					disabled={isLoading}
+					isLoading={isLoading}>
 					Login
 				</Button>
 			</CardFooter>

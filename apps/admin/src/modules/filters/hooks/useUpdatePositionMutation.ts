@@ -11,7 +11,7 @@ interface UpdatePositionBody {
 }
 
 const updatePosition = async (slug: string, body: UpdatePositionBody) => {
-	const { data } = await api.put<Filter[]>(`/filters/${slug}/position`, body)
+	const { data } = await api.patch<Filter[]>(`/filters/${slug}/position`, body)
 	return data
 }
 

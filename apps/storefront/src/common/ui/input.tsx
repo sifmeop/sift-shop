@@ -1,3 +1,5 @@
+'use client'
+
 import { useId, useState } from 'react'
 
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
@@ -6,7 +8,6 @@ import { cn } from '~/common/utils/cn'
 
 import { Field, FieldError, FieldLabel } from './field'
 import { InputGroup, InputGroupAddon, InputGroupInput } from './input-group'
-import { Show } from './show'
 
 export const Input = ({
   className,
@@ -49,9 +50,7 @@ export const EmailInput = ({ errorMessage, ...props }: EmailInputProps) => {
         aria-invalid={!!errorMessage}
         {...props}
       />
-      <Show when={!!errorMessage}>
-        <FieldError>{errorMessage}</FieldError>
-      </Show>
+      <FieldError error={errorMessage} />
     </Field>
   )
 }
@@ -101,9 +100,7 @@ export const PasswordInput = ({
           {showPassword ? <EyeOffIcon /> : <EyeIcon />}
         </InputGroupAddon>
       </InputGroup>
-      <Show when={!!errorMessage}>
-        <FieldError>{errorMessage}</FieldError>
-      </Show>
+      <FieldError error={errorMessage} />
     </Field>
   )
 }

@@ -1,6 +1,7 @@
 import { createRouter, RouterProvider } from '@tanstack/react-router'
 import { useAuth } from '~/common/contexts/auth'
 import { routeTree } from '~/global/routeTree.gen'
+import { FullScreenLoader } from '../ui/FullScreenLoader'
 
 declare module '@tanstack/react-router' {
 	interface Register {
@@ -11,12 +12,16 @@ declare module '@tanstack/react-router' {
 const router = createRouter({
 	routeTree,
 	context: {
-		user: null
+		auth: null
 	}
 })
 
 export const TanstackRouterProvider = () => {
-	const { user } = useAuth()
+	const auth = useAuth()
 
-	return <RouterProvider router={router} context={{ user }} />
+	if (auth.isLoading) {
+		return <FullScreenLoader />
+	}
+
+	return <RouterProvider router={router} context={{ auth }} />
 }

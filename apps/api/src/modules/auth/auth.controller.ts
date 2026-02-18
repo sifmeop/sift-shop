@@ -1,16 +1,7 @@
-import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  Req,
-  Res,
-  UseGuards
-} from '@nestjs/common'
+import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { Request, Response } from 'express'
 
-import { EmailConfirmationDto } from './dto/email-confirmation.dto'
 import { EmailConfirmationService } from './services/email-confirmation.service'
 import { OAuthService } from './services/oauth.service'
 
@@ -32,13 +23,5 @@ export class AuthController {
     @Res() res: Response
   ): Promise<void> {
     await this.oAuthService.googleCallback(req, res)
-  }
-
-  @Post('email-confirmation')
-  async emailConfirmation(
-    @Req() req: Request,
-    @Body() body: EmailConfirmationDto
-  ): Promise<void> {
-    await this.emailConfirmationService.emailConfirmation(req, body)
   }
 }

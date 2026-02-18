@@ -9,6 +9,7 @@ export const TanstackQueryProvider = ({
 			new QueryClient({
 				defaultOptions: {
 					queries: {
+						retry: false,
 						refetchOnWindowFocus: false,
 						staleTime: Infinity
 					}

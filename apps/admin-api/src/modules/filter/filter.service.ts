@@ -217,6 +217,27 @@ export class FilterService {
     })
   }
 
+  async updateFilterStatus(id: string) {
+    const filter = await prisma.filter.findUnique({
+      where: {
+        id
+      }
+    })
+
+    if (!filter) {
+      throw new HttpException('Filter not found', 404)
+    }
+
+    return await prisma.filter.update({
+      where: {
+        id
+      },
+      data: {
+        isActive: !filter.isActive
+      }
+    })
+  }
+
   async deleteFilter(id: string) {
     const deletedFilter = await prisma.filter.delete({
       where: { id },

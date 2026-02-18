@@ -1,3 +1,4 @@
+export * from './modules/email-confirmation/ui/EmailConfirmationForm'
 export * from './modules/forgot-password/ui/ForgotPasswordForm'
 export * from './modules/reset-password/ui/ResetPasswordForm'
 export * from './modules/sign-in/ui/SignInForm'
