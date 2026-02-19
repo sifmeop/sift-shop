@@ -48,13 +48,13 @@ export const DesktopNavigation = ({ data }: DesktopNavigationProps) => {
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={ROUTES.HOME}>About</Link>
+            <Link href={ROUTES.ABOUT}>About</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
 
         <NavigationMenuItem>
           <NavigationMenuLink asChild className={navigationMenuTriggerStyle()}>
-            <Link href={ROUTES.HOME}>Contact</Link>
+            <Link href={ROUTES.CONTACT}>Contact</Link>
           </NavigationMenuLink>
         </NavigationMenuItem>
       </NavigationMenuList>

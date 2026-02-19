@@ -1,6 +1,9 @@
 import { apolloClient } from '~/common/lib/graphql/apollo-client'
 import { gql } from '~/common/lib/graphql/generated'
-import { GetProductsInput } from '~/common/lib/graphql/generated/graphql'
+import {
+  GetProductsInput,
+  GetProductsQuery
+} from '~/common/lib/graphql/generated/graphql'
 
 const PRODUCTS_LIST = gql(`
 	query GetProducts($input: GetProductsInput!, $filters: JSON) {
@@ -11,7 +14,7 @@ const PRODUCTS_LIST = gql(`
   			name
   			description
   			price
-  			compareAtPrice
+  			discountPercent
   			stock
   			isFeatured
   			images
@@ -35,7 +38,7 @@ export const getProducts = async (
   input: GetProductsInput,
   filters?: Record<string, string>
 ) => {
-  return apolloClient.query({
+  return apolloClient.query<GetProductsQuery>({
     query: PRODUCTS_LIST,
     variables: { input, filters }
   })

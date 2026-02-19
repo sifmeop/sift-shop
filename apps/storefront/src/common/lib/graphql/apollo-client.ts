@@ -19,5 +19,17 @@ const link = ApolloLink.from([removeTypenameLink, httpLink])
 
 export const apolloClient = new ApolloClient({
   link,
-  cache: new InMemoryCache({})
+  cache: new InMemoryCache({
+    typePolicies: {
+      Query: {
+        fields: {
+          cart: {
+            merge(_, incoming) {
+              return incoming
+            }
+          }
+        }
+      }
+    }
+  })
 })

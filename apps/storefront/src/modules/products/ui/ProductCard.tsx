@@ -8,6 +8,7 @@ import { useRouter } from 'next/navigation'
 
 import { env } from '~/common/constants/env'
 import type { GetProductsQuery } from '~/common/lib/graphql/generated/graphql'
+import { calcDiscountedPrice } from '~/common/utils/calcDiscountedPrice'
 import { formatPrice } from '~/common/utils/formatPrice'
 
 import { QuantitySelector } from './QuantitySelector'
@@ -24,18 +25,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false)
 
   const productLink = `/products/${product.slug}`
-  const hasDiscount =
-    product.compareAtPrice && product.compareAtPrice > product.price
-  const discountPercent = hasDiscount
-    ? Math.round(
-        ((product.compareAtPrice! - product.price) / product.compareAtPrice!) *
-          100
-      )
-    : 0
 
   return (
     <motion.div
-      className='group relative flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white transition-all hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 h-full'
+      className='group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 h-full'
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       initial={{ opacity: 0, y: 20 }}
@@ -45,6 +38,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         href={productLink}
         className='relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800'>
         <Image
+          loading='eager'
           src={env.NEXT_PUBLIC_IMAGE_BASE_URL + product.images[0]}
           alt={product.name}
           fill
@@ -63,9 +57,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
               Featured
             </span>
           )}
-          {hasDiscount && (
+          {product.discountPercent && (
             <span className='rounded-full bg-green-500 px-3 py-1 text-xs font-medium text-white'>
-              -{discountPercent}%
+              -{product.discountPercent}%
             </span>
           )}
         </div>
@@ -108,17 +102,19 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       <div className='flex flex-1 flex-col p-4'>
         <Link
           href={productLink}
-          className='line-clamp-2 text-lg font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline mb-auto'>
+          className='line-clamp-2 text-base font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline mb-auto'>
           {product.name}
         </Link>
 
         <div className='mt-1 flex items-baseline gap-2'>
-          <span className='text-2xl font-bold text-gray-900 dark:text-white'>
+          <span className='text-xl font-bold text-gray-900 dark:text-white'>
             {formatPrice(product.price)}
           </span>
-          {hasDiscount && (
+          {!!product.discountPercent && (
             <span className='text-lg text-gray-500 line-through dark:text-gray-400'>
-              {formatPrice(product.compareAtPrice!)}
+              {formatPrice(
+                calcDiscountedPrice(product.price, product.discountPercent)
+              )}
             </span>
           )}
         </div>

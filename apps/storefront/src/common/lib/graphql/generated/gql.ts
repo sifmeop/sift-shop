@@ -21,8 +21,11 @@ type Documents = {
     "\n  mutation ResetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input) {\n      success\n    }\n  }\n": typeof types.ResetPasswordDocument,
     "\n  mutation SignIn($input: SignInInput!) {\n    signIn(input: $input) {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n    }\n  }\n": typeof types.SignInDocument,
     "\n  mutation SignUp($input: SignUpInput!) {\n    signUp(input: $input) {\n      success\n    }\n  }\n": typeof types.SignUpDocument,
+    "\n\tmutation AddToCart($input: AddToCartInput!) {\n\t\taddToCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n\t}\n": typeof types.AddToCartDocument,
+    "\n  query Cart {\n    cart {\n      id\n      product {\n        id\n        slug\n        name\n        stock\n        images\n      }\n      quantity\n      price\n      discountedPrice\n    }\n  }\n": typeof types.CartDocument,
+    "\n  mutation RemoveFromCart($input: RemoveFromCartInput!) {\n    removeFromCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n  }\n": typeof types.RemoveFromCartDocument,
     "\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n": typeof types.GetCategoriesDocument,
-    "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tcompareAtPrice\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetProductsDocument,
+    "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tdiscountPercent\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetProductsDocument,
 };
 const documents: Documents = {
     "\n\tmutation SignOut {\n\t\tsignOut{\n\t\t\tsuccess\n\t\t}\n\t}\n": types.SignOutDocument,
@@ -32,8 +35,11 @@ const documents: Documents = {
     "\n  mutation ResetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input) {\n      success\n    }\n  }\n": types.ResetPasswordDocument,
     "\n  mutation SignIn($input: SignInInput!) {\n    signIn(input: $input) {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n    }\n  }\n": types.SignInDocument,
     "\n  mutation SignUp($input: SignUpInput!) {\n    signUp(input: $input) {\n      success\n    }\n  }\n": types.SignUpDocument,
+    "\n\tmutation AddToCart($input: AddToCartInput!) {\n\t\taddToCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n\t}\n": types.AddToCartDocument,
+    "\n  query Cart {\n    cart {\n      id\n      product {\n        id\n        slug\n        name\n        stock\n        images\n      }\n      quantity\n      price\n      discountedPrice\n    }\n  }\n": types.CartDocument,
+    "\n  mutation RemoveFromCart($input: RemoveFromCartInput!) {\n    removeFromCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n  }\n": types.RemoveFromCartDocument,
     "\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n": types.GetCategoriesDocument,
-    "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tcompareAtPrice\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetProductsDocument,
+    "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tdiscountPercent\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetProductsDocument,
 };
 
 /**
@@ -81,11 +87,23 @@ export function gql(source: "\n  mutation SignUp($input: SignUpInput!) {\n    si
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
+export function gql(source: "\n\tmutation AddToCart($input: AddToCartInput!) {\n\t\taddToCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation AddToCart($input: AddToCartInput!) {\n\t\taddToCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n\t}\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  query Cart {\n    cart {\n      id\n      product {\n        id\n        slug\n        name\n        stock\n        images\n      }\n      quantity\n      price\n      discountedPrice\n    }\n  }\n"): (typeof documents)["\n  query Cart {\n    cart {\n      id\n      product {\n        id\n        slug\n        name\n        stock\n        images\n      }\n      quantity\n      price\n      discountedPrice\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n  mutation RemoveFromCart($input: RemoveFromCartInput!) {\n    removeFromCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n  }\n"): (typeof documents)["\n  mutation RemoveFromCart($input: RemoveFromCartInput!) {\n    removeFromCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
 export function gql(source: "\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tcompareAtPrice\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tcompareAtPrice\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
+export function gql(source: "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tdiscountPercent\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tdiscountPercent\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n"];
 
 export function gql(source: string) {
   return (documents as any)[source] ?? {};

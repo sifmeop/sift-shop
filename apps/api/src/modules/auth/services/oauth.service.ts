@@ -32,6 +32,8 @@ export class OAuthService {
 
     await this.sessionService.saveSession(req, user)
 
-    res.redirect(this.configService.getOrThrow<string>('ORIGIN') + '/')
+    res.redirect(
+      this.configService.getOrThrow<string>('ORIGIN') + '/profile/orders'
+    )
   }
 }

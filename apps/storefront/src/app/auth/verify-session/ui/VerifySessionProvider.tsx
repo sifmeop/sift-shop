@@ -1,5 +1,6 @@
 import { useEffect } from 'react'
 
+import { env } from '~/common/constants/env'
 import { useUserStore } from '~/common/stores/user'
 
 import { useVerifySessionQuery } from '../hooks/useVerifySessionQuery'
@@ -14,7 +15,7 @@ export const VerifySessionProvider = ({
 
   useEffect(() => {
     const handleVerifySession = async () => {
-      const session = await cookieStore.get('session')
+      const session = await cookieStore.get(env.NEXT_PUBLIC_SESSION_COOKIE_NAME)
 
       if (!session) {
         setLoading(false)

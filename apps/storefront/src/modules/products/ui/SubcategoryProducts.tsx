@@ -1,5 +1,3 @@
-import { use } from 'react'
-
 import { getProducts } from '../api/getProducts'
 
 import { ProductsContent } from './ProductsContent'
@@ -9,11 +7,11 @@ interface SubcategoryProductsProps {
   filters?: Record<string, string>
 }
 
-export const SubcategoryProducts = ({
+export const SubcategoryProducts = async ({
   subcategory,
   filters
 }: SubcategoryProductsProps) => {
-  const { data } = use(getProducts({ subcategory }, filters))
+  const { data } = await getProducts({ subcategory }, filters)
 
   return <ProductsContent data={data} />
 }

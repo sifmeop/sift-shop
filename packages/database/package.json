@@ -18,7 +18,8 @@
 		"prisma:push": "bunx prisma db push",
 		"prisma:reset": "bunx prisma db push --force-reset",
 		"prisma:migrate": "bunx prisma migrate dev",
-		"prisma:deploy": "bunx prisma migrate deploy"
+		"prisma:deploy": "bunx prisma migrate deploy",
+		"prisma:build": "bunx prisma db push && bunx prisma generate && bun run build"
 	},
 	"dependencies": {
 		"@prisma/adapter-pg": "^7.3.0",

@@ -1,12 +1,10 @@
-import { use } from 'react'
-
 import { getCategories } from '~/modules/categories'
 
 import { DesktopNavigation } from './DesktopNavigation'
 import { MobileNavigation } from './MobileNavigation'
 
-export const Navigation = () => {
-  const { data } = use(getCategories())
+export const Navigation = async () => {
+  const { data } = await getCategories()
 
   return (
     <>

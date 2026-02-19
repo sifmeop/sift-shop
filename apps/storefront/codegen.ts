@@ -11,11 +11,6 @@ const config: CodegenConfig = {
       presetConfig: {
         gqlTagName: 'gql'
       }
-      // config: {
-      //   documentMode: 'string',
-      //   useTypeImports: true,
-      //   enumsAsTypes: true
-      // }
     }
   }
 }

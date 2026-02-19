@@ -1,5 +1,7 @@
 import { CART_BUTTON_ID } from '~/common/constants/ids'
 
+// TODO: EDIT
+
 const DOT_SIZE = 24
 
 export const useCart = (

@@ -1,5 +1,3 @@
-import { use } from 'react'
-
 import { SubcategoryPage } from '~/screens/subcategory'
 
 export const dynamic = 'force-dynamic'
@@ -13,9 +11,10 @@ interface PageProps {
   searchParams: Promise<Record<string, string>>
 }
 
-export default function Page({ params, searchParams }: PageProps) {
-  const { category, subcategory } = use(params)
-  const filters = use(searchParams)
+export default async function Page({ params, searchParams }: PageProps) {
+  const { category, subcategory } = await params
+  const filters = await searchParams
+
   return (
     <SubcategoryPage
       category={category}

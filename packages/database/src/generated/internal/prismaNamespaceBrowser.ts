@@ -59,7 +59,9 @@ export const ModelName = {
   Category: 'Category',
   Subcategory: 'Subcategory',
   Filter: 'Filter',
-  FilterOption: 'FilterOption'
+  FilterOption: 'FilterOption',
+  Cart: 'Cart',
+  CartItem: 'CartItem'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -128,7 +130,7 @@ export const ProductScalarFieldEnum = {
   description: 'description',
   stock: 'stock',
   price: 'price',
-  compareAtPrice: 'compareAtPrice',
+  discountPercent: 'discountPercent',
   images: 'images',
   isFeatured: 'isFeatured',
   isActive: 'isActive',
@@ -207,6 +209,28 @@ export const FilterOptionScalarFieldEnum = {
 } as const
 
 export type FilterOptionScalarFieldEnum = (typeof FilterOptionScalarFieldEnum)[keyof typeof FilterOptionScalarFieldEnum]
+
+
+export const CartScalarFieldEnum = {
+  id: 'id',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId'
+} as const
+
+export type CartScalarFieldEnum = (typeof CartScalarFieldEnum)[keyof typeof CartScalarFieldEnum]
+
+
+export const CartItemScalarFieldEnum = {
+  id: 'id',
+  cartId: 'cartId',
+  productId: 'productId',
+  quantity: 'quantity',
+  price: 'price',
+  discountedPrice: 'discountedPrice'
+} as const
+
+export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typeof CartItemScalarFieldEnum]
 
 
 export const SortOrder = {

@@ -37,6 +37,7 @@ model User {
   method             AuthMethod
   accounts           Account[]
   createdAt          DateTime   @default(now())
+  cart               Cart?
 }
 
 model Account {
@@ -62,23 +63,24 @@ model Token {
 }
 
 model Product {
-  id             String               @id @default(uuid())
-  slug           String               @unique
-  name           String
-  sku            String               @unique
-  description    String?              @db.Text
-  stock          Int                  @default(0)
-  price          Decimal              @db.Decimal(10, 2)
-  compareAtPrice Decimal?             @db.Decimal(10, 2)
-  images         String[]
-  isFeatured     Boolean              @default(false) // ⭐ Для главной страницы
-  isActive       Boolean              @default(true) // ⭐ Скрыть/показать товар
-  specifications Json
-  filterValues   ProductFilterValue[]
-  subcategoryId  String
-  subcategory    Subcategory          @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
-  createdAt      DateTime             @default(now())
-  updatedAt      DateTime             @updatedAt // ⭐ Отслеживание изменений
+  id              String               @id @default(uuid())
+  slug            String               @unique
+  name            String
+  sku             String               @unique
+  description     String?              @db.Text
+  stock           Int                  @default(0)
+  price           Decimal              @db.Decimal(10, 2)
+  discountPercent Int?
+  images          String[]
+  isFeatured      Boolean              @default(false) // ⭐ Для главной страницы
+  isActive        Boolean              @default(true) // ⭐ Скрыть/показать товар
+  specifications  Json
+  filterValues    ProductFilterValue[]
+  subcategoryId   String
+  subcategory     Subcategory          @relation(fields: [subcategoryId], references: [id], onDelete: Cascade)
+  createdAt       DateTime             @default(now())
+  updatedAt       DateTime             @updatedAt // ⭐ Отслеживание изменений
+  cartItems       CartItem[]
 
   @@index([slug])
   @@index([subcategoryId])
@@ -164,4 +166,26 @@ model FilterOption {
   @@unique([filterId, value])
   @@index([filterId])
   @@index([filterId, position])
+}
+
+model Cart {
+  id        String     @id @default(uuid())
+  items     CartItem[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+  user      User       @relation(fields: [userId], references: [id])
+  userId    String     @unique
+}
+
+model CartItem {
+  id              String   @id @default(uuid())
+  cartId          String
+  cart            Cart     @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  productId       String
+  product         Product  @relation(fields: [productId], references: [id], onDelete: Restrict)
+  quantity        Int      @default(1)
+  price           Decimal
+  discountedPrice Decimal?
+
+  @@unique([cartId, productId])
 }

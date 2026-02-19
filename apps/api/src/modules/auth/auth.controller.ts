@@ -2,15 +2,11 @@ import { Controller, Get, Req, Res, UseGuards } from '@nestjs/common'
 import { AuthGuard } from '@nestjs/passport'
 import { Request, Response } from 'express'
 
-import { EmailConfirmationService } from './services/email-confirmation.service'
 import { OAuthService } from './services/oauth.service'
 
 @Controller('auth')
 export class AuthController {
-  constructor(
-    private readonly oAuthService: OAuthService,
-    private readonly emailConfirmationService: EmailConfirmationService
-  ) {}
+  constructor(private readonly oAuthService: OAuthService) {}
 
   @Get('google')
   @UseGuards(AuthGuard('google'))

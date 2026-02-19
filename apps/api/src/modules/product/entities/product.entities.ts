@@ -19,8 +19,8 @@ export class ProductEntity implements Partial<Product> {
   @Field(() => Float)
   price: Prisma.Decimal
 
-  @Field(() => Float, { nullable: true })
-  compareAtPrice: Prisma.Decimal | null
+  @Field(() => Int, { nullable: true })
+  discountPercent: number | null
 
   @Field(() => Int)
   stock: number

@@ -16,7 +16,15 @@ const CATEGORIES_LIST = gql(`
 `)
 
 export const getCategories = async () => {
-  return apolloClient.query({
-    query: CATEGORIES_LIST
-  })
+  try {
+    return await apolloClient.query({
+      query: CATEGORIES_LIST
+    })
+  } catch {
+    return {
+      data: {
+        categories: []
+      }
+    }
+  }
 }

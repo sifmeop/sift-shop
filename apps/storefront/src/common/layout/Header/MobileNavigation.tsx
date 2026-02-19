@@ -112,7 +112,7 @@ export const MobileNavigation = ({ data }: MobileNavigationProps) => {
 
             <DrawerClose>
               <Link
-                href={ROUTES.HOME}
+                href={ROUTES.ABOUT}
                 className='block px-4 py-3 text-sm font-medium hover:bg-accent rounded-lg transition-colors'>
                 About
               </Link>
@@ -120,7 +120,7 @@ export const MobileNavigation = ({ data }: MobileNavigationProps) => {
 
             <DrawerClose>
               <Link
-                href={ROUTES.HOME}
+                href={ROUTES.CONTACT}
                 className='block px-4 py-3 text-sm font-medium hover:bg-accent rounded-lg transition-colors'>
                 Contact
               </Link>

@@ -1,8 +1,12 @@
 import { useMutation } from '@apollo/client/react'
 
 import { gql } from '~/common/lib/graphql/generated'
+import {
+  ForgotPasswordMutation,
+  ForgotPasswordMutationVariables
+} from '~/common/lib/graphql/generated/graphql'
 
-const FORGOT_PASSWORD = gql(`
+const FORGOT_PASSWORD_GQL = gql(`
   mutation ForgotPassword($input: ForgotPasswordInput!) {
     forgotPassword(input: $input) {
       success
@@ -11,5 +15,7 @@ const FORGOT_PASSWORD = gql(`
 `)
 
 export const useForgotPasswordMutation = () => {
-  return useMutation(FORGOT_PASSWORD)
+  return useMutation<ForgotPasswordMutation, ForgotPasswordMutationVariables>(
+    FORGOT_PASSWORD_GQL
+  )
 }

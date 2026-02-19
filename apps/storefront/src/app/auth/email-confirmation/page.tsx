@@ -1,5 +1,3 @@
-import { use } from 'react'
-
 import { redirect } from 'next/navigation'
 
 import { ROUTES } from '~/common/constants/routes'
@@ -9,8 +7,8 @@ interface PageProps {
   searchParams: Promise<{ token?: string }>
 }
 
-export default function Page({ searchParams }: PageProps) {
-  const { token } = use(searchParams)
+export default async function Page({ searchParams }: PageProps) {
+  const { token } = await searchParams
 
   if (!token) {
     redirect(ROUTES.SIGN_IN)

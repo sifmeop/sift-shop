@@ -1,5 +1,3 @@
-import { use } from 'react'
-
 import { PageHeader } from '~/common/ui/page-header'
 
 import { getCategories } from '../api/getCategories'
@@ -10,8 +8,8 @@ interface CategoriesListProps {
   slug: string
 }
 
-export const CategoriesList = ({ slug }: CategoriesListProps) => {
-  const { data, error } = use(getCategories())
+export const CategoriesList = async ({ slug }: CategoriesListProps) => {
+  const { data, error } = await getCategories()
 
   if (error) {
     return <div>Error: {error.message}</div>

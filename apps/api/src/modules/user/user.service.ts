@@ -1,6 +1,5 @@
 import { HttpException, Injectable } from '@nestjs/common'
-import { prisma, User } from '@sift-shop/database'
-import { AuthMethod } from '@sift-shop/database'
+import { AuthMethod, prisma, User } from '@sift-shop/database'
 import { hash } from 'argon2'
 
 @Injectable()
@@ -52,7 +51,10 @@ export class UserService {
         password: hashedPassword,
         fullName,
         method,
-        isVerified
+        isVerified,
+        cart: {
+          create: {}
+        }
       }
     })
 

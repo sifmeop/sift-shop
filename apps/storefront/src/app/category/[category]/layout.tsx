@@ -1,5 +1,3 @@
-import { use } from 'react'
-
 import { NotFoundContent } from '~/common/ui/NotFoundContent'
 import { getCategories } from '~/modules/categories'
 
@@ -7,13 +5,13 @@ interface CategoryLayoutProps extends React.PropsWithChildren {
   params: Promise<{ category: string }>
 }
 
-export default function CategoryLayout({
+export default async function CategoryLayout({
   children,
   params
 }: CategoryLayoutProps) {
-  const { category } = use(params)
+  const { category } = await params
 
-  const { data } = use(getCategories())
+  const { data, error } = await getCategories()
 
   const categoryInfo = data?.categories.find((c) => c.slug === category)
 

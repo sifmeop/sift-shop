@@ -2,6 +2,10 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AddToCartInput {
+  productId: String!
+}
+
 type AuthEntity {
   avatar: String
   createdAt: DateTime!
@@ -9,6 +13,22 @@ type AuthEntity {
   fullName: String!
   id: ID!
   isTwoFactorEnabled: Boolean!
+}
+
+type CartItemEntity {
+  discountedPrice: Float
+  id: String!
+  price: Float!
+  product: CartProductItemEntity!
+  quantity: Int!
+}
+
+type CartProductItemEntity {
+  id: String!
+  images: [String!]!
+  name: String!
+  slug: String!
+  stock: Int!
 }
 
 type CategoryEntity {
@@ -55,8 +75,10 @@ type LogoutEntity {
 }
 
 type Mutation {
+  addToCart(input: AddToCartInput!): CartItemEntity!
   emailConfirmation(input: EmailConfirmationInput!): AuthEntity!
   forgotPassword(input: ForgotPasswordInput!): SuccessEntity!
+  removeFromCart(input: RemoveFromCartInput!): CartItemEntity!
   resetPassword(input: ResetPasswordInput!): SuccessEntity!
   signIn(input: SignInInput!): AuthEntity!
   signOut: LogoutEntity!
@@ -64,8 +86,8 @@ type Mutation {
 }
 
 type ProductEntity {
-  compareAtPrice: Float
   description: String
+  discountPercent: Int
   id: String!
   images: [String!]!
   isFeatured: Boolean!
@@ -89,11 +111,16 @@ type ProductResponseEntity {
 }
 
 type Query {
+  cart: [CartItemEntity!]!
   categories: [CategoryEntity!]!
   product: ProductEntity!
   products(filters: JSON, input: GetProductsInput!): ProductResponseEntity!
   schema: String!
   verifySession: AuthEntity!
+}
+
+input RemoveFromCartInput {
+  id: String!
 }
 
 input ResetPasswordInput {

@@ -1,10 +1,10 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
+import { Layout } from '~/common/layout'
+import { Providers } from '~/common/providers'
 import { cn } from '~/common/utils/cn'
 
-import { Layout } from './_layout/Layout'
-import { Providers } from './_providers/Providers'
 import './globals.css'
 
 const inter = Inter({ variable: '--font-sans', subsets: ['latin', 'cyrillic'] })

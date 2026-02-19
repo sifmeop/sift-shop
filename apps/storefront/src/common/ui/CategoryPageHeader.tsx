@@ -1,5 +1,3 @@
-import { use } from 'react'
-
 import { getCategories } from '~/modules/categories'
 
 import { BreadcrumbProps, PageHeader } from './page-header'
@@ -9,11 +7,11 @@ interface CategoryPageHeaderProps {
   subcategory?: string
 }
 
-export const CategoryPageHeader = ({
+export const CategoryPageHeader = async ({
   category,
   subcategory
 }: CategoryPageHeaderProps) => {
-  const { data } = use(getCategories())
+  const { data } = await getCategories()
 
   const categoryInfo = data?.categories.find((c) => c.slug === category)
   const subcategoryInfo = categoryInfo?.subcategories.find(
