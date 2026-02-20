@@ -14,6 +14,7 @@ interface SubcategoriesGrid {
 export const SubcategoriesGrid = ({ category }: SubcategoriesGrid) => {
   return (
     <Container
+      main
       bgColor='white'
       innerClassName='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 py-10'>
       {category.subcategories.map((subcategory, index) => (

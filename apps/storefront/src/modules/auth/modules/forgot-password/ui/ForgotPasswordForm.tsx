@@ -58,11 +58,7 @@ export const ForgotPasswordForm = () => {
             Please enter the email address associated with your account.
             We&apos;ll promptly send you a link to reset your password.
           </p>
-          <EmailInput
-            {...register('email')}
-            errorMessage={errors.email?.message}
-            className='mb-4'
-          />
+          <EmailInput className='mb-4' />
           <Button fullWidth type='submit' isLoading={loading}>
             Send reset link
           </Button>

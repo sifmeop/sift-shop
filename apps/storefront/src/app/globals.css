@@ -95,7 +95,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground font-sans text-sm;
+    @apply bg-background text-foreground overflow-x-hidden font-sans text-sm;
   }
 }
 

@@ -178,6 +178,7 @@ export type QueryProductsArgs = {
 
 export type RemoveFromCartInput = {
   id: Scalars['String']['input'];
+  quantity: Scalars['Int']['input'];
 };
 
 export type ResetPasswordInput = {

@@ -1,13 +1,19 @@
 'use client'
 
 import { useId, useState } from 'react'
+import { Controller, useFormContext } from 'react-hook-form'
 
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
 
 import { cn } from '~/common/utils/cn'
 
 import { Field, FieldError, FieldLabel } from './field'
-import { InputGroup, InputGroupAddon, InputGroupInput } from './input-group'
+import {
+  InputGroup,
+  InputGroupAddon,
+  InputGroupInput,
+  InputGroupText
+} from './input-group'
 
 export const Input = ({
   className,
@@ -27,19 +33,20 @@ export const Input = ({
   )
 }
 
-interface EmailInputProps extends React.ComponentProps<'input'> {
-  errorMessage?: string
-}
-
-export const EmailInput = ({ errorMessage, ...props }: EmailInputProps) => {
+export const EmailInput = ({ ...props }: React.ComponentProps<'input'>) => {
+  const {
+    register,
+    formState: { errors }
+  } = useFormContext<{ email: string }>()
   const id = useId()
-  const inputId = `input-${id}`
+  const errorMessage = errors.email?.message
 
   return (
     <Field>
-      <FieldLabel htmlFor={inputId}>Email</FieldLabel>
+      <FieldLabel htmlFor={id}>Email</FieldLabel>
       <Input
-        id={inputId}
+        {...register('email')}
+        id={id}
         type='email'
         name='email'
         autoComplete='email'
@@ -68,7 +75,6 @@ export const PasswordInput = ({
   ...props
 }: PasswordInputProps) => {
   const id = useId()
-  const inputId = `input-${id}`
 
   const [showPassword, setShowPassword] = useState(false)
 
@@ -80,10 +86,10 @@ export const PasswordInput = ({
 
   return (
     <Field>
-      <FieldLabel htmlFor={inputId}>{label}</FieldLabel>
+      <FieldLabel htmlFor={id}>{label}</FieldLabel>
       <InputGroup>
         <InputGroupInput
-          id={inputId}
+          id={id}
           type={showPassword ? 'text' : 'password'}
           name='password'
           autoComplete={isNew ? 'new-password' : 'current-password'}
@@ -102,5 +108,121 @@ export const PasswordInput = ({
       </InputGroup>
       <FieldError error={errorMessage} />
     </Field>
+  )
+}
+
+export const FirstNameInput = ({ ...props }: React.ComponentProps<'input'>) => {
+  const id = useId()
+  const { control } = useFormContext()
+
+  return (
+    <Controller
+      name='firstName'
+      control={control}
+      render={({ field, fieldState }) => {
+        const isInvalid = fieldState.invalid
+        return (
+          <Field aria-invalid={isInvalid}>
+            <FieldLabel htmlFor={id} aria-invalid={isInvalid}>
+              First Name
+            </FieldLabel>
+            <Input
+              id={id}
+              aria-invalid={isInvalid}
+              placeholder='John'
+              {...field}
+              {...props}
+            />
+            <FieldError error={fieldState.error?.message} />
+          </Field>
+        )
+      }}
+    />
+  )
+}
+
+export const LastNameInput = ({ ...props }: React.ComponentProps<'input'>) => {
+  const id = useId()
+  const { control } = useFormContext()
+
+  return (
+    <Controller
+      name='lastName'
+      control={control}
+      render={({ field, fieldState }) => {
+        const isInvalid = fieldState.invalid
+        return (
+          <Field aria-invalid={isInvalid}>
+            <FieldLabel htmlFor={id} aria-invalid={isInvalid}>
+              Last Name
+            </FieldLabel>
+            <Input
+              id={id}
+              aria-invalid={isInvalid}
+              {...field}
+              placeholder='Doe'
+              {...props}
+            />
+            <FieldError error={fieldState.error?.message} />
+          </Field>
+        )
+      }}
+    />
+  )
+}
+
+export const PhoneInput = ({ ...props }: React.ComponentProps<'input'>) => {
+  const id = useId()
+  const { control } = useFormContext()
+
+  const formatPhone = (digits: string) => {
+    if (digits.length <= 2) return digits
+    if (digits.length <= 5) return `${digits.slice(0, 2)}-${digits.slice(2)}`
+    return `${digits.slice(0, 2)}-${digits.slice(2, 5)}-${digits.slice(5)}`
+  }
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    onChange: (value: string) => void
+  ) => {
+    const digits = e.target.value.replace(/\D/g, '')
+
+    if (digits.length > 9) return
+
+    onChange(formatPhone(digits))
+  }
+
+  return (
+    <Controller
+      name='phone'
+      control={control}
+      render={({ field, fieldState }) => {
+        const isInvalid = fieldState.invalid
+        return (
+          <Field aria-invalid={isInvalid}>
+            <FieldLabel htmlFor={id} aria-invalid={isInvalid}>
+              Phone
+            </FieldLabel>
+            <InputGroup>
+              <InputGroupAddon>
+                <InputGroupText>+380</InputGroupText>
+              </InputGroupAddon>
+              <InputGroupInput
+                id={id}
+                aria-invalid={isInvalid}
+                placeholder='XX-XXX-XXXX'
+                type='tel'
+                inputMode='numeric'
+                autoComplete='tel'
+                value={field.value}
+                onChange={(e) => handleChange(e, field.onChange)}
+                {...props}
+              />
+            </InputGroup>
+            <FieldError error={fieldState.error?.message} />
+          </Field>
+        )
+      }}
+    />
   )
 }

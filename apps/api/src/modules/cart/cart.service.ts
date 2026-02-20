@@ -28,6 +28,9 @@ export class CartService {
             }
           }
         }
+      },
+      orderBy: {
+        createdAt: 'desc'
       }
     })
 
@@ -153,7 +156,7 @@ export class CartService {
       throw new HttpException('Cart item not found', 404)
     }
 
-    if (cartItem.quantity > 1) {
+    if (cartItem.quantity > input.quantity) {
       return await prisma.cartItem.update({
         where: {
           id: cartItem.id

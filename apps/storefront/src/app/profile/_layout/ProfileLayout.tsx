@@ -25,7 +25,7 @@ export const ProfileLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <PageHeader title='My Account' breadcrumbs={[{ label: 'My Account' }]} />
-      <Container bgColor='white' className='pt-15 pb-32.5'>
+      <Container main bgColor='white' className='pt-15 pb-32.5'>
         <div className='flex items-start'>
           <div className='sticky top-4 flex'>
             <ProfileNavigation />

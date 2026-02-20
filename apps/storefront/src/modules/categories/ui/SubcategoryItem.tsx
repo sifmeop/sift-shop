@@ -4,11 +4,11 @@ import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
-import { env } from '~/common/constants/env'
 import {
   CategoryEntity,
   SubcategoryEntity
 } from '~/common/lib/graphql/generated/graphql'
+import { getImageUrl } from '~/common/utils/getImageUrl'
 
 interface SubcategoryItemProps {
   category: CategoryEntity
@@ -38,7 +38,7 @@ export const SubcategoryItem = ({
             <Image
               width={300}
               height={300}
-              src={env.NEXT_PUBLIC_IMAGE_BASE_URL + subcategory.image}
+              src={getImageUrl(subcategory.image)}
               alt={subcategory.name}
               className='size-full object-contain p-4'
             />

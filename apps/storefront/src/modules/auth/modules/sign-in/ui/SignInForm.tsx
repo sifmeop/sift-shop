@@ -46,10 +46,7 @@ export const SignInForm = () => {
       <form onSubmit={onSubmit}>
         <SocialAuth />
         <div className='space-y-3.75 mb-4'>
-          <EmailInput
-            {...register('email')}
-            errorMessage={errors.email?.message}
-          />
+          <EmailInput />
           <PasswordInput {...register('password')} label='Password' />
         </div>
         <ForgotPassword />

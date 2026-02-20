@@ -6,17 +6,15 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
-import { env } from '~/common/constants/env'
-import type { GetProductsQuery } from '~/common/lib/graphql/generated/graphql'
+import type { ProductEntity } from '~/common/lib/graphql/generated/graphql'
 import { calcDiscountedPrice } from '~/common/utils/calcDiscountedPrice'
 import { formatPrice } from '~/common/utils/formatPrice'
+import { getImageUrl } from '~/common/utils/getImageUrl'
 
 import { QuantitySelector } from './QuantitySelector'
 
-type Product = GetProductsQuery['products']['products'][0]
-
 interface ProductCardProps {
-  product: Product
+  product: ProductEntity
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
@@ -39,7 +37,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         className='relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800'>
         <Image
           loading='eager'
-          src={env.NEXT_PUBLIC_IMAGE_BASE_URL + product.images[0]}
+          src={getImageUrl(product.images[0])}
           alt={product.name}
           fill
           className='object-cover transition-transform duration-500 group-hover:scale-110 p-4'
@@ -95,8 +93,6 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             <Eye className='h-5 w-5 text-gray-600 dark:text-gray-400' />
           </button>
         </motion.div>
-
-        <QuantitySelector product={product} isHovered={isHovered} />
       </Link>
 
       <div className='flex flex-1 flex-col p-4'>
@@ -119,6 +115,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           )}
         </div>
       </div>
+      <QuantitySelector product={product} />
     </motion.div>
   )
 }

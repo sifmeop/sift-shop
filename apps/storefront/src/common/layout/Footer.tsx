@@ -21,11 +21,6 @@ export const Footer = () => {
             <h3 className='text-sm font-medium'>Explore</h3>
             <nav className='flex flex-col space-y-2'>
               <Link
-                href={ROUTES.CATEGORY}
-                className='text-sm text-muted-foreground hover:text-foreground transition-colors'>
-                Categories
-              </Link>
-              <Link
                 href={ROUTES.ABOUT}
                 className='text-sm text-muted-foreground hover:text-foreground transition-colors'>
                 About

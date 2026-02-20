@@ -1,6 +1,7 @@
 import { useLazyQuery } from '@apollo/client/react'
 
 import { gql } from '~/common/lib/graphql/generated'
+import { VerifySessionQuery } from '~/common/lib/graphql/generated/graphql'
 
 const VERIFY_SESSION = gql(`
   query VerifySession {
@@ -16,5 +17,5 @@ const VERIFY_SESSION = gql(`
 `)
 
 export const useVerifySessionQuery = () => {
-  return useLazyQuery(VERIFY_SESSION)
+  return useLazyQuery<VerifySessionQuery>(VERIFY_SESSION)
 }

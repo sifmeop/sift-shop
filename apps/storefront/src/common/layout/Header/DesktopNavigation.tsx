@@ -22,7 +22,7 @@ import {
 import { cn } from '~/common/utils/cn'
 
 interface DesktopNavigationProps {
-  data: GetCategoriesQuery | undefined
+  data?: GetCategoriesQuery
 }
 
 export const DesktopNavigation = ({ data }: DesktopNavigationProps) => {

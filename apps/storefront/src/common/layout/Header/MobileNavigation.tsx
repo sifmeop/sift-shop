@@ -20,7 +20,7 @@ import {
 import { cn } from '~/common/utils/cn'
 
 interface MobileNavigationProps {
-  data: GetCategoriesQuery | undefined
+  data?: GetCategoriesQuery
 }
 
 export const MobileNavigation = ({ data }: MobileNavigationProps) => {

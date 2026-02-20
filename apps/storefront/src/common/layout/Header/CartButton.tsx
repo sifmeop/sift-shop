@@ -1,5 +1,6 @@
 'use client'
 
+import NumberFlow from '@number-flow/react'
 import { ShoppingCartIcon } from 'lucide-react'
 import Link from 'next/link'
 
@@ -15,22 +16,26 @@ export const CartButton = () => {
     data?.cart.reduce((total, item) => total + item.quantity, 0) ?? 0
 
   return (
-    <Button id={CART_BUTTON_ID} variant='ghost' className='size-11.25 relative'>
-      <Link href={ROUTES.CART} className='inline-flex'>
-        <ShoppingCartIcon className='size-6.5' strokeWidth={1.5} />
-        <Show when={cartItemsCount > 0}>
-          {loading ? (
-            <span className='absolute top-1 right-0 flex size-4'>
-              <span className='absolute inline-flex size-full animate-ping rounded-full bg-sky-400 opacity-75' />
-              <span className='absolute inline-flex size-full rounded-full bg-sky-500' />
-            </span>
-          ) : (
-            <span className='absolute top-1 right-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white'>
-              {cartItemsCount}
-            </span>
-          )}
-        </Show>
-      </Link>
+    <Button
+      id={CART_BUTTON_ID}
+      as={Link}
+      href={ROUTES.CART}
+      variant='ghost'
+      className='size-11.25 relative'>
+      <ShoppingCartIcon className='size-6.5' strokeWidth={1.5} />
+      <Show when={cartItemsCount > 0}>
+        {loading ? (
+          <span className='absolute top-1 right-0 flex size-4'>
+            <span className='absolute inline-flex size-full animate-ping rounded-full bg-sky-400 opacity-75' />
+            <span className='absolute inline-flex size-full rounded-full bg-sky-500' />
+          </span>
+        ) : (
+          <NumberFlow
+            value={cartItemsCount}
+            className='absolute top-1 right-0 flex h-4 min-w-4 items-center justify-center rounded-full bg-red-500 text-[10px] text-white'
+          />
+        )}
+      </Show>
     </Button>
   )
 }

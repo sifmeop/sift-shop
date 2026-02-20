@@ -1,3 +1,4 @@
+import { PageHeader } from '~/common/ui/page-header'
 import { ProductPage } from '~/screens/product'
 
 interface PageProps {
@@ -6,5 +7,10 @@ interface PageProps {
 
 export default async function Page({ params }: PageProps) {
   const { slug } = await params
-  return <ProductPage slug={slug} />
+  return (
+    <>
+      <PageHeader breadcrumbs={[{ label: slug }]} />
+      <ProductPage slug={slug} />
+    </>
+  )
 }

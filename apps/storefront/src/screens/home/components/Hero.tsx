@@ -35,12 +35,11 @@ export const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.2 }}>
               <Button
-                asChild
+                as={Link}
+                href={ROUTES.CATEGORY}
                 className='mt-8 bg-foreground hover:bg-foreground/90'>
-                <Link href={ROUTES.CATEGORY}>
-                  View Collection
-                  <ArrowRight className='ml-2 size-4' />
-                </Link>
+                View Collection
+                <ArrowRight className='ml-2 size-4' />
               </Button>
             </motion.div>
           </div>

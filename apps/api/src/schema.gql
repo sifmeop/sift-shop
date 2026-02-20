@@ -121,6 +121,7 @@ type Query {
 
 input RemoveFromCartInput {
   id: String!
+  quantity: Int!
 }
 
 input ResetPasswordInput {

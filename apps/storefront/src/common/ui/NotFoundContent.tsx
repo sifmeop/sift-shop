@@ -54,7 +54,7 @@ export const NotFoundContent = ({
   const finalDescription = description || messages.description
 
   return (
-    <Container className='flex min-h-[60dvh] items-center justify-center'>
+    <Container main className='flex min-h-[60dvh] items-center justify-center'>
       <motion.div
         className='text-center'
         initial={{ opacity: 0, y: 20 }}

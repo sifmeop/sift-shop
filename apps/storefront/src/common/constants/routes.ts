@@ -19,7 +19,10 @@ export const ROUTES = {
   WISHLIST: '/profile/wishlist',
   ADDRESS: '/profile/address',
   PASSWORD: '/profile/password',
-  ACCOUNT_DETAIL: '/profile/account-detail'
+  ACCOUNT_DETAIL: '/profile/account-detail',
+
+  // CHECKOUT
+  CHECKOUT: '/checkout'
 } as const
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES]

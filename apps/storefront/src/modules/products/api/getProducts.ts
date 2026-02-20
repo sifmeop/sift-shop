@@ -38,8 +38,14 @@ export const getProducts = async (
   input: GetProductsInput,
   filters?: Record<string, string>
 ) => {
-  return apolloClient.query<GetProductsQuery>({
-    query: PRODUCTS_LIST,
-    variables: { input, filters }
-  })
+  try {
+    return await apolloClient.query<GetProductsQuery>({
+      query: PRODUCTS_LIST,
+      variables: { input, filters }
+    })
+  } catch {
+    return {
+      data: undefined
+    }
+  }
 }

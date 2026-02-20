@@ -11,7 +11,7 @@ export default async function CategoryLayout({
 }: CategoryLayoutProps) {
   const { category } = await params
 
-  const { data, error } = await getCategories()
+  const { data } = await getCategories()
 
   const categoryInfo = data?.categories.find((c) => c.slug === category)
 

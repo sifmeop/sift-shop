@@ -1,5 +1,5 @@
-import { Field, InputType } from '@nestjs/graphql'
-import { IsString, IsUUID } from 'class-validator'
+import { Field, InputType, Int } from '@nestjs/graphql'
+import { IsInt, IsString, IsUUID } from 'class-validator'
 
 @InputType()
 export class RemoveFromCartInput {
@@ -7,4 +7,8 @@ export class RemoveFromCartInput {
   @IsString()
   @IsUUID('4')
   id: string
+
+  @Field(() => Int)
+  @IsInt()
+  quantity: number
 }

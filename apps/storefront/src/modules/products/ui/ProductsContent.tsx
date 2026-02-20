@@ -21,7 +21,11 @@ export const ProductsContent = ({ data }: ProductsContentProps) => {
   const { filters, products } = data.products
 
   return (
-    <Container bgColor='white' className='py-8' innerClassName='flex gap-5'>
+    <Container
+      main
+      bgColor='white'
+      className='py-8'
+      innerClassName='flex gap-5'>
       <FiltersSidebar filters={filters} />
       <div className='w-full space-y-4'>
         <AppliedFilters filters={filters} />

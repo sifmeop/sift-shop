@@ -1,5 +1,6 @@
 import { apolloClient } from '~/common/lib/graphql/apollo-client'
 import { gql } from '~/common/lib/graphql/generated'
+import { GetCategoriesQuery } from '~/common/lib/graphql/generated/graphql'
 
 const CATEGORIES_LIST = gql(`
   query GetCategories {
@@ -17,14 +18,12 @@ const CATEGORIES_LIST = gql(`
 
 export const getCategories = async () => {
   try {
-    return await apolloClient.query({
+    return await apolloClient.query<GetCategoriesQuery>({
       query: CATEGORIES_LIST
     })
   } catch {
     return {
-      data: {
-        categories: []
-      }
+      data: undefined
     }
   }
 }
