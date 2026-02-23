@@ -52,6 +52,7 @@
     "resend": "^6.9.1",
     "rxjs": "^7.8.1",
     "speakeasy": "^2.0.0",
+    "stripe": "^20.3.1",
     "uuid": "^13.0.0"
   },
   "devDependencies": {
@@ -69,6 +70,7 @@
     "@types/passport-google-oauth20": "^2.0.17",
     "@types/react": "^19.2.10",
     "@types/speakeasy": "^2.0.10",
+    "@types/stripe": "^8.0.417",
     "@types/supertest": "^6.0.2",
     "@types/uuid": "^11.0.0",
     "eslint": "^9.18.0",

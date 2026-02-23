@@ -11,7 +11,9 @@ import { AppModule } from './app.module'
 import { parseBoolean } from './common/utils/parse-boolean'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create(AppModule, {
+    rawBody: true
+  })
 
   const config = app.get(ConfigService)
 

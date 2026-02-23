@@ -16,7 +16,11 @@ interface ContactStepProps {
 }
 
 export const ContactStep = ({ onNext }: ContactStepProps) => {
-  const { trigger } = useFormContext<CheckoutFormData>()
+  const {
+    trigger,
+    register,
+    formState: { errors }
+  } = useFormContext<CheckoutFormData>()
 
   const handleNext = async () => {
     const isValid = await trigger(['firstName', 'lastName', 'email', 'phone'], {
@@ -33,7 +37,7 @@ export const ContactStep = ({ onNext }: ContactStepProps) => {
       <FieldGroup className='grid grid-cols-2 gap-4'>
         <FirstNameInput />
         <LastNameInput />
-        <EmailInput />
+        <EmailInput {...register('email')} error={errors.email?.message} />
         <PhoneInput />
       </FieldGroup>
       <Button fullWidth type='button' onClick={handleNext}>

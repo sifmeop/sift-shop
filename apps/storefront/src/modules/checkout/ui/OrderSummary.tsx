@@ -80,13 +80,10 @@ export const OrderSummary = () => {
         </div>
       </div>
       <Separator className='my-6' />
-      <div className='flex items-center justify-between font-medium mb-8'>
+      <div className='flex items-center justify-between font-medium'>
         <p>Total</p>
         <p className='text-base'>{formatPrice(total)}</p>
       </div>
-      <Button fullWidth type='submit'>
-        Place Order
-      </Button>
     </div>
   )
 }

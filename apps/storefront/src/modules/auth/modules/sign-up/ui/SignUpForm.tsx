@@ -88,7 +88,7 @@ export const SignUpForm = () => {
               {...register('fullName')}
               errorMessage={errors.fullName?.message}
             />
-            <EmailInput />
+            <EmailInput {...register('email')} error={errors.email?.message} />
             <PasswordInput
               {...register('password')}
               name='password'

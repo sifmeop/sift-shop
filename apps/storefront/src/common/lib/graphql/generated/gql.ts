@@ -25,6 +25,8 @@ type Documents = {
     "\n  query Cart {\n    cart {\n      id\n      product {\n        id\n        slug\n        name\n        stock\n        images\n      }\n      quantity\n      price\n      discountedPrice\n    }\n  }\n": typeof types.CartDocument,
     "\n  mutation RemoveFromCart($input: RemoveFromCartInput!) {\n    removeFromCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n  }\n": typeof types.RemoveFromCartDocument,
     "\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n": typeof types.GetCategoriesDocument,
+    "\n\tquery GetOrderBySession($input: GetOrderBySessionInput!) {\n    getOrderBySession(input: $input) {\n      id\n      status\n      method\n      firstName\n      lastName\n      email\n      phone\n      city\n      country\n      state\n      zipCode\n      items {\n        id\n        product {\n          id\n          name\n          images\n        }\n        quantity\n        price\n      }\n      createdAt\n    }\n  }\n": typeof types.GetOrderBySessionDocument,
+    "\n\tmutation CreateOrder($input: CreateOrderInput!) {\n\t\tcreate(input: $input) {\n\t\t\turl\n\t\t}\n\t}\n": typeof types.CreateOrderDocument,
     "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tdiscountPercent\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": typeof types.GetProductsDocument,
 };
 const documents: Documents = {
@@ -39,6 +41,8 @@ const documents: Documents = {
     "\n  query Cart {\n    cart {\n      id\n      product {\n        id\n        slug\n        name\n        stock\n        images\n      }\n      quantity\n      price\n      discountedPrice\n    }\n  }\n": types.CartDocument,
     "\n  mutation RemoveFromCart($input: RemoveFromCartInput!) {\n    removeFromCart(input: $input) {\n\t\t\tid\n\t\t\tproduct {\n        id\n\t\t\t\tslug\n\t\t\t\tname\n\t\t\t\tstock\n\t\t\t\timages\n\t\t\t}\n\t\t\tquantity\n\t\t\tprice\n\t\t\tdiscountedPrice\n\t\t}\n  }\n": types.RemoveFromCartDocument,
     "\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n": types.GetCategoriesDocument,
+    "\n\tquery GetOrderBySession($input: GetOrderBySessionInput!) {\n    getOrderBySession(input: $input) {\n      id\n      status\n      method\n      firstName\n      lastName\n      email\n      phone\n      city\n      country\n      state\n      zipCode\n      items {\n        id\n        product {\n          id\n          name\n          images\n        }\n        quantity\n        price\n      }\n      createdAt\n    }\n  }\n": types.GetOrderBySessionDocument,
+    "\n\tmutation CreateOrder($input: CreateOrderInput!) {\n\t\tcreate(input: $input) {\n\t\t\turl\n\t\t}\n\t}\n": types.CreateOrderDocument,
     "\n\tquery GetProducts($input: GetProductsInput!, $filters: JSON) {\n\t\tproducts(input: $input, filters: $filters) {\n\t\t\tproducts {\n\t\t\t\tid\n  \t\t\tslug\n  \t\t\tname\n  \t\t\tdescription\n  \t\t\tprice\n  \t\t\tdiscountPercent\n  \t\t\tstock\n  \t\t\tisFeatured\n  \t\t\timages\n  \t\t\tspecifications\n\t\t\t}\n\t\t\tfilters {\n\t\t\t\tid\n\t\t\t\tname\n\t\t\t\tslug\n\t\t\t\toptions {\n\t\t\t\t\tid\n\t\t\t\t\tlabel\n\t\t\t\t\tvalue\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t}\n": types.GetProductsDocument,
 };
 
@@ -100,6 +104,14 @@ export function gql(source: "\n  mutation RemoveFromCart($input: RemoveFromCartI
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
 export function gql(source: "\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n"): (typeof documents)["\n  query GetCategories {\n    categories {\n      slug\n      name\n      subcategories {\n        slug\n        name\n        image\n      }\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tquery GetOrderBySession($input: GetOrderBySessionInput!) {\n    getOrderBySession(input: $input) {\n      id\n      status\n      method\n      firstName\n      lastName\n      email\n      phone\n      city\n      country\n      state\n      zipCode\n      items {\n        id\n        product {\n          id\n          name\n          images\n        }\n        quantity\n        price\n      }\n      createdAt\n    }\n  }\n"): (typeof documents)["\n\tquery GetOrderBySession($input: GetOrderBySessionInput!) {\n    getOrderBySession(input: $input) {\n      id\n      status\n      method\n      firstName\n      lastName\n      email\n      phone\n      city\n      country\n      state\n      zipCode\n      items {\n        id\n        product {\n          id\n          name\n          images\n        }\n        quantity\n        price\n      }\n      createdAt\n    }\n  }\n"];
+/**
+ * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
+ */
+export function gql(source: "\n\tmutation CreateOrder($input: CreateOrderInput!) {\n\t\tcreate(input: $input) {\n\t\t\turl\n\t\t}\n\t}\n"): (typeof documents)["\n\tmutation CreateOrder($input: CreateOrderInput!) {\n\t\tcreate(input: $input) {\n\t\t\turl\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */

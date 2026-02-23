@@ -79,6 +79,4 @@ export class ProductService {
 
     return { products: productsResponse, filters: filtersResponse }
   }
-
-  async findOne() {}
 }

@@ -3,6 +3,7 @@ import { Args, Context, Mutation, Query, Resolver } from '@nestjs/graphql'
 import { Recaptcha } from '@nestlab/google-recaptcha'
 import { Request } from 'express'
 
+import { Public } from '~/common/decorators/public.decorator'
 import { GraphQLContext } from '~/common/types/graphql-context'
 
 import { EmailConfirmationInput } from '../dto/email-confirmation.input'
@@ -10,7 +11,6 @@ import { SignInInput } from '../dto/sign-in.input'
 import { SignUpInput } from '../dto/sign-up.input'
 import { AuthEntity, SuccessEntity } from '../entities/auth.entity'
 import { LogoutEntity } from '../entities/logout.entity'
-import { AuthGuard } from '../guards/auth.guard'
 import { TwoFactorGuard } from '../guards/two-factor.guard'
 import { CredentialsService } from '../services/credentials.service'
 import { EmailConfirmationService } from '../services/email-confirmation.service'
@@ -22,6 +22,7 @@ export class CredentialsResolver {
     private readonly emailConfirmationService: EmailConfirmationService
   ) {}
 
+  @Public()
   @Mutation(() => SuccessEntity)
   @Recaptcha()
   async signUp(
@@ -40,17 +41,16 @@ export class CredentialsResolver {
   }
 
   @Mutation(() => LogoutEntity)
-  @UseGuards(AuthGuard)
   async signOut(@Context() ctx: GraphQLContext): Promise<LogoutEntity> {
     return await this.credentialsService.signOut(ctx.req, ctx.res)
   }
 
   @Query(() => AuthEntity)
-  @UseGuards(AuthGuard)
   verifySession(@Context('req') req: Request): AuthEntity {
     return req.user as AuthEntity
   }
 
+  @Public()
   @Mutation(() => AuthEntity)
   async emailConfirmation(
     @Context('req') req: Request,

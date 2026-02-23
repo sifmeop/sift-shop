@@ -33,3 +33,20 @@ export const TokenType = {
 } as const
 
 export type TokenType = (typeof TokenType)[keyof typeof TokenType]
+
+
+export const PaymentMethod = {
+  CASH: 'CASH',
+  CARD: 'CARD'
+} as const
+
+export type PaymentMethod = (typeof PaymentMethod)[keyof typeof PaymentMethod]
+
+
+export const OrderStatus = {
+  PENDING: 'PENDING',
+  PAID: 'PAID',
+  CANCELLED: 'CANCELLED'
+} as const
+
+export type OrderStatus = (typeof OrderStatus)[keyof typeof OrderStatus]

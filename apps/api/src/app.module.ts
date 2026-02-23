@@ -1,19 +1,23 @@
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo'
 import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
+import { APP_GUARD } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { PassportModule } from '@nestjs/passport'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { GraphQLJSON, GraphQLJSONObject } from 'graphql-scalars'
 import { join } from 'path'
 
+import { AuthGuard } from './common/guards/auth.guard'
 import { MailModule } from './common/libs/mail/mail.module'
+import { StripeModule } from './common/libs/stripe/stripe.module'
 import { GraphQLContext } from './common/types/graphql-context'
 import { AuthModule } from './modules/auth/auth.module'
+import { CartModule } from './modules/cart/cart.module'
 import { CategoryModule } from './modules/category/category.module'
+import { OrderModule } from './modules/order/order.module'
 import { ProductModule } from './modules/product/product.module'
 import { UserModule } from './modules/user/user.module'
-import { CartModule } from './modules/cart/cart.module';
 
 @Module({
   imports: [
@@ -61,14 +65,16 @@ import { CartModule } from './modules/cart/cart.module';
     UserModule,
     CategoryModule,
     ProductModule,
-    CartModule
+    CartModule,
+    OrderModule,
+    StripeModule
   ],
-  controllers: []
-  // providers: [
-  //   {
-  //     provide: APP_GUARD,
-  //     useClass: GqlThrottlerGuard
-  //   }
-  // ]
+  controllers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: AuthGuard
+    }
+  ]
 })
 export class AppModule {}

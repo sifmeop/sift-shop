@@ -1,5 +1,4 @@
-import { useState } from 'react'
-
+import { CenterLoader } from '~/common/ui/CenterLoader'
 import { Step, Stepper } from '~/common/ui/Stepper'
 
 import { ContactStep } from './steps/ContactStep'
@@ -21,15 +20,23 @@ const steps: Step[] = [
   }
 ]
 
-export const CheckoutFlow = () => {
-  const [currentStep, setCurrentStep] = useState(0)
+interface CheckoutFlowProps {
+  currentStep: number
+  setCurrentStep: React.Dispatch<React.SetStateAction<number>>
+}
 
-  const Component = [ContactStep, DeliveryStep, PaymentStep][currentStep]
+export const CheckoutFlow = ({
+  currentStep,
+  setCurrentStep
+}: CheckoutFlowProps) => {
+  const Component = [ContactStep, DeliveryStep, PaymentStep, CenterLoader][
+    currentStep
+  ]
 
   return (
     <div className='flex flex-col gap-10'>
       <Stepper steps={steps} currentStep={currentStep} />
-      <Component onNext={() => setCurrentStep(currentStep + 1)} />
+      <Component onNext={() => setCurrentStep((prev) => prev + 1)} />
     </div>
   )
 }

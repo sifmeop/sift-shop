@@ -1,7 +1,7 @@
 import { applyDecorators, UseGuards } from '@nestjs/common'
 import { UserRole } from '@sift-shop/database'
 
-import { AuthGuard } from '~/modules/auth/guards/auth.guard'
+import { AuthGuard } from '~/common/guards/auth.guard'
 import { RolesGuard } from '~/modules/auth/guards/roles.guard'
 
 import { Roles } from './roles.decorator'

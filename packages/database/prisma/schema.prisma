@@ -24,6 +24,17 @@ enum TokenType {
   PASSWORD_RESET
 }
 
+enum PaymentMethod {
+  CASH
+  CARD
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  CANCELLED
+}
+
 model User {
   id                 String     @id @default(uuid())
   email              String     @unique
@@ -38,6 +49,7 @@ model User {
   accounts           Account[]
   createdAt          DateTime   @default(now())
   cart               Cart?
+  orders             Order[]
 }
 
 model Account {
@@ -81,6 +93,7 @@ model Product {
   createdAt       DateTime             @default(now())
   updatedAt       DateTime             @updatedAt // ⭐ Отслеживание изменений
   cartItems       CartItem[]
+  orderItems      OrderItem[]
 
   @@index([slug])
   @@index([subcategoryId])
@@ -189,4 +202,33 @@ model CartItem {
   createdAt       DateTime @default(now())
 
   @@unique([cartId, productId])
+}
+
+model Order {
+  id        String        @id @default(uuid())
+  sessionId String        @unique
+  status    OrderStatus   @default(PENDING)
+  method    PaymentMethod
+  userId    String
+  user      User          @relation(fields: [userId], references: [id])
+  firstName String
+  lastName  String
+  email     String
+  phone     String
+  city      String
+  country   String
+  state     String?
+  zipCode   String
+  createdAt DateTime      @default(now())
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id        String  @id @default(uuid())
+  orderId   String
+  order     Order   @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Restrict)
+  quantity  Int     @default(1)
+  price     Decimal
 }

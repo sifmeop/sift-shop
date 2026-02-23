@@ -4,16 +4,31 @@ import {
   HttpException,
   Injectable
 } from '@nestjs/common'
+import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
 
-import { GraphQLContext } from '~/common/types/graphql-context'
 import { UserService } from '~/modules/user/user.service'
+
+import { IS_PUBLIC_KEY } from '../decorators/public.decorator'
+import { GraphQLContext } from '../types/graphql-context'
 
 @Injectable()
 export class AuthGuard implements CanActivate {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly reflector: Reflector,
+    private readonly userService: UserService
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
+    const isPublic = this.reflector.getAllAndOverride<boolean>(IS_PUBLIC_KEY, [
+      context.getHandler(),
+      context.getClass()
+    ])
+
+    if (isPublic) {
+      return true
+    }
+
     const ctx = GqlExecutionContext.create(context)
     const { req } = ctx.getContext<GraphQLContext>()
 

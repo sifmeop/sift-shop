@@ -1,15 +1,5 @@
-import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql'
-import { AuthMethod, User, UserRole } from '@sift-shop/database'
-
-registerEnumType(AuthMethod, {
-  name: 'AuthMethod',
-  description: 'Authentication method'
-})
-
-registerEnumType(UserRole, {
-  name: 'UserRole',
-  description: 'User role'
-})
+import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { User } from '@sift-shop/database'
 
 @ObjectType()
 export class AuthEntity implements Partial<User> {

@@ -33,19 +33,18 @@ export const Input = ({
   )
 }
 
-export const EmailInput = ({ ...props }: React.ComponentProps<'input'>) => {
-  const {
-    register,
-    formState: { errors }
-  } = useFormContext<{ email: string }>()
+export const EmailInput = ({
+  error,
+  ...props
+}: React.ComponentProps<'input'> & {
+  error?: string
+}) => {
   const id = useId()
-  const errorMessage = errors.email?.message
 
   return (
     <Field>
       <FieldLabel htmlFor={id}>Email</FieldLabel>
       <Input
-        {...register('email')}
         id={id}
         type='email'
         name='email'
@@ -54,10 +53,10 @@ export const EmailInput = ({ ...props }: React.ComponentProps<'input'>) => {
         spellCheck={false}
         inputMode='email'
         placeholder='example@gmail.com'
-        aria-invalid={!!errorMessage}
+        aria-invalid={!!error}
         {...props}
       />
-      <FieldError error={errorMessage} />
+      <FieldError error={error} />
     </Field>
   )
 }
