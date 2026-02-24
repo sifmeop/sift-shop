@@ -25,6 +25,9 @@ export class CreateOrderInput {
   @Field()
   @IsString()
   @IsNotEmpty({ message: 'Last name is required' })
+  @Matches(/^[A-Za-z\s]+$/, {
+    message: 'Last name must contain only English letters'
+  })
   lastName: string
 
   @Field()
@@ -34,23 +37,40 @@ export class CreateOrderInput {
   @Field()
   @IsString()
   @IsNotEmpty({ message: 'Phone is required' })
-  @Matches(/^\+?[0-9]{7,15}$/, { message: 'Invalid phone number' })
+  @Matches(/^\+?[0-9\s\-()]{7,15}$/, { message: 'Invalid phone number' })
   phone: string
 
   @Field()
   @IsString()
   @IsNotEmpty({ message: 'City is required' })
+  @Matches(/^[A-Za-z\s]+$/, {
+    message: 'City must contain only English letters'
+  })
   city: string
 
   @Field()
   @IsString()
   @IsNotEmpty({ message: 'Country is required' })
+  @Matches(/^[A-Za-z\s]+$/, {
+    message: 'Country must contain only English letters'
+  })
   country: string
+
+  @Field(() => String, { nullable: true })
+  @IsOptional()
+  @IsString()
+  @Matches(/^[A-Za-z\s]+$/, {
+    message: 'State must contain only English letters'
+  })
+  state?: string
 
   @Field()
   @IsString()
-  @IsOptional()
-  state?: string
+  @IsNotEmpty({ message: 'Address is required' })
+  @Matches(/^[A-Za-z0-9\s]+$/, {
+    message: 'Address must contain only English letters'
+  })
+  address: string
 
   @Field()
   @IsString()
@@ -61,9 +81,4 @@ export class CreateOrderInput {
   @Field(() => PaymentMethod)
   @IsEnum(PaymentMethod, { message: 'Invalid payment method' })
   method: PaymentMethod
-
-  // @Field(() => String)
-  // @IsString()
-  // @IsIn(paymentValues, { message: 'Invalid payment method' })
-  // method: PaymentMethod
 }

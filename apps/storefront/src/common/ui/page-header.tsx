@@ -42,7 +42,7 @@ export const PageHeader = ({
           </BreadcrumbItem>
           <BreadcrumbSeparator />
           {breadcrumbs.map(({ label, href }, idx) => (
-            <Fragment key={label}>
+            <Fragment key={idx}>
               <BreadcrumbItem>
                 {href ? (
                   <BreadcrumbLink href={href}>{label}</BreadcrumbLink>

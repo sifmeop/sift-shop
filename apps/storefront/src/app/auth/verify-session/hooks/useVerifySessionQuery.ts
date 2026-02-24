@@ -12,6 +12,17 @@ const VERIFY_SESSION = gql(`
       avatar
       isTwoFactorEnabled
       createdAt
+      accountDetails {
+        firstName
+        lastName
+        email
+        phone
+        city
+        country
+        state
+        address
+        zipCode
+      }
     }
   }
 `)

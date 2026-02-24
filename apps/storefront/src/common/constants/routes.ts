@@ -22,7 +22,8 @@ export const ROUTES = {
   ACCOUNT_DETAIL: '/profile/account-detail',
 
   // CHECKOUT
-  CHECKOUT: '/checkout'
+  CHECKOUT: '/checkout',
+  CHECKOUT_SUCCESS: '/checkout/success'
 } as const
 
 export type Route = (typeof ROUTES)[keyof typeof ROUTES]

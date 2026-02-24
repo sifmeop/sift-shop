@@ -1,6 +1,8 @@
 import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { User } from '@sift-shop/database'
 
+import { AccountDetailsEntity } from '~/modules/user/entities/account-details.entity'
+
 @ObjectType()
 export class AuthEntity implements Partial<User> {
   @Field(() => ID)
@@ -20,6 +22,9 @@ export class AuthEntity implements Partial<User> {
 
   @Field(() => Date)
   createdAt: Date
+
+  @Field(() => AccountDetailsEntity, { nullable: true })
+  accountDetails?: AccountDetailsEntity
 }
 
 @ObjectType()

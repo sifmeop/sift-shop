@@ -1,11 +1,6 @@
-export interface User {
-  id: string
-  email: string
-  fullName: string
-  avatar?: string | null
-  isTwoFactorEnabled: boolean
-  createdAt: string
-}
+import { AuthEntity } from '~/common/lib/graphql/generated/graphql'
+
+export type User = AuthEntity
 
 interface State {
   user: User | null
@@ -14,9 +9,10 @@ interface State {
 }
 
 interface Actions {
-  setUser: (user: User) => void
+  setUser: (user: User | null) => void
   setLoading: (isLoading: boolean) => void
   logout: () => void
+  setAccountDetails: (accountDetails: User['accountDetails']) => void
 }
 
 export type UserState = State & Actions

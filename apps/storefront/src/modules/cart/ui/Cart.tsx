@@ -1,5 +1,6 @@
 'use client'
 
+import { ShoppingCartIcon } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 
@@ -41,9 +42,24 @@ export const Cart = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className='text-center space-y-4'>
-            <h3 className='font-semibold text-base'>Your cart is empty</h3>
-            <Button as={Link} variant='outline' href={ROUTES.HOME}>
+            className='flex flex-col items-center justify-center py-16 px-4 text-center space-y-6'>
+            <div className='w-20 h-20 flex items-center justify-center rounded-full bg-gray-100 text-gray-400'>
+              <ShoppingCartIcon className='size-10' />
+            </div>
+
+            <h3 className='text-2xl font-semibold text-gray-700'>
+              Your cart is empty
+            </h3>
+            <p className='text-gray-500 max-w-xs'>
+              Looks like you haven’t added anything to your cart yet. Start
+              shopping to fill it up!
+            </p>
+
+            <Button
+              as={Link}
+              variant='outline'
+              href={ROUTES.HOME}
+              className='px-6 py-3 rounded-md hover:bg-gray-100 hover:text-gray-900 transition'>
               Continue shopping
             </Button>
           </motion.div>

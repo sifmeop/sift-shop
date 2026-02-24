@@ -2,33 +2,21 @@ import z from 'zod'
 
 import { PaymentMethod } from '~/common/lib/graphql/generated/graphql'
 import { emailValidation } from '~/common/schemas/email.schema'
-import { firstNameValidation } from '~/common/schemas/firstName.schema'
-import { lastNameValidation } from '~/common/schemas/lastName.schema'
+import { englishField } from '~/common/schemas/englishStr.schema'
 import { phoneValidation } from '~/common/schemas/phone.schema'
 
 export const checkoutSchema = z.object({
   // step #1
-  firstName: firstNameValidation,
-  lastName: lastNameValidation,
+  firstName: englishField('First name'),
+  lastName: englishField('Last name'),
   phone: phoneValidation,
   email: emailValidation,
 
   // step #2
-  country: z
-    .string('Country is required')
-    .min(2, 'Country is too short')
-    .max(50, 'Country is too long'),
-
-  city: z
-    .string('City is required')
-    .min(2, 'City is too short')
-    .max(50, 'City is too long'),
-
-  state: z
-    .string('State is required')
-    .min(2, 'State is too short')
-    .max(50, 'State is too long'),
-
+  country: englishField('Country', 2, 50),
+  city: englishField('City', 2, 50),
+  state: englishField('State', 2, 50, { allowNumbers: true, optional: true }),
+  address: englishField('Address', 2, 50, { allowNumbers: true }),
   zipCode: z
     .string('Zip code is required')
     .regex(/^\d{5,10}$/, 'Zip code must be 5-10 digits'),

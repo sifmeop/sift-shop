@@ -8,20 +8,24 @@ export class StripeService {
   readonly stripe: Stripe
 
   constructor(private configService: ConfigService) {
-    this.stripe = new Stripe(
-      this.configService.getOrThrow<string>('STRIPE_SECRET_KEY')
-    )
+    const secretKey = this.configService.getOrThrow<string>('STRIPE_SECRET_KEY')
+    this.stripe = new Stripe(secretKey)
   }
 
   async createCheckoutSession(
-    items: Stripe.Checkout.SessionCreateParams.LineItem[]
+    items: Stripe.Checkout.SessionCreateParams.LineItem[],
+    shipping: Stripe.Checkout.SessionCreateParams.ShippingOption[]
   ): Promise<Stripe.Checkout.Session> {
     const origin = this.configService.getOrThrow<string>('ORIGIN')
 
     return this.stripe.checkout.sessions.create({
       mode: 'payment',
       line_items: items,
-      success_url: `${origin}/checkout/success?session_id={CHECKOUT_SESSION_ID}`
+      currency: 'usd',
+      locale: 'en',
+      payment_method_types: ['card'],
+      success_url: `${origin}/checkout/success?payment_id={CHECKOUT_SESSION_ID}`,
+      shipping_options: shipping
     })
   }
 
@@ -40,9 +44,20 @@ export class StripeService {
 
         if (session.payment_status !== 'paid') break
 
-        const order = await prisma.order.update({
-          where: { sessionId: session.id },
-          data: { status: OrderStatus.PAID }
+        const order = await prisma.order.findFirst({
+          where: { paymentId: session.id }
+        })
+
+        if (!order) break
+
+        await prisma.order.update({
+          where: {
+            id: order.id
+          },
+          data: {
+            status: OrderStatus.PAID,
+            currency: session.currency?.toUpperCase()
+          }
         })
 
         await prisma.cartItem.deleteMany({
@@ -58,8 +73,14 @@ export class StripeService {
       case 'checkout.session.expired': {
         const session = event.data.object
 
+        const order = await prisma.order.findFirst({
+          where: { paymentId: session.id }
+        })
+
+        if (!order) break
+
         await prisma.order.update({
-          where: { sessionId: session.id },
+          where: { id: order.id },
           data: { status: OrderStatus.CANCELLED }
         })
 

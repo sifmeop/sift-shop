@@ -16,6 +16,17 @@ const EMAIL_CONFIRMATION_GQL = gql(`
       avatar
       isTwoFactorEnabled
       createdAt
+      accountDetails {
+        firstName
+        lastName
+        email
+        phone
+        city
+        country
+        state
+        address
+        zipCode
+      }
     }
   }
 `)

@@ -1,2 +1,2 @@
-export * from './api/fetchOrderBySession'
+export * from './api/fetchOrderByPaymentId'
 export * from './ui/CheckoutForm'

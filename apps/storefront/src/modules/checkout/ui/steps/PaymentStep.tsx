@@ -4,6 +4,7 @@ import clsx from 'clsx'
 
 import { PaymentMethod } from '~/common/lib/graphql/generated/graphql'
 import { Button } from '~/common/ui/button'
+import { Label } from '~/common/ui/label'
 
 import { CheckoutFormData } from '../../schemas/checkout.schema'
 
@@ -78,9 +79,9 @@ export const PaymentStep = ({}: PaymentStepProps) => {
   return (
     <div className='flex flex-col justify-between flex-1 gap-5'>
       <div>
-        <p className='text-xs font-semibold uppercase tracking-widest text-slate-400 mb-3'>
+        <Label className='text-xs font-semibold uppercase tracking-widest mb-3'>
           Choose Payment Method
-        </p>
+        </Label>
 
         <Controller
           name='method'

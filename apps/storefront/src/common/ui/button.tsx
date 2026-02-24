@@ -36,6 +36,14 @@ export const buttonVariants = cva(
         'icon-sm':
           'size-8 rounded-[min(var(--radius-md),10px)] in-data-[slot=button-group]:rounded-md',
         'icon-lg': 'size-10'
+      },
+      color: {
+        yellow:
+          'bg-yellow-200/80 text-yellow-700 hover:bg-yellow-200/60 border-yellow-200 hover:border-yellow-200/80 hover:text-yellow-800',
+        blue: 'bg-blue-200 text-blue-500 hover:bg-blue-200/80 border-blue-200 hover:border-blue-200/80 hover:text-blue-600',
+        red: 'bg-red-200 text-red-500 hover:bg-red-200/80 border-red-200 hover:border-red-200/80 hover:text-red-600',
+        green:
+          'bg-green-200 text-green-500 hover:bg-green-200/80 border-green-200 hover:border-green-200/80 hover:text-green-600'
       }
     },
     defaultVariants: {
@@ -45,6 +53,8 @@ export const buttonVariants = cva(
   }
 )
 
+type Color = 'blue' | 'red' | 'green' | 'yellow'
+
 type LoadingMode = 'with-content' | 'spinner-only'
 
 type ButtonProps<T extends React.ElementType = 'button'> = {
@@ -53,6 +63,7 @@ type ButtonProps<T extends React.ElementType = 'button'> = {
   fullWidth?: boolean
   isLoading?: boolean
   loadingMode?: LoadingMode
+  color?: Color
 } & VariantProps<typeof buttonVariants> &
   Omit<React.ComponentPropsWithoutRef<T>, 'as'>
 
@@ -67,6 +78,7 @@ export const Button = <T extends React.ElementType = 'button'>({
   loadingMode = 'with-content',
   children,
   disabled,
+  color,
   ...props
 }: ButtonProps<T>) => {
   const Comp = asChild ? Slot.Root : (as ?? 'button')
@@ -76,7 +88,7 @@ export const Button = <T extends React.ElementType = 'button'>({
       data-slot='button'
       data-variant={variant}
       data-size={size}
-      className={cn(buttonVariants({ variant, size, className }), {
+      className={cn(buttonVariants({ variant, size, className, color }), {
         'w-full': fullWidth
       })}
       disabled={isLoading || disabled}

@@ -63,10 +63,10 @@ export const CartItem = ({ item }: CartItemProps) => {
         ) : (
           <p className='font-medium text-base'>{formatPrice(price)}</p>
         )}
-        <div className='rounded-md px-3 py-2 grid grid-cols-[2fr_1fr_2fr] items-center gap-3 border border-border'>
+        <div className='rounded-md p-1 grid grid-cols-[2fr_1fr_2fr] items-center gap-3 border border-border'>
           <Button
             variant='ghost'
-            className='size-4 p-3'
+            className='size-4 p-3.5'
             onClick={() => removeFromCart(1)}
             disabled={isLoading}
             isLoading={isRemoving}
@@ -76,7 +76,7 @@ export const CartItem = ({ item }: CartItemProps) => {
           <NumberFlow value={item.quantity} className='text-center' />
           <Button
             variant='ghost'
-            className='size-4 p-3'
+            className='size-4 p-3.5'
             onClick={addToCart}
             disabled={isLoading}
             isLoading={isAdding}

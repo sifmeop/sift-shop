@@ -1,3 +1,5 @@
+import { AccountDetailsForm } from '~/modules/profile'
+
 export const AccountDetailPage = () => {
-  return <div>AccountDetailPage</div>
+  return <AccountDetailsForm />
 }

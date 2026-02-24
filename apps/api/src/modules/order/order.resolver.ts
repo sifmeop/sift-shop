@@ -6,7 +6,7 @@ import { Public } from '~/common/decorators/public.decorator'
 import { CreateOrderEntity } from './entities/create-order.entity'
 import { OrderEntity } from './entities/order.entity'
 import { CreateOrderInput } from './inputs/create-order.input'
-import { GetOrderBySessionInput } from './inputs/get-order-by-session.input'
+import { GetOrderByPaymentIdInput } from './inputs/get-order-by-session.input'
 import { OrderService } from './order.service'
 
 @Resolver(() => OrderEntity)
@@ -15,17 +15,12 @@ export class OrderResolver {
 
   @Public()
   @Query(() => OrderEntity)
-  async getOrderBySession(
-    @Args('input', { type: () => GetOrderBySessionInput })
-    input: GetOrderBySessionInput
+  async getOrderByPaymentId(
+    @Args('input', { type: () => GetOrderByPaymentIdInput })
+    input: GetOrderByPaymentIdInput
   ): Promise<OrderEntity> {
-    return await this.orderService.getOrderBySession(input.id)
+    return await this.orderService.getOrderByPaymentId(input.id)
   }
-
-  // @Query(() => [OrderEntity])
-  // async getOrders(@Authorized('id') userId: string): Promise<OrderEntity[]> {
-  //   return await this.orderService.getOrders()
-  // }
 
   @Mutation(() => CreateOrderEntity)
   async create(

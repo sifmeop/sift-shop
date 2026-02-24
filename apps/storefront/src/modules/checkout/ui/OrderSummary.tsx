@@ -10,16 +10,28 @@ import { Show } from '~/common/ui/show'
 import { formatPrice } from '~/common/utils/formatPrice'
 import { useCartQuery } from '~/modules/cart'
 
+const DELIVERY_PRICE = 10
+const TAX_RATE = 0.1
+
 export const OrderSummary = () => {
   const { data, loading } = useCartQuery()
 
-  const subtotal =
+  const subtotalAmount =
     data?.cart.reduce((acc, item) => {
       return acc + (item.discountedPrice ?? item.price) * item.quantity
     }, 0) ?? 0
-  const shipping = 0
-  const tax = 3
-  const total = subtotal + shipping + tax
+  const deliveryAmount = subtotalAmount >= 100 ? 0 : DELIVERY_PRICE
+  const discountAmount =
+    data?.cart.reduce((acc, item) => {
+      if (item.discountedPrice) {
+        acc += item.discountedPrice * item.quantity
+      }
+      return acc
+    }, 0) ?? 0
+  const taxAmount =
+    (subtotalAmount + deliveryAmount - discountAmount) * TAX_RATE
+  const totalAmount =
+    subtotalAmount + deliveryAmount - discountAmount + taxAmount
 
   return (
     <div className='flex-1 overflow-hidden'>
@@ -68,21 +80,29 @@ export const OrderSummary = () => {
       <div className='space-y-3'>
         <div className='flex items-center justify-between font-medium'>
           <p className='text-muted-foreground'>Subtotal</p>
-          <p>{formatPrice(subtotal)}</p>
+          <p>{formatPrice(subtotalAmount)}</p>
         </div>
         <div className='flex items-center justify-between font-medium'>
           <p className='text-muted-foreground'>Shipping</p>
-          {shipping === 0 ? <p>Free</p> : formatPrice(shipping)}
+          {deliveryAmount === 0 ? <p>Free</p> : formatPrice(deliveryAmount)}
         </div>
         <div className='flex items-center justify-between font-medium'>
           <p className='text-muted-foreground'>Tax</p>
-          <p>{formatPrice(tax)}</p>
+          <p>{formatPrice(taxAmount)}</p>
+        </div>
+        <div className='flex items-center justify-between font-medium'>
+          <p className='text-gray-500'>Discount</p>
+          {discountAmount > 0 ? (
+            <p className='text-red-500'>-{formatPrice(discountAmount)}</p>
+          ) : (
+            <p>N/A</p>
+          )}
         </div>
       </div>
       <Separator className='my-6' />
       <div className='flex items-center justify-between font-medium'>
         <p>Total</p>
-        <p className='text-base'>{formatPrice(total)}</p>
+        <p className='text-base'>{formatPrice(totalAmount)}</p>
       </div>
     </div>
   )

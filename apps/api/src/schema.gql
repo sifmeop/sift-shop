@@ -2,11 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+type AccountDetailsEntity {
+  address: String!
+  city: String!
+  country: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  state: String
+  zipCode: String!
+}
+
 input AddToCartInput {
   productId: String!
 }
 
 type AuthEntity {
+  accountDetails: AccountDetailsEntity
   avatar: String
   createdAt: DateTime!
   email: String!
@@ -42,6 +55,7 @@ type CreateOrderEntity {
 }
 
 input CreateOrderInput {
+  address: String!
   city: String!
   country: String!
   email: String!
@@ -49,7 +63,7 @@ input CreateOrderInput {
   lastName: String!
   method: PaymentMethod!
   phone: String!
-  state: String!
+  state: String
   zipCode: String!
 }
 
@@ -72,7 +86,7 @@ input ForgotPasswordInput {
   email: String!
 }
 
-input GetOrderBySessionInput {
+input GetOrderByPaymentIdInput {
   id: String!
 }
 
@@ -104,12 +118,17 @@ type Mutation {
   signIn(input: SignInInput!): AuthEntity!
   signOut: LogoutEntity!
   signUp(input: SignUpInput!): SuccessEntity!
+  updateAccountDetails(input: UpdateAccountDetailsInput!): AccountDetailsEntity!
 }
 
 type OrderEntity {
+  address: String!
   city: String!
   country: String!
   createdAt: DateTime!
+  currency: String!
+  deliveryAmount: Float!
+  discountAmount: Float!
   email: String!
   firstName: String!
   id: String!
@@ -119,6 +138,9 @@ type OrderEntity {
   phone: String!
   state: String
   status: OrderStatus!
+  subtotalAmount: Float!
+  taxAmount: Float!
+  totalAmount: Float!
   zipCode: String!
 }
 
@@ -126,7 +148,9 @@ type OrderItemEntity {
   id: String!
   price: Float!
   product: OrderItemProductEntity!
+  productName: String!
   quantity: Int!
+  totalPrice: Float!
 }
 
 type OrderItemProductEntity {
@@ -137,6 +161,7 @@ type OrderItemProductEntity {
 
 """Order status"""
 enum OrderStatus {
+  AWAITING_PAYMENT
   CANCELLED
   PAID
   PENDING
@@ -176,7 +201,7 @@ type ProductResponseEntity {
 type Query {
   cart: [CartItemEntity!]!
   categories: [CategoryEntity!]!
-  getOrderBySession(input: GetOrderBySessionInput!): OrderEntity!
+  getOrderByPaymentId(input: GetOrderByPaymentIdInput!): OrderEntity!
   products(filters: JSON, input: GetProductsInput!): ProductResponseEntity!
   schema: String!
   verifySession: AuthEntity!
@@ -214,4 +239,16 @@ type SubcategoryEntity {
 
 type SuccessEntity {
   success: Boolean!
+}
+
+input UpdateAccountDetailsInput {
+  address: String!
+  city: String!
+  country: String!
+  email: String!
+  firstName: String!
+  lastName: String!
+  phone: String!
+  state: String
+  zipCode: String!
 }

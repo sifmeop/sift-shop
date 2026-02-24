@@ -1,5 +1,6 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
+import { Field, Float, ObjectType, registerEnumType } from '@nestjs/graphql'
 import { Order, OrderStatus, PaymentMethod } from '@sift-shop/database'
+import Decimal from 'decimal.js'
 
 import { OrderItemEntity } from './order-item.entity'
 
@@ -37,16 +38,37 @@ export class OrderEntity implements Partial<Order> {
   phone: string
 
   @Field()
-  city: string
+  country: string
 
   @Field()
-  country: string
+  city: string
 
   @Field(() => String, { nullable: true })
   state: string | null
 
   @Field()
+  address: string
+
+  @Field()
   zipCode: string
+
+  @Field(() => Float)
+  subtotalAmount: Decimal
+
+  @Field(() => Float)
+  discountAmount: Decimal
+
+  @Field(() => Float)
+  taxAmount: Decimal
+
+  @Field(() => Float)
+  deliveryAmount: Decimal
+
+  @Field(() => Float)
+  totalAmount: Decimal
+
+  @Field()
+  currency: string
 
   @Field(() => [OrderItemEntity])
   items: OrderItemEntity[]

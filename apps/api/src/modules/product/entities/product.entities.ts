@@ -1,5 +1,6 @@
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
 import { Prisma, Product } from '@sift-shop/database'
+import Decimal from 'decimal.js'
 import { GraphQLJSON } from 'graphql-scalars'
 
 @ObjectType()
@@ -17,7 +18,7 @@ export class ProductEntity implements Partial<Product> {
   description: string | null
 
   @Field(() => Float)
-  price: Prisma.Decimal
+  price: Decimal
 
   @Field(() => Int, { nullable: true })
   discountPercent: number | null

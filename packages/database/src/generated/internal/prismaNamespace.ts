@@ -385,6 +385,7 @@ type FieldRefInputType<Model, FieldType> = Model extends never ? never : FieldRe
 
 export const ModelName = {
   User: 'User',
+  AccountDetail: 'AccountDetail',
   Account: 'Account',
   Token: 'Token',
   Product: 'Product',
@@ -412,7 +413,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "user" | "account" | "token" | "product" | "productFilterValue" | "category" | "subcategory" | "filter" | "filterOption" | "cart" | "cartItem" | "order" | "orderItem"
+    modelProps: "user" | "accountDetail" | "account" | "token" | "product" | "productFilterValue" | "category" | "subcategory" | "filter" | "filterOption" | "cart" | "cartItem" | "order" | "orderItem"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -487,6 +488,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.UserCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.UserCountAggregateOutputType> | number
+        }
+      }
+    }
+    AccountDetail: {
+      payload: Prisma.$AccountDetailPayload<ExtArgs>
+      fields: Prisma.AccountDetailFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.AccountDetailFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.AccountDetailFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>
+        }
+        findFirst: {
+          args: Prisma.AccountDetailFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.AccountDetailFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>
+        }
+        findMany: {
+          args: Prisma.AccountDetailFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>[]
+        }
+        create: {
+          args: Prisma.AccountDetailCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>
+        }
+        createMany: {
+          args: Prisma.AccountDetailCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.AccountDetailCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>[]
+        }
+        delete: {
+          args: Prisma.AccountDetailDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>
+        }
+        update: {
+          args: Prisma.AccountDetailUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>
+        }
+        deleteMany: {
+          args: Prisma.AccountDetailDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.AccountDetailUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.AccountDetailUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>[]
+        }
+        upsert: {
+          args: Prisma.AccountDetailUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$AccountDetailPayload>
+        }
+        aggregate: {
+          args: Prisma.AccountDetailAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateAccountDetail>
+        }
+        groupBy: {
+          args: Prisma.AccountDetailGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountDetailGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.AccountDetailCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AccountDetailCountAggregateOutputType> | number
         }
       }
     }
@@ -1428,10 +1503,28 @@ export const UserScalarFieldEnum = {
   isTwoFactorEnabled: 'isTwoFactorEnabled',
   twoFactorSecret: 'twoFactorSecret',
   method: 'method',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  accountDetailId: 'accountDetailId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AccountDetailScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  city: 'city',
+  country: 'country',
+  state: 'state',
+  address: 'address',
+  zipCode: 'zipCode',
+  userId: 'userId'
+} as const
+
+export type AccountDetailScalarFieldEnum = (typeof AccountDetailScalarFieldEnum)[keyof typeof AccountDetailScalarFieldEnum]
 
 
 export const AccountScalarFieldEnum = {
@@ -1573,18 +1666,26 @@ export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typ
 
 export const OrderScalarFieldEnum = {
   id: 'id',
-  sessionId: 'sessionId',
+  paymentId: 'paymentId',
   status: 'status',
   method: 'method',
-  userId: 'userId',
   firstName: 'firstName',
   lastName: 'lastName',
   email: 'email',
   phone: 'phone',
-  city: 'city',
   country: 'country',
+  city: 'city',
   state: 'state',
+  address: 'address',
   zipCode: 'zipCode',
+  subtotalAmount: 'subtotalAmount',
+  discountAmount: 'discountAmount',
+  taxAmount: 'taxAmount',
+  deliveryAmount: 'deliveryAmount',
+  totalAmount: 'totalAmount',
+  currency: 'currency',
+  userId: 'userId',
+  updatedAt: 'updatedAt',
   createdAt: 'createdAt'
 } as const
 
@@ -1596,7 +1697,9 @@ export const OrderItemScalarFieldEnum = {
   orderId: 'orderId',
   productId: 'productId',
   quantity: 'quantity',
-  price: 'price'
+  productName: 'productName',
+  price: 'price',
+  totalPrice: 'totalPrice'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]
@@ -1904,6 +2007,7 @@ export type PrismaClientOptions = ({
 }
 export type GlobalOmitConfig = {
   user?: Prisma.UserOmit
+  accountDetail?: Prisma.AccountDetailOmit
   account?: Prisma.AccountOmit
   token?: Prisma.TokenOmit
   product?: Prisma.ProductOmit

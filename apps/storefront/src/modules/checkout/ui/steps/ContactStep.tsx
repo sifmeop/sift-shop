@@ -1,13 +1,9 @@
 import { useFormContext } from 'react-hook-form'
 
 import { Button } from '~/common/ui/button'
-import { FieldGroup } from '~/common/ui/field'
-import {
-  EmailInput,
-  FirstNameInput,
-  LastNameInput,
-  PhoneInput
-} from '~/common/ui/input'
+import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/field'
+import { Input } from '~/common/ui/input'
+import { prettifyCamelCase } from '~/common/utils/prettifyCamelCase'
 
 import { CheckoutFormData } from '../../schemas/checkout.schema'
 
@@ -35,10 +31,27 @@ export const ContactStep = ({ onNext }: ContactStepProps) => {
   return (
     <div className='flex flex-col justify-between flex-1 gap-4'>
       <FieldGroup className='grid grid-cols-2 gap-4'>
-        <FirstNameInput />
-        <LastNameInput />
-        <EmailInput {...register('email')} error={errors.email?.message} />
-        <PhoneInput />
+        {(['firstName', 'lastName', 'phone', 'email'] as const).map(
+          (fieldName) => {
+            const error = errors[fieldName]?.message
+            const isInvalid = !!error
+            const label = prettifyCamelCase(fieldName)
+            const placeholder = `Enter your ${label.toLowerCase()}`
+
+            return (
+              <Field key={fieldName} aria-invalid={isInvalid}>
+                <FieldLabel aria-invalid={isInvalid}>{label}</FieldLabel>
+                <Input
+                  {...register(fieldName)}
+                  placeholder={placeholder}
+                  aria-invalid={isInvalid}
+                  aria-describedby={`${fieldName}-error`}
+                />
+                <FieldError id={`${fieldName}-error`} error={error} />
+              </Field>
+            )
+          }
+        )}
       </FieldGroup>
       <Button fullWidth type='button' onClick={handleNext}>
         To Delivery

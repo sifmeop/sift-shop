@@ -2,17 +2,18 @@ import { HttpException, Injectable } from '@nestjs/common'
 import { AuthMethod, prisma, User } from '@sift-shop/database'
 import { hash } from 'argon2'
 
+import { AccountDetailsEntity } from './entities/account-details.entity'
+import { UpdateAccountDetailsInput } from './inputs/update-account-details.input'
+
 @Injectable()
 export class UserService {
-  constructor() {}
-
   async findById(id: string): Promise<User> {
     const user = await prisma.user.findUnique({
       where: {
         id
       },
       include: {
-        accounts: true
+        accountDetails: true
       }
     })
 
@@ -29,7 +30,7 @@ export class UserService {
         email
       },
       include: {
-        accounts: true
+        accountDetails: true
       }
     })
 
@@ -74,5 +75,21 @@ export class UserService {
     })
 
     return user
+  }
+
+  async updateAccountDetails(
+    userId: string,
+    input: UpdateAccountDetailsInput
+  ): Promise<AccountDetailsEntity> {
+    return await prisma.accountDetail.upsert({
+      where: {
+        userId
+      },
+      update: input,
+      create: {
+        ...input,
+        userId
+      }
+    })
   }
 }

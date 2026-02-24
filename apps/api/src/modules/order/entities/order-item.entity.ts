@@ -1,5 +1,6 @@
 import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
-import { OrderItem, Prisma } from '@sift-shop/database'
+import { OrderItem } from '@sift-shop/database'
+import Decimal from 'decimal.js'
 
 import { OrderItemProductEntity } from './order-item-product.entity'
 
@@ -11,9 +12,15 @@ export class OrderItemEntity implements Partial<OrderItem> {
   @Field(() => OrderItemProductEntity)
   product: OrderItemProductEntity
 
+  @Field()
+  productName: string
+
   @Field(() => Int)
   quantity: number
 
   @Field(() => Float)
-  price: Prisma.Decimal
+  price: Decimal
+
+  @Field(() => Float)
+  totalPrice: Decimal
 }

@@ -31,6 +31,7 @@ export class CredentialsResolver {
     return await this.credentialsService.signUp(input)
   }
 
+  @Public()
   @Mutation(() => AuthEntity)
   @UseGuards(TwoFactorGuard)
   async signIn(

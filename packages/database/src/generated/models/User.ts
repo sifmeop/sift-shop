@@ -36,6 +36,7 @@ export type UserMinAggregateOutputType = {
   twoFactorSecret: string | null
   method: $Enums.AuthMethod | null
   createdAt: Date | null
+  accountDetailId: string | null
 }
 
 export type UserMaxAggregateOutputType = {
@@ -50,6 +51,7 @@ export type UserMaxAggregateOutputType = {
   twoFactorSecret: string | null
   method: $Enums.AuthMethod | null
   createdAt: Date | null
+  accountDetailId: string | null
 }
 
 export type UserCountAggregateOutputType = {
@@ -64,6 +66,7 @@ export type UserCountAggregateOutputType = {
   twoFactorSecret: number
   method: number
   createdAt: number
+  accountDetailId: number
   _all: number
 }
 
@@ -80,6 +83,7 @@ export type UserMinAggregateInputType = {
   twoFactorSecret?: true
   method?: true
   createdAt?: true
+  accountDetailId?: true
 }
 
 export type UserMaxAggregateInputType = {
@@ -94,6 +98,7 @@ export type UserMaxAggregateInputType = {
   twoFactorSecret?: true
   method?: true
   createdAt?: true
+  accountDetailId?: true
 }
 
 export type UserCountAggregateInputType = {
@@ -108,6 +113,7 @@ export type UserCountAggregateInputType = {
   twoFactorSecret?: true
   method?: true
   createdAt?: true
+  accountDetailId?: true
   _all?: true
 }
 
@@ -195,6 +201,7 @@ export type UserGroupByOutputType = {
   twoFactorSecret: string | null
   method: $Enums.AuthMethod
   createdAt: Date
+  accountDetailId: string | null
   _count: UserCountAggregateOutputType | null
   _min: UserMinAggregateOutputType | null
   _max: UserMaxAggregateOutputType | null
@@ -230,7 +237,9 @@ export type UserWhereInput = {
   twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
   method?: Prisma.EnumAuthMethodFilter<"User"> | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  accountDetailId?: Prisma.StringNullableFilter<"User"> | string | null
   accounts?: Prisma.AccountListRelationFilter
+  accountDetails?: Prisma.XOR<Prisma.AccountDetailNullableScalarRelationFilter, Prisma.AccountDetailWhereInput> | null
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   orders?: Prisma.OrderListRelationFilter
 }
@@ -247,7 +256,9 @@ export type UserOrderByWithRelationInput = {
   twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  accountDetailId?: Prisma.SortOrderInput | Prisma.SortOrder
   accounts?: Prisma.AccountOrderByRelationAggregateInput
+  accountDetails?: Prisma.AccountDetailOrderByWithRelationInput
   cart?: Prisma.CartOrderByWithRelationInput
   orders?: Prisma.OrderOrderByRelationAggregateInput
 }
@@ -267,7 +278,9 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   twoFactorSecret?: Prisma.StringNullableFilter<"User"> | string | null
   method?: Prisma.EnumAuthMethodFilter<"User"> | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFilter<"User"> | Date | string
+  accountDetailId?: Prisma.StringNullableFilter<"User"> | string | null
   accounts?: Prisma.AccountListRelationFilter
+  accountDetails?: Prisma.XOR<Prisma.AccountDetailNullableScalarRelationFilter, Prisma.AccountDetailWhereInput> | null
   cart?: Prisma.XOR<Prisma.CartNullableScalarRelationFilter, Prisma.CartWhereInput> | null
   orders?: Prisma.OrderListRelationFilter
 }, "id" | "email">
@@ -284,6 +297,7 @@ export type UserOrderByWithAggregationInput = {
   twoFactorSecret?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  accountDetailId?: Prisma.SortOrderInput | Prisma.SortOrder
   _count?: Prisma.UserCountOrderByAggregateInput
   _max?: Prisma.UserMaxOrderByAggregateInput
   _min?: Prisma.UserMinOrderByAggregateInput
@@ -304,6 +318,7 @@ export type UserScalarWhereWithAggregatesInput = {
   twoFactorSecret?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
   method?: Prisma.EnumAuthMethodWithAggregatesFilter<"User"> | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string
+  accountDetailId?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null
 }
 
 export type UserCreateInput = {
@@ -318,7 +333,9 @@ export type UserCreateInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  accountDetails?: Prisma.AccountDetailCreateNestedOneWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
 }
@@ -335,7 +352,9 @@ export type UserUncheckedCreateInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  accountDetails?: Prisma.AccountDetailUncheckedCreateNestedOneWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
 }
@@ -352,7 +371,9 @@ export type UserUpdateInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  accountDetails?: Prisma.AccountDetailUpdateOneWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
 }
@@ -369,7 +390,9 @@ export type UserUncheckedUpdateInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  accountDetails?: Prisma.AccountDetailUncheckedUpdateOneWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -386,6 +409,7 @@ export type UserCreateManyInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
 }
 
 export type UserUpdateManyMutationInput = {
@@ -400,6 +424,7 @@ export type UserUpdateManyMutationInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserUncheckedUpdateManyInput = {
@@ -414,6 +439,7 @@ export type UserUncheckedUpdateManyInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
 }
 
 export type UserCountOrderByAggregateInput = {
@@ -428,6 +454,7 @@ export type UserCountOrderByAggregateInput = {
   twoFactorSecret?: Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  accountDetailId?: Prisma.SortOrder
 }
 
 export type UserMaxOrderByAggregateInput = {
@@ -442,6 +469,7 @@ export type UserMaxOrderByAggregateInput = {
   twoFactorSecret?: Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
+  accountDetailId?: Prisma.SortOrder
 }
 
 export type UserMinOrderByAggregateInput = {
@@ -456,16 +484,17 @@ export type UserMinOrderByAggregateInput = {
   twoFactorSecret?: Prisma.SortOrder
   method?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
-}
-
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
+  accountDetailId?: Prisma.SortOrder
 }
 
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type StringFieldUpdateOperationsInput = {
@@ -490,6 +519,20 @@ export type EnumAuthMethodFieldUpdateOperationsInput = {
 
 export type DateTimeFieldUpdateOperationsInput = {
   set?: Date | string
+}
+
+export type UserCreateNestedOneWithoutAccountDetailsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountDetailsInput, Prisma.UserUncheckedCreateWithoutAccountDetailsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountDetailsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAccountDetailsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAccountDetailsInput, Prisma.UserUncheckedCreateWithoutAccountDetailsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAccountDetailsInput
+  upsert?: Prisma.UserUpsertWithoutAccountDetailsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAccountDetailsInput, Prisma.UserUpdateWithoutAccountDetailsInput>, Prisma.UserUncheckedUpdateWithoutAccountDetailsInput>
 }
 
 export type UserCreateNestedOneWithoutAccountsInput = {
@@ -536,6 +579,94 @@ export type UserUpdateOneRequiredWithoutOrdersNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutOrdersInput, Prisma.UserUpdateWithoutOrdersInput>, Prisma.UserUncheckedUpdateWithoutOrdersInput>
 }
 
+export type UserCreateWithoutAccountDetailsInput = {
+  id?: string
+  email: string
+  password: string
+  fullName: string
+  avatar?: string | null
+  role?: $Enums.UserRole
+  isVerified?: boolean
+  isTwoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  method: $Enums.AuthMethod
+  createdAt?: Date | string
+  accountDetailId?: string | null
+  accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderCreateNestedManyWithoutUserInput
+}
+
+export type UserUncheckedCreateWithoutAccountDetailsInput = {
+  id?: string
+  email: string
+  password: string
+  fullName: string
+  avatar?: string | null
+  role?: $Enums.UserRole
+  isVerified?: boolean
+  isTwoFactorEnabled?: boolean
+  twoFactorSecret?: string | null
+  method: $Enums.AuthMethod
+  createdAt?: Date | string
+  accountDetailId?: string | null
+  accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
+  orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
+}
+
+export type UserCreateOrConnectWithoutAccountDetailsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAccountDetailsInput, Prisma.UserUncheckedCreateWithoutAccountDetailsInput>
+}
+
+export type UserUpsertWithoutAccountDetailsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAccountDetailsInput, Prisma.UserUncheckedUpdateWithoutAccountDetailsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAccountDetailsInput, Prisma.UserUncheckedCreateWithoutAccountDetailsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAccountDetailsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAccountDetailsInput, Prisma.UserUncheckedUpdateWithoutAccountDetailsInput>
+}
+
+export type UserUpdateWithoutAccountDetailsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAccountDetailsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  fullName?: Prisma.StringFieldUpdateOperationsInput | string
+  avatar?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  isTwoFactorEnabled?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
+  orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
+}
+
 export type UserCreateWithoutAccountsInput = {
   id?: string
   email: string
@@ -548,6 +679,8 @@ export type UserCreateWithoutAccountsInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
+  accountDetails?: Prisma.AccountDetailCreateNestedOneWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
 }
@@ -564,6 +697,8 @@ export type UserUncheckedCreateWithoutAccountsInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
+  accountDetails?: Prisma.AccountDetailUncheckedCreateNestedOneWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
 }
@@ -596,6 +731,8 @@ export type UserUpdateWithoutAccountsInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountDetails?: Prisma.AccountDetailUpdateOneWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
 }
@@ -612,6 +749,8 @@ export type UserUncheckedUpdateWithoutAccountsInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  accountDetails?: Prisma.AccountDetailUncheckedUpdateOneWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
 }
@@ -628,7 +767,9 @@ export type UserCreateWithoutCartInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  accountDetails?: Prisma.AccountDetailCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderCreateNestedManyWithoutUserInput
 }
 
@@ -644,7 +785,9 @@ export type UserUncheckedCreateWithoutCartInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  accountDetails?: Prisma.AccountDetailUncheckedCreateNestedOneWithoutUserInput
   orders?: Prisma.OrderUncheckedCreateNestedManyWithoutUserInput
 }
 
@@ -676,7 +819,9 @@ export type UserUpdateWithoutCartInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  accountDetails?: Prisma.AccountDetailUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUpdateManyWithoutUserNestedInput
 }
 
@@ -692,7 +837,9 @@ export type UserUncheckedUpdateWithoutCartInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  accountDetails?: Prisma.AccountDetailUncheckedUpdateOneWithoutUserNestedInput
   orders?: Prisma.OrderUncheckedUpdateManyWithoutUserNestedInput
 }
 
@@ -708,7 +855,9 @@ export type UserCreateWithoutOrdersInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
   accounts?: Prisma.AccountCreateNestedManyWithoutUserInput
+  accountDetails?: Prisma.AccountDetailCreateNestedOneWithoutUserInput
   cart?: Prisma.CartCreateNestedOneWithoutUserInput
 }
 
@@ -724,7 +873,9 @@ export type UserUncheckedCreateWithoutOrdersInput = {
   twoFactorSecret?: string | null
   method: $Enums.AuthMethod
   createdAt?: Date | string
+  accountDetailId?: string | null
   accounts?: Prisma.AccountUncheckedCreateNestedManyWithoutUserInput
+  accountDetails?: Prisma.AccountDetailUncheckedCreateNestedOneWithoutUserInput
   cart?: Prisma.CartUncheckedCreateNestedOneWithoutUserInput
 }
 
@@ -756,7 +907,9 @@ export type UserUpdateWithoutOrdersInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUpdateManyWithoutUserNestedInput
+  accountDetails?: Prisma.AccountDetailUpdateOneWithoutUserNestedInput
   cart?: Prisma.CartUpdateOneWithoutUserNestedInput
 }
 
@@ -772,7 +925,9 @@ export type UserUncheckedUpdateWithoutOrdersInput = {
   twoFactorSecret?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.EnumAuthMethodFieldUpdateOperationsInput | $Enums.AuthMethod
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  accountDetailId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   accounts?: Prisma.AccountUncheckedUpdateManyWithoutUserNestedInput
+  accountDetails?: Prisma.AccountDetailUncheckedUpdateOneWithoutUserNestedInput
   cart?: Prisma.CartUncheckedUpdateOneWithoutUserNestedInput
 }
 
@@ -828,7 +983,9 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
+  accountDetailId?: boolean
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  accountDetails?: boolean | Prisma.User$accountDetailsArgs<ExtArgs>
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -846,6 +1003,7 @@ export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
+  accountDetailId?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
@@ -860,6 +1018,7 @@ export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensio
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
+  accountDetailId?: boolean
 }, ExtArgs["result"]["user"]>
 
 export type UserSelectScalar = {
@@ -874,11 +1033,13 @@ export type UserSelectScalar = {
   twoFactorSecret?: boolean
   method?: boolean
   createdAt?: boolean
+  accountDetailId?: boolean
 }
 
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "fullName" | "avatar" | "role" | "isVerified" | "isTwoFactorEnabled" | "twoFactorSecret" | "method" | "createdAt", ExtArgs["result"]["user"]>
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "fullName" | "avatar" | "role" | "isVerified" | "isTwoFactorEnabled" | "twoFactorSecret" | "method" | "createdAt" | "accountDetailId", ExtArgs["result"]["user"]>
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   accounts?: boolean | Prisma.User$accountsArgs<ExtArgs>
+  accountDetails?: boolean | Prisma.User$accountDetailsArgs<ExtArgs>
   cart?: boolean | Prisma.User$cartArgs<ExtArgs>
   orders?: boolean | Prisma.User$ordersArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
@@ -890,6 +1051,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
   name: "User"
   objects: {
     accounts: Prisma.$AccountPayload<ExtArgs>[]
+    accountDetails: Prisma.$AccountDetailPayload<ExtArgs> | null
     cart: Prisma.$CartPayload<ExtArgs> | null
     orders: Prisma.$OrderPayload<ExtArgs>[]
   }
@@ -905,6 +1067,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     twoFactorSecret: string | null
     method: $Enums.AuthMethod
     createdAt: Date
+    accountDetailId: string | null
   }, ExtArgs["result"]["user"]>
   composites: {}
 }
@@ -1300,6 +1463,7 @@ readonly fields: UserFieldRefs;
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
   readonly [Symbol.toStringTag]: "PrismaPromise"
   accounts<T extends Prisma.User$accountsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accountDetails<T extends Prisma.User$accountDetailsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$accountDetailsArgs<ExtArgs>>): Prisma.Prisma__AccountDetailClient<runtime.Types.Result.GetResult<Prisma.$AccountDetailPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   cart<T extends Prisma.User$cartArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$cartArgs<ExtArgs>>): Prisma.Prisma__CartClient<runtime.Types.Result.GetResult<Prisma.$CartPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   orders<T extends Prisma.User$ordersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$ordersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$OrderPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
@@ -1342,6 +1506,7 @@ export interface UserFieldRefs {
   readonly twoFactorSecret: Prisma.FieldRef<"User", 'String'>
   readonly method: Prisma.FieldRef<"User", 'AuthMethod'>
   readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>
+  readonly accountDetailId: Prisma.FieldRef<"User", 'String'>
 }
     
 
@@ -1751,6 +1916,25 @@ export type User$accountsArgs<ExtArgs extends runtime.Types.Extensions.InternalA
   take?: number
   skip?: number
   distinct?: Prisma.AccountScalarFieldEnum | Prisma.AccountScalarFieldEnum[]
+}
+
+/**
+ * User.accountDetails
+ */
+export type User$accountDetailsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountDetail
+   */
+  select?: Prisma.AccountDetailSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountDetail
+   */
+  omit?: Prisma.AccountDetailOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountDetailInclude<ExtArgs> | null
+  where?: Prisma.AccountDetailWhereInput
 }
 
 /**

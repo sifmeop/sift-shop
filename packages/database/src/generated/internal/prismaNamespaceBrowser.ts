@@ -52,6 +52,7 @@ export const AnyNull = runtime.AnyNull
 
 export const ModelName = {
   User: 'User',
+  AccountDetail: 'AccountDetail',
   Account: 'Account',
   Token: 'Token',
   Product: 'Product',
@@ -93,10 +94,28 @@ export const UserScalarFieldEnum = {
   isTwoFactorEnabled: 'isTwoFactorEnabled',
   twoFactorSecret: 'twoFactorSecret',
   method: 'method',
-  createdAt: 'createdAt'
+  createdAt: 'createdAt',
+  accountDetailId: 'accountDetailId'
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AccountDetailScalarFieldEnum = {
+  id: 'id',
+  firstName: 'firstName',
+  lastName: 'lastName',
+  email: 'email',
+  phone: 'phone',
+  city: 'city',
+  country: 'country',
+  state: 'state',
+  address: 'address',
+  zipCode: 'zipCode',
+  userId: 'userId'
+} as const
+
+export type AccountDetailScalarFieldEnum = (typeof AccountDetailScalarFieldEnum)[keyof typeof AccountDetailScalarFieldEnum]
 
 
 export const AccountScalarFieldEnum = {
@@ -238,18 +257,26 @@ export type CartItemScalarFieldEnum = (typeof CartItemScalarFieldEnum)[keyof typ
 
 export const OrderScalarFieldEnum = {
   id: 'id',
-  sessionId: 'sessionId',
+  paymentId: 'paymentId',
   status: 'status',
   method: 'method',
-  userId: 'userId',
   firstName: 'firstName',
   lastName: 'lastName',
   email: 'email',
   phone: 'phone',
-  city: 'city',
   country: 'country',
+  city: 'city',
   state: 'state',
+  address: 'address',
   zipCode: 'zipCode',
+  subtotalAmount: 'subtotalAmount',
+  discountAmount: 'discountAmount',
+  taxAmount: 'taxAmount',
+  deliveryAmount: 'deliveryAmount',
+  totalAmount: 'totalAmount',
+  currency: 'currency',
+  userId: 'userId',
+  updatedAt: 'updatedAt',
   createdAt: 'createdAt'
 } as const
 
@@ -261,7 +288,9 @@ export const OrderItemScalarFieldEnum = {
   orderId: 'orderId',
   productId: 'productId',
   quantity: 'quantity',
-  price: 'price'
+  productName: 'productName',
+  price: 'price',
+  totalPrice: 'totalPrice'
 } as const
 
 export type OrderItemScalarFieldEnum = (typeof OrderItemScalarFieldEnum)[keyof typeof OrderItemScalarFieldEnum]

@@ -1,5 +1,6 @@
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { toast } from 'sonner'
 import { handleApiError } from '~/common/api/errorHandler'
 import { loginSchema, type LoginSchema } from '../schemas/login.schema'
 import { useLoginMutation } from './useLoginMutation'
@@ -21,8 +22,7 @@ export const useLoginForm = () => {
 		try {
 			await mutateAsync(values)
 		} catch (err) {
-			const message = handleApiError(err)
-			console.debug('message', message)
+			toast.error(handleApiError(err))
 		}
 	})
 

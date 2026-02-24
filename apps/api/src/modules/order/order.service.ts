@@ -1,6 +1,15 @@
 import { HttpException, Injectable } from '@nestjs/common'
-import { prisma } from '@sift-shop/database'
+import { ConfigService } from '@nestjs/config'
+import {
+  Order,
+  OrderStatus,
+  PaymentMethod,
+  Prisma,
+  prisma
+} from '@sift-shop/database'
+import Decimal from 'decimal.js'
 import Stripe from 'stripe'
+import { v4 as uuidv4 } from 'uuid'
 
 import { StripeService } from '~/common/libs/stripe/stripe.service'
 
@@ -10,11 +19,17 @@ import { CreateOrderInput } from './inputs/create-order.input'
 
 @Injectable()
 export class OrderService {
-  constructor(private readonly stripeService: StripeService) {}
+  private readonly DELIVERY_PRICE = new Decimal(10)
+  private readonly TAX_RATE = new Decimal(0.1)
 
-  async getOrderBySession(sessionId: string): Promise<OrderEntity> {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly stripeService: StripeService
+  ) {}
+
+  async getOrderByPaymentId(paymentId: string): Promise<OrderEntity> {
     const order = await prisma.order.findFirst({
-      where: { sessionId },
+      where: { paymentId },
       include: {
         items: {
           include: {
@@ -92,19 +107,118 @@ export class OrderService {
       throw new HttpException('Some items are out of stock', 400)
     }
 
+    const subtotalAmount = cart.items.reduce(
+      (acc, item) => acc.add(item.product.price.mul(item.quantity)),
+      new Decimal(0)
+    )
+
+    const deliveryAmount = subtotalAmount.greaterThanOrEqualTo(100)
+      ? new Decimal(0)
+      : this.DELIVERY_PRICE
+
+    const discountAmount = cart.items.reduce((acc, item) => {
+      if (item.discountedPrice) {
+        return acc.add(item.discountedPrice.mul(item.quantity))
+      }
+      return acc
+    }, new Decimal(0))
+
+    const taxAmount = subtotalAmount
+      .add(deliveryAmount)
+      .sub(discountAmount)
+      .mul(this.TAX_RATE)
+
+    const totalAmount = subtotalAmount
+      .add(deliveryAmount)
+      .sub(discountAmount)
+      .add(taxAmount)
+
+    const orderData = {
+      ...input,
+      userId,
+      currency: 'USD',
+      taxAmount,
+      subtotalAmount,
+      deliveryAmount,
+      discountAmount,
+      totalAmount,
+      items: {
+        createMany: {
+          data: cart.items.map((item) => {
+            const { id, price, name } = item.product
+            return {
+              productName: name,
+              productId: id,
+              quantity: item.quantity,
+              price,
+              totalPrice: price.mul(item.quantity)
+            }
+          })
+        }
+      }
+    }
+
+    if (input.method === PaymentMethod.CASH) {
+      const order = await prisma.order.create({
+        data: {
+          ...orderData,
+          paymentId: uuidv4(),
+          status: OrderStatus.AWAITING_PAYMENT
+        }
+      })
+
+      await prisma.cartItem.deleteMany({
+        where: {
+          cart: {
+            userId
+          }
+        }
+      })
+
+      const origin = this.configService.getOrThrow<string>('ORIGIN')
+
+      return { url: `${origin}/checkout/success?payment_id=${order.paymentId}` }
+    }
+
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] =
       cart.items.map((item) => ({
         price_data: {
           currency: 'usd',
-          product_data: {
-            name: item.product.name
-          },
+          product_data: { name: item.product.name },
           unit_amount: item.product.price.mul(100).toNumber()
         },
         quantity: item.quantity
       }))
 
-    const session = await this.stripeService.createCheckoutSession(lineItems)
+    if (taxAmount.greaterThan(0)) {
+      lineItems.push({
+        price_data: {
+          currency: 'usd',
+          product_data: { name: 'Tax' },
+          unit_amount: taxAmount.mul(100).toNumber()
+        },
+        quantity: 1
+      })
+    }
+
+    const shipping: Stripe.Checkout.SessionCreateParams.ShippingOption[] = []
+    if (deliveryAmount.greaterThan(0)) {
+      shipping.push({
+        shipping_rate_data: {
+          type: 'fixed_amount',
+          fixed_amount: {
+            amount: deliveryAmount.mul(100).toNumber(),
+            currency: 'usd'
+          },
+          display_name: 'Delivery'
+        }
+      })
+    }
+
+    const session = await this.stripeService.createCheckoutSession(
+      lineItems,
+      shipping
+    )
 
     if (!session.url) {
       throw new HttpException('Failed to create checkout session', 500)
@@ -112,21 +226,16 @@ export class OrderService {
 
     await prisma.order.create({
       data: {
-        ...input,
-        sessionId: session.id,
-        userId,
-        items: {
-          createMany: {
-            data: cart.items.map((item) => ({
-              productId: item.product.id,
-              quantity: item.quantity,
-              price: item.product.price
-            }))
-          }
-        }
+        ...orderData,
+        paymentId: session.id,
+        status: OrderStatus.PENDING
       }
     })
 
     return { url: session.url }
+  }
+
+  async createOrder(data: Prisma.OrderCreateInput): Promise<Order> {
+    return await prisma.order.create({ data })
   }
 }

@@ -12,7 +12,7 @@ export const Providers = () => {
 				<ThemeProvider defaultTheme='light' storageKey='theme'>
 					<TooltipProvider>
 						<TanstackRouterProvider />
-						<Toaster position='top-right' closeButton />
+						<Toaster position='top-right' closeButton duration={5000} />
 					</TooltipProvider>
 				</ThemeProvider>
 			</AuthProvider>
