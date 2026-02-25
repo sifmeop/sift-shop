@@ -108,17 +108,39 @@ type LogoutEntity {
   success: Boolean!
 }
 
+input MarkNotificationsAsReadInput {
+  ids: [String!]!
+}
+
 type Mutation {
   addToCart(input: AddToCartInput!): CartItemEntity!
   create(input: CreateOrderInput!): CreateOrderEntity!
   emailConfirmation(input: EmailConfirmationInput!): AuthEntity!
   forgotPassword(input: ForgotPasswordInput!): SuccessEntity!
+  markNotificationsAsRead(input: MarkNotificationsAsReadInput!): [NotificationEntity!]!
   removeFromCart(input: RemoveFromCartInput!): CartItemEntity!
   resetPassword(input: ResetPasswordInput!): SuccessEntity!
   signIn(input: SignInInput!): AuthEntity!
   signOut: LogoutEntity!
   signUp(input: SignUpInput!): SuccessEntity!
   updateAccountDetails(input: UpdateAccountDetailsInput!): AccountDetailsEntity!
+}
+
+type NotificationEntity {
+  createdAt: DateTime!
+  data: JSON
+  id: String!
+  readAt: DateTime
+  type: NotificationType!
+}
+
+"""Notification type"""
+enum NotificationType {
+  ORDER_CANCELLED
+  ORDER_PLACED
+  PASSWORD_CHANGED
+  TWO_FACTOR_DISABLED
+  TWO_FACTOR_ENABLED
 }
 
 type OrderEntity {
@@ -135,6 +157,7 @@ type OrderEntity {
   items: [OrderItemEntity!]!
   lastName: String!
   method: PaymentMethod!
+  number: Int!
   phone: String!
   state: String
   status: OrderStatus!
@@ -161,10 +184,20 @@ type OrderItemProductEntity {
 
 """Order status"""
 enum OrderStatus {
-  AWAITING_PAYMENT
   CANCELLED
   PAID
   PENDING
+  PROCESSING
+}
+
+type OrdersEntity {
+  orders: [OrderEntity!]!
+  total: Int!
+}
+
+input PaginationInput {
+  skip: Int! = 0
+  take: Int! = 10
 }
 
 """Payment method"""
@@ -202,6 +235,8 @@ type Query {
   cart: [CartItemEntity!]!
   categories: [CategoryEntity!]!
   getOrderByPaymentId(input: GetOrderByPaymentIdInput!): OrderEntity!
+  notifications: [NotificationEntity!]!
+  orders(input: PaginationInput!): OrdersEntity!
   products(filters: JSON, input: GetProductsInput!): ProductResponseEntity!
   schema: String!
   verifySession: AuthEntity!

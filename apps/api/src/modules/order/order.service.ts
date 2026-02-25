@@ -1,20 +1,26 @@
-import { HttpException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
+import { Cron, CronExpression } from '@nestjs/schedule'
 import {
+  NotificationType,
   Order,
   OrderStatus,
   PaymentMethod,
   Prisma,
   prisma
 } from '@sift-shop/database'
+import dayjs from 'dayjs'
 import Decimal from 'decimal.js'
 import Stripe from 'stripe'
 import { v4 as uuidv4 } from 'uuid'
 
+import { PaginationInput } from '~/common/inputs/pagination.input'
+import { PusherService } from '~/common/libs/pusher'
 import { StripeService } from '~/common/libs/stripe/stripe.service'
 
 import { CreateOrderEntity } from './entities/create-order.entity'
 import { OrderEntity } from './entities/order.entity'
+import { OrdersEntity } from './entities/orders.entity'
 import { CreateOrderInput } from './inputs/create-order.input'
 
 @Injectable()
@@ -24,12 +30,36 @@ export class OrderService {
 
   constructor(
     private readonly configService: ConfigService,
-    private readonly stripeService: StripeService
+    private readonly stripeService: StripeService,
+    private readonly pusherService: PusherService
   ) {}
+
+  @Cron(CronExpression.EVERY_MINUTE)
+  async handlePendingOrders(): Promise<void> {
+    const expiryThreshold = dayjs().subtract(30, 'minute').toDate()
+
+    const result = await prisma.order.updateMany({
+      where: {
+        status: OrderStatus.PENDING,
+        createdAt: {
+          lte: expiryThreshold
+        }
+      },
+      data: {
+        status: OrderStatus.CANCELLED
+      }
+    })
+
+    if (result.count > 0) {
+      Logger.log(`Cancelled ${result.count} orders`)
+    }
+  }
 
   async getOrderByPaymentId(paymentId: string): Promise<OrderEntity> {
     const order = await prisma.order.findFirst({
-      where: { paymentId },
+      where: {
+        paymentId
+      },
       include: {
         items: {
           include: {
@@ -46,38 +76,35 @@ export class OrderService {
     return order
   }
 
-  async getOrder(id: string): Promise<OrderEntity> {
-    const order = await prisma.order.findUnique({
-      where: { id },
-      include: {
-        items: {
-          include: {
-            product: true
+  async getOrders(
+    userId: string,
+    input: PaginationInput
+  ): Promise<OrdersEntity> {
+    const [orders, total] = await Promise.all([
+      prisma.order.findMany({
+        where: { userId },
+        orderBy: {
+          createdAt: 'desc'
+        },
+        include: {
+          items: {
+            include: {
+              product: true
+            }
           }
-        }
-      }
-    })
+        },
+        skip: input.skip,
+        take: input.take
+      }),
+      prisma.order.count({
+        where: { userId }
+      })
+    ])
 
-    if (!order) {
-      throw new HttpException('Order not found', 404)
+    return {
+      orders,
+      total
     }
-
-    return order
-  }
-
-  async getOrders(userId: string): Promise<OrderEntity[]> {
-    const orders = await prisma.order.findMany({
-      where: { userId },
-      include: {
-        items: {
-          include: {
-            product: true
-          }
-        }
-      }
-    })
-
-    return orders
   }
 
   async create(
@@ -97,6 +124,10 @@ export class OrderService {
 
     if (!cart) {
       throw new HttpException('Cart not found', 404)
+    }
+
+    if (cart.items.length === 0) {
+      throw new HttpException('Cart is empty', 400)
     }
 
     const outOfStockItems = cart.items.filter(
@@ -159,21 +190,44 @@ export class OrderService {
     }
 
     if (input.method === PaymentMethod.CASH) {
-      const order = await prisma.order.create({
+      const [order] = await Promise.all([
+        prisma.order.create({
+          data: {
+            ...orderData,
+            paymentId: uuidv4(),
+            status: OrderStatus.PROCESSING
+          },
+          include: {
+            items: {
+              include: {
+                product: true
+              }
+            }
+          }
+        }),
+        prisma.cartItem.deleteMany({
+          where: {
+            cart: {
+              userId
+            }
+          }
+        })
+      ])
+
+      const notification = await prisma.notification.create({
         data: {
-          ...orderData,
-          paymentId: uuidv4(),
-          status: OrderStatus.AWAITING_PAYMENT
+          data: {
+            orderId: order.id,
+            orderNumber: String(order.number),
+            totalAmount: order.totalAmount
+          },
+          type: NotificationType.ORDER_PLACED,
+          userId
         }
       })
 
-      await prisma.cartItem.deleteMany({
-        where: {
-          cart: {
-            userId
-          }
-        }
-      })
+      this.pusherService.trigger(`user-${userId}`, 'notification', notification)
+      this.pusherService.trigger(`user-${userId}`, 'order', order)
 
       const origin = this.configService.getOrThrow<string>('ORIGIN')
 
@@ -224,13 +278,22 @@ export class OrderService {
       throw new HttpException('Failed to create checkout session', 500)
     }
 
-    await prisma.order.create({
+    const order = await prisma.order.create({
       data: {
         ...orderData,
         paymentId: session.id,
         status: OrderStatus.PENDING
+      },
+      include: {
+        items: {
+          include: {
+            product: true
+          }
+        }
       }
     })
+
+    this.pusherService.trigger(`user-${userId}`, 'order', order)
 
     return { url: session.url }
   }

@@ -7,7 +7,7 @@ import {
   RemoveFromCartMutationVariables
 } from '~/common/lib/graphql/generated/graphql'
 
-import { CART_GQL } from './useCartQuery'
+import { GET_CART_GQL } from './useCartQuery'
 
 const REMOVE_FROM_CART_GQL = gql(`
   mutation RemoveFromCart($input: RemoveFromCartInput!) {
@@ -34,7 +34,7 @@ export const useRemoveFromCartMutation = () => {
       update: (cache, { data }) => {
         if (!data) return
 
-        cache.updateQuery<CartQuery>({ query: CART_GQL }, (prev) => {
+        cache.updateQuery<CartQuery>({ query: GET_CART_GQL }, (prev) => {
           if (!prev) return
 
           const canRemoveItem = data.removeFromCart.quantity === 0

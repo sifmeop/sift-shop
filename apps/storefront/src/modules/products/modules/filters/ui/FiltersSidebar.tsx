@@ -11,7 +11,7 @@ interface FiltersSidebarProps {
 }
 
 export const FiltersSidebar = ({ filters }: FiltersSidebarProps) => {
-  const isEmpty = filters.every((filter) => filter.options.length === 0)
+  const isEmpty = filters.every((filter) => !filter.options.length)
 
   if (isEmpty) return
 

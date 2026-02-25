@@ -7,8 +7,7 @@ import {
   LogOutIcon,
   ShoppingCartIcon,
   UserIcon,
-  UserPlusIcon,
-  VanIcon
+  UserPlusIcon
 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -78,17 +77,13 @@ export const UserMenu = () => {
             <HeartIcon />
             Wishlist
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleRoute(ROUTES.ADDRESS)}>
-            <VanIcon />
-            Address
+          <DropdownMenuItem onClick={handleRoute(ROUTES.ACCOUNT_DETAIL)}>
+            <UserIcon />
+            Account Details
           </DropdownMenuItem>
           <DropdownMenuItem onClick={handleRoute(ROUTES.PASSWORD)}>
             <KeyRoundIcon />
             Password
-          </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleRoute(ROUTES.ACCOUNT_DETAIL)}>
-            <UserIcon />
-            Account Details
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

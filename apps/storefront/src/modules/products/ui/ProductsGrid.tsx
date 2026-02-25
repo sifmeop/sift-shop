@@ -4,27 +4,12 @@ import type { ProductEntity } from '~/common/lib/graphql/generated/graphql'
 
 import { ProductCard } from './ProductCard'
 
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.1
-    }
-  }
-}
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0 }
-}
-
 interface ProductsGridProps {
   products: ProductEntity[]
 }
 
 export const ProductsGrid = ({ products }: ProductsGridProps) => {
-  if (products.length === 0) {
+  if (!products.length) {
     return (
       <div className='flex-1 flex flex-col items-center justify-center py-20'>
         <div className='text-center'>

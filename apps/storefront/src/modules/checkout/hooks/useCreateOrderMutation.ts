@@ -14,7 +14,7 @@ const CREATE_ORDER_GQL = gql(`
 	}
 `)
 
-export const useCreateOrder = () => {
+export const useCreateOrderMutation = () => {
   return useMutation<CreateOrderMutation, CreateOrderMutationVariables>(
     CREATE_ORDER_GQL
   )

@@ -87,3 +87,8 @@ export type Order = Prisma.OrderModel
  * 
  */
 export type OrderItem = Prisma.OrderItemModel
+/**
+ * Model Notification
+ * 
+ */
+export type Notification = Prisma.NotificationModel

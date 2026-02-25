@@ -1,8 +1,8 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 
-import { Layout } from '~/common/layout'
-import { Providers } from '~/common/providers'
+import { Layout } from '~/app/_layout'
+import { Providers } from '~/app/_providers'
 import { cn } from '~/common/utils/cn'
 
 import './globals.css'

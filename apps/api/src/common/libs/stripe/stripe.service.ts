@@ -1,13 +1,18 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { OrderStatus, prisma } from '@sift-shop/database'
+import { NotificationType, OrderStatus, prisma } from '@sift-shop/database'
 import Stripe from 'stripe'
+
+import { PusherService } from '../pusher'
 
 @Injectable()
 export class StripeService {
   readonly stripe: Stripe
 
-  constructor(private configService: ConfigService) {
+  constructor(
+    private configService: ConfigService,
+    private readonly pusherService: PusherService
+  ) {
     const secretKey = this.configService.getOrThrow<string>('STRIPE_SECRET_KEY')
     this.stripe = new Stripe(secretKey)
   }
@@ -50,23 +55,44 @@ export class StripeService {
 
         if (!order) break
 
-        await prisma.order.update({
-          where: {
-            id: order.id
-          },
+        const userId = order.userId
+
+        const [orderUpdate] = await Promise.all([
+          prisma.order.update({
+            where: {
+              id: order.id
+            },
+            data: {
+              status: OrderStatus.PAID,
+              currency: session.currency?.toUpperCase()
+            }
+          }),
+          prisma.cartItem.deleteMany({
+            where: {
+              cart: {
+                userId
+              }
+            }
+          })
+        ])
+
+        const notification = await prisma.notification.create({
           data: {
-            status: OrderStatus.PAID,
-            currency: session.currency?.toUpperCase()
+            data: {
+              orderId: orderUpdate.id,
+              orderNumber: String(orderUpdate.number),
+              totalAmount: orderUpdate.totalAmount
+            },
+            type: NotificationType.ORDER_PLACED,
+            userId
           }
         })
 
-        await prisma.cartItem.deleteMany({
-          where: {
-            cart: {
-              userId: order.userId
-            }
-          }
-        })
+        this.pusherService.trigger(
+          `user-${userId}`,
+          'notification',
+          notification
+        )
 
         break
       }
@@ -83,6 +109,26 @@ export class StripeService {
           where: { id: order.id },
           data: { status: OrderStatus.CANCELLED }
         })
+
+        const userId = order.userId
+
+        const notification = await prisma.notification.create({
+          data: {
+            data: {
+              orderId: order.id,
+              orderNumber: String(order.number),
+              totalAmount: order.totalAmount
+            },
+            type: NotificationType.ORDER_CANCELLED,
+            userId
+          }
+        })
+
+        this.pusherService.trigger(
+          `user-${userId}`,
+          'notification',
+          notification
+        )
 
         break
       }

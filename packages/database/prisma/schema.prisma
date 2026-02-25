@@ -32,8 +32,16 @@ enum PaymentMethod {
 enum OrderStatus {
   PENDING
   PAID
-  AWAITING_PAYMENT
+  PROCESSING
   CANCELLED
+}
+
+enum NotificationType {
+  ORDER_PLACED
+  ORDER_CANCELLED
+  PASSWORD_CHANGED
+  TWO_FACTOR_ENABLED
+  TWO_FACTOR_DISABLED
 }
 
 model User {
@@ -53,6 +61,7 @@ model User {
   cart               Cart?
   orders             Order[]
   accountDetailId    String?
+  notification       Notification[]
 }
 
 model AccountDetail {
@@ -224,6 +233,7 @@ model CartItem {
 
 model Order {
   id             String        @id @default(uuid())
+  number         Int           @unique @default(autoincrement())
   paymentId      String
   status         OrderStatus   @default(PENDING)
   method         PaymentMethod
@@ -259,4 +269,14 @@ model OrderItem {
   productName String
   price       Decimal @db.Decimal(10, 2)
   totalPrice  Decimal @db.Decimal(10, 2)
+}
+
+model Notification {
+  id        String           @id @default(uuid())
+  data      Json?
+  type      NotificationType
+  readAt    DateTime?
+  user      User             @relation(fields: [userId], references: [id])
+  userId    String
+  createdAt DateTime         @default(now())
 }

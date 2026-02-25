@@ -1,3 +1,5 @@
+import { OrdersList } from '~/modules/orders'
+
 export const OrdersPage = () => {
-  return <div>Orders</div>
+  return <OrdersList />
 }

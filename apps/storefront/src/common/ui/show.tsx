@@ -1,5 +1,5 @@
 interface ShowProps extends React.PropsWithChildren {
-  when: boolean
+  when?: boolean
   fallback?: React.ReactNode
 }
 

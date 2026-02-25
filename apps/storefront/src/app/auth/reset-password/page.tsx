@@ -12,7 +12,7 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
   const { token } = await searchParams
 
-  if (!token || token.length === 0) {
+  if (!token || !token.length) {
     redirect(ROUTES.FORGOT_PASSWORD)
   }
 

@@ -12,9 +12,8 @@ import { ProfileNavigation } from './ProfileNavigation'
 const titles = {
   [ROUTES.ORDERS]: 'Orders',
   [ROUTES.WISHLIST]: 'Wishlist',
-  [ROUTES.ADDRESS]: 'Address',
-  [ROUTES.PASSWORD]: 'Password',
-  [ROUTES.ACCOUNT_DETAIL]: 'Account Detail'
+  [ROUTES.ACCOUNT_DETAIL]: 'Account Details',
+  [ROUTES.PASSWORD]: 'Password'
 }
 
 export const ProfileLayout = ({ children }: React.PropsWithChildren) => {

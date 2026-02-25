@@ -7,7 +7,7 @@ import {
   CartQuery
 } from '~/common/lib/graphql/generated/graphql'
 
-import { CART_GQL } from './useCartQuery'
+import { GET_CART_GQL } from './useCartQuery'
 
 const ADD_TO_CART_GQL = gql(`
 	mutation AddToCart($input: AddToCartInput!) {
@@ -34,7 +34,7 @@ export const useAddToCartMutation = () => {
       update: (cache, { data }) => {
         if (!data) return
 
-        cache.updateQuery<CartQuery>({ query: CART_GQL }, (prev) => {
+        cache.updateQuery<CartQuery>({ query: GET_CART_GQL }, (prev) => {
           if (!prev) return
 
           const isExisting = prev.cart.some(

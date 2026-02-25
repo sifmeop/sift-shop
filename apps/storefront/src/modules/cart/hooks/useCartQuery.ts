@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client/react'
 import { gql } from '~/common/lib/graphql/generated'
 import { CartQuery } from '~/common/lib/graphql/generated/graphql'
 
-export const CART_GQL = gql(`
+export const GET_CART_GQL = gql(`
   query Cart {
     cart {
       id
@@ -22,5 +22,5 @@ export const CART_GQL = gql(`
 `)
 
 export const useCartQuery = () => {
-  return useQuery<CartQuery>(CART_GQL)
+  return useQuery<CartQuery>(GET_CART_GQL)
 }

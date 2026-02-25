@@ -1,10 +1,11 @@
 import { Controller, useFormContext } from 'react-hook-form'
 
-import clsx from 'clsx'
+import { AnimatePresence, motion } from 'motion/react'
 
 import { PaymentMethod } from '~/common/lib/graphql/generated/graphql'
 import { Button } from '~/common/ui/button'
 import { Label } from '~/common/ui/label'
+import { cn } from '~/common/utils/cn'
 
 import { CheckoutFormData } from '../../schemas/checkout.schema'
 
@@ -56,20 +57,20 @@ const PAYMENT_OPTIONS = [
     label: 'Pay with Card',
     description: 'Visa, Mastercard, or any debit card',
     icon: CreditCardIcon,
-    gradient: 'from-blue-500 to-violet-500',
-    ring: 'ring-blue-500/30',
-    iconBg: 'bg-blue-50',
-    iconColor: 'text-blue-600'
+    activeColor: 'text-blue-600',
+    activeBg: 'bg-blue-50',
+    activeBorder: 'border-blue-600',
+    ring: 'ring-blue-600/20'
   },
   {
     value: PaymentMethod.Cash,
     label: 'Pay with Cash',
     description: 'Pay in person upon delivery',
     icon: CashIcon,
-    gradient: 'from-emerald-500 to-teal-500',
-    ring: 'ring-emerald-500/30',
-    iconBg: 'bg-emerald-50',
-    iconColor: 'text-emerald-600'
+    activeColor: 'text-emerald-600',
+    activeBg: 'bg-emerald-50',
+    activeBorder: 'border-emerald-600',
+    ring: 'ring-emerald-600/20'
   }
 ] as const
 
@@ -79,7 +80,7 @@ export const PaymentStep = ({}: PaymentStepProps) => {
   return (
     <div className='flex flex-col justify-between flex-1 gap-5'>
       <div>
-        <Label className='text-xs font-semibold uppercase tracking-widest mb-3'>
+        <Label className='text-xs font-semibold uppercase tracking-widest mb-4 block'>
           Choose Payment Method
         </Label>
 
@@ -97,62 +98,75 @@ export const PaymentStep = ({}: PaymentStepProps) => {
                     key={option.value}
                     type='button'
                     onClick={() => field.onChange(option.value)}
-                    className={clsx(
-                      'relative flex items-center gap-4 w-full text-left px-4 py-4 rounded-lg border-2 transition-all duration-200 outline-none',
+                    className={cn(
+                      'relative flex items-center gap-4 w-full text-left px-4 py-4 rounded-xl border-2 transition-all duration-300 outline-none overflow-hidden',
                       isSelected
-                        ? `border-transparent ring-2 ${option.ring} shadow-md bg-white`
-                        : 'border-slate-100 bg-white hover:border-slate-200 hover:shadow-sm'
+                        ? `${option.activeBorder} ${option.ring} shadow-sm`
+                        : 'border-slate-100 bg-white hover:border-slate-300'
                     )}>
-                    {isSelected && (
-                      <span
-                        className={clsx(
-                          'absolute inset-0 rounded-lg bg-linear-to-br opacity-[0.05] pointer-events-none',
-                          option.gradient
-                        )}
-                      />
-                    )}
+                    <AnimatePresence>
+                      {isSelected && (
+                        <motion.div
+                          initial={{ opacity: 0 }}
+                          animate={{ opacity: 1 }}
+                          exit={{ opacity: 0 }}
+                          className={cn(
+                            'absolute inset-0 -z-10',
+                            option.activeBg
+                          )}
+                        />
+                      )}
+                    </AnimatePresence>
 
-                    <span
-                      className={clsx(
-                        'shrink-0 flex items-center justify-center w-11 h-11 rounded-lg transition-colors duration-200',
-                        isSelected ? option.iconBg : 'bg-slate-100'
+                    <div
+                      className={cn(
+                        'shrink-0 flex items-center justify-center w-11 h-11 rounded-lg transition-all duration-300 bg-slate-100'
                       )}>
                       <span
-                        className={
-                          isSelected ? option.iconColor : 'text-slate-400'
-                        }>
+                        className={cn(
+                          'transition-colors duration-300',
+                          isSelected ? option.activeColor : 'text-slate-400'
+                        )}>
                         <Icon />
                       </span>
-                    </span>
+                    </div>
 
-                    <span className='flex flex-col min-w-0 flex-1'>
+                    <div className='flex flex-col min-w-0 flex-1'>
                       <span
-                        className={clsx(
-                          'text-sm font-semibold leading-tight',
+                        className={cn(
+                          'text-sm font-semibold transition-colors duration-300',
                           isSelected ? 'text-slate-900' : 'text-slate-600'
                         )}>
                         {option.label}
                       </span>
-                      <span className='text-xs text-slate-400 mt-0.5'>
+                      <span className='text-xs text-slate-400 mt-0.5 leading-none'>
                         {option.description}
                       </span>
-                    </span>
+                    </div>
 
-                    <span className='ml-auto shrink-0'>
-                      {isSelected ? (
-                        <span
-                          className={clsx(
-                            'flex items-center justify-center w-6 h-6 rounded-full bg-linear-to-br',
-                            option.gradient
-                          )}>
-                          <span className='text-white'>
+                    <div className='ml-auto shrink-0 relative w-6 h-6'>
+                      <div
+                        className={cn(
+                          'absolute inset-0 rounded-full border-2 transition-all duration-300',
+                          isSelected ? option.activeBorder : 'border-slate-200'
+                        )}
+                      />
+
+                      <AnimatePresence>
+                        {isSelected && (
+                          <motion.div
+                            initial={{ scale: 0 }}
+                            animate={{ scale: 1 }}
+                            exit={{ scale: 0 }}
+                            className={cn(
+                              'absolute inset-0 flex items-center justify-center rounded-full text-white',
+                              option.activeBorder.replace('border-', 'bg-')
+                            )}>
                             <CheckIcon />
-                          </span>
-                        </span>
-                      ) : (
-                        <span className='w-6 h-6 rounded-full border-2 border-slate-200 block' />
-                      )}
-                    </span>
+                          </motion.div>
+                        )}
+                      </AnimatePresence>
+                    </div>
                   </button>
                 )
               })}

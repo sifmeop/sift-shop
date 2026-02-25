@@ -10,14 +10,14 @@ import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
 
 import { CheckoutFormData, checkoutSchema } from '../schemas/checkout.schema'
 
-import { useCreateOrder } from './useCreateOrder'
+import { useCreateOrderMutation } from './useCreateOrderMutation'
 
 export const useCheckoutForm = () => {
   const router = useRouter()
   const [currentStep, setCurrentStep] = useState<number>(0)
   const accountDetails = useUserStore((state) => state.user?.accountDetails)
 
-  const [mutate] = useCreateOrder()
+  const [mutate] = useCreateOrderMutation()
 
   const form = useForm<CheckoutFormData>({
     defaultValues: {

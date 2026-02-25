@@ -7,6 +7,6 @@ export const FORMAT_PRICE_OPTIONS: Format = {
   minimumFractionDigits: 2
 }
 
-export const formatPrice = (price: number) => {
-  return new Intl.NumberFormat('en-US', FORMAT_PRICE_OPTIONS).format(price)
+export const formatPrice = (price: number | string) => {
+  return new Intl.NumberFormat('en-US', FORMAT_PRICE_OPTIONS).format(+price)
 }

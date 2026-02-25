@@ -48,7 +48,7 @@ export const AppliedFilters = ({ filters }: AppliedFiltersProps) => {
     })
     .filter((item): item is AppliedFilter => item !== null)
 
-  if (appliedFilters.length === 0) return
+  if (!appliedFilters.length) return
 
   return (
     <div className='flex flex-wrap gap-3'>

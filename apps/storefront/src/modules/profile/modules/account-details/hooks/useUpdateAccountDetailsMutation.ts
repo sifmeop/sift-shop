@@ -23,7 +23,7 @@ const UPDATE_ACCOUNT_DETAILS_GQL = gql(`
 	}
 `)
 
-export const useUpdateAccountDetails = () => {
+export const useUpdateAccountDetailsMutation = () => {
   const setAccountDetails = useUserStore((state) => state.setAccountDetails)
 
   return useMutation<

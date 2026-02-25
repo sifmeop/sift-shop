@@ -11,6 +11,7 @@ export const handleGraphQLError = (
   error: unknown,
   fallback: string = 'Something went wrong. Please try again.'
 ) => {
+  console.debug('error', error)
   if (CombinedGraphQLErrors.is(error)) {
     const cause = error.cause
 

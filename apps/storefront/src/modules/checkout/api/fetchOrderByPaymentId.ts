@@ -12,6 +12,7 @@ const GET_ORDER_BY_PAYMENT_ID_GQL = gql(`
 	query GetOrderByPaymentId($input: GetOrderByPaymentIdInput!) {
     getOrderByPaymentId(input: $input) {
       id
+      number
       status
       method
       firstName

@@ -12,11 +12,11 @@ import {
   accountDetailsSchema
 } from '../schemas/account-details.schema'
 
-import { useUpdateAccountDetails } from './useUpdateAccountDetails'
+import { useUpdateAccountDetailsMutation } from './useUpdateAccountDetailsMutation'
 
 export const useAccountDetailsForm = () => {
   const accountDetails = useUserStore((state) => state.user?.accountDetails)
-  const [mutate, { loading }] = useUpdateAccountDetails()
+  const [mutate, { loading }] = useUpdateAccountDetailsMutation()
 
   const form = useForm<AccountDetailsFormData>({
     defaultValues: {

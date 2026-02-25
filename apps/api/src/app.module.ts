@@ -4,17 +4,20 @@ import { ConfigModule } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 import { GraphQLModule } from '@nestjs/graphql'
 import { PassportModule } from '@nestjs/passport'
+import { ScheduleModule } from '@nestjs/schedule'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { GraphQLJSON, GraphQLJSONObject } from 'graphql-scalars'
 import { join } from 'path'
 
 import { AuthGuard } from './common/guards/auth.guard'
 import { MailModule } from './common/libs/mail/mail.module'
+import { PusherModule } from './common/libs/pusher'
 import { StripeModule } from './common/libs/stripe/stripe.module'
 import { GraphQLContext } from './common/types/graphql-context'
 import { AuthModule } from './modules/auth/auth.module'
 import { CartModule } from './modules/cart/cart.module'
 import { CategoryModule } from './modules/category/category.module'
+import { NotificationModule } from './modules/notification/notification.module'
 import { OrderModule } from './modules/order/order.module'
 import { ProductModule } from './modules/product/product.module'
 import { UserModule } from './modules/user/user.module'
@@ -39,6 +42,7 @@ import { UserModule } from './modules/user/user.module'
       }
     ]),
     ConfigModule.forRoot({ isGlobal: true }),
+    ScheduleModule.forRoot(),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
@@ -67,7 +71,9 @@ import { UserModule } from './modules/user/user.module'
     ProductModule,
     CartModule,
     OrderModule,
-    StripeModule
+    StripeModule,
+    NotificationModule,
+    PusherModule
   ],
   controllers: [],
   providers: [

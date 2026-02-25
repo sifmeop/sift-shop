@@ -3,8 +3,7 @@ import {
   KeyRoundIcon,
   LucideIcon,
   ShoppingCart,
-  UserIcon,
-  VanIcon
+  UserIcon
 } from 'lucide-react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -32,19 +31,14 @@ const links: ProfileMenuItemProps[] = [
     icon: HeartIcon
   },
   {
-    name: 'Address',
-    href: ROUTES.ADDRESS,
-    icon: VanIcon
+    name: 'Account Details',
+    href: ROUTES.ACCOUNT_DETAIL,
+    icon: UserIcon
   },
   {
     name: 'Password',
     href: ROUTES.PASSWORD,
     icon: KeyRoundIcon
-  },
-  {
-    name: 'Account Detail',
-    href: ROUTES.ACCOUNT_DETAIL,
-    icon: UserIcon
   }
 ]
 
