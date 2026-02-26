@@ -4,6 +4,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import { Bell, BellDotIcon, BellIcon, XIcon } from 'lucide-react'
 
+import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
 import { Button } from '~/common/ui/button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
 import {
@@ -24,6 +25,7 @@ import { MarkAllButton } from './MarkAllButton'
 import { NotificationItem } from './NotificationItem'
 
 export const Notifications = () => {
+  const isAuthenticated = useIsAuthenticated()
   const { data, loading, error } = useGetNotificationsQuery()
   const notifications = data?.notifications
 
@@ -34,7 +36,7 @@ export const Notifications = () => {
 
   return (
     <Drawer direction='right'>
-      <DrawerTrigger asChild>
+      <DrawerTrigger asChild disabled={!isAuthenticated}>
         <Button variant='ghost' className='size-11.25 relative'>
           <Icon
             className='size-6.5 [&>circle]:stroke-red-500 [&>circle]:fill-red-500'

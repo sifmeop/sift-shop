@@ -5,15 +5,20 @@ import {
   Injectable
 } from '@nestjs/common'
 import { GqlExecutionContext } from '@nestjs/graphql'
-import * as speakeasy from 'speakeasy'
+import { GraphQLError } from 'graphql'
+import { verify } from 'otplib'
 
+import { TwoFactorAuthService } from '~/modules/two-factor-auth/two-factor-auth.service'
 import { UserService } from '~/modules/user/user.service'
 
 import { SignInInput } from '../dto/sign-in.input'
 
 @Injectable()
 export class TwoFactorGuard implements CanActivate {
-  constructor(private readonly userService: UserService) {}
+  constructor(
+    private readonly userService: UserService,
+    private readonly twoFactorAuthService: TwoFactorAuthService
+  ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
     const ctx = GqlExecutionContext.create(context)
@@ -25,22 +30,28 @@ export class TwoFactorGuard implements CanActivate {
       throw new HttpException('User not found', 404)
     }
 
-    if (!user.isTwoFactorEnabled || !user.twoFactorSecret) {
+    if (!user.isVerified || !user.isTwoFactorEnabled || !user.twoFactorSecret) {
       return true
     }
 
     if (!input.code) {
-      throw new HttpException('2FA code is required', 400)
+      throw new GraphQLError('2FA code is required', {
+        extensions: {
+          code: 'TWO_FACTOR_REQUIRED'
+        }
+      })
     }
 
-    const isValid = speakeasy.totp.verify({
-      secret: user.twoFactorSecret,
-      encoding: 'base32',
-      token: input.code,
-      window: 1
+    const decryptedSecret = this.twoFactorAuthService.decryptSecret(
+      user.twoFactorSecret
+    )
+
+    const { valid } = await verify({
+      secret: decryptedSecret,
+      token: input.code
     })
 
-    if (!isValid) {
+    if (!valid) {
       throw new HttpException('Invalid 2FA code', 401)
     }
 

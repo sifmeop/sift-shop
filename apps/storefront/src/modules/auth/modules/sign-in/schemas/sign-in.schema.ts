@@ -9,7 +9,8 @@ export const signInSchema = z.object({
     .regex(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)/,
       'Password must contain at least one lowercase letter, one uppercase letter, and one number'
-    )
+    ),
+  code: z.string().optional()
 })
 
 export type SignInFormData = z.infer<typeof signInSchema>

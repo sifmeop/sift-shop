@@ -7,9 +7,8 @@ import {
 import { Reflector } from '@nestjs/core'
 import { GqlExecutionContext } from '@nestjs/graphql'
 import { User } from '@sift-shop/database'
-import { Request } from 'express'
-
 import { UserRole } from '@sift-shop/database'
+import { Request } from 'express'
 
 @Injectable()
 export class RolesGuard implements CanActivate {

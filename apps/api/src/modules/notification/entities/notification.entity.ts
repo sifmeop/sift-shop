@@ -1,4 +1,4 @@
-import { Field, ObjectType, registerEnumType } from '@nestjs/graphql'
+import { Field, ID, ObjectType, registerEnumType } from '@nestjs/graphql'
 import { Notification, NotificationType, Prisma } from '@sift-shop/database'
 import { GraphQLJSON } from 'graphql-scalars'
 
@@ -9,7 +9,7 @@ registerEnumType(NotificationType, {
 
 @ObjectType()
 export class NotificationEntity implements Partial<Notification> {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field(() => GraphQLJSON, { nullable: true })

@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client/react'
 
+import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
 import { gql } from '~/common/lib/graphql/generated'
 import { CartQuery } from '~/common/lib/graphql/generated/graphql'
 
@@ -17,10 +18,14 @@ export const GET_CART_GQL = gql(`
       quantity
       price
       discountedPrice
+      isPriceChanged
     }
   }
 `)
 
 export const useCartQuery = () => {
-  return useQuery<CartQuery>(GET_CART_GQL)
+  const isAuthenticated = useIsAuthenticated()
+  return useQuery<CartQuery>(GET_CART_GQL, {
+    skip: !isAuthenticated
+  })
 }

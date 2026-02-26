@@ -1,8 +1,9 @@
 'use client'
 
-import { useId, useState } from 'react'
+import { useEffect, useId, useRef, useState } from 'react'
 
 import { EyeIcon, EyeOffIcon } from 'lucide-react'
+import { AnimatePresence, motion } from 'motion/react'
 
 import { cn } from '~/common/utils/cn'
 
@@ -101,5 +102,108 @@ export const PasswordInput = ({
       </InputGroup>
       <FieldError error={errorMessage} />
     </Field>
+  )
+}
+
+const OTP_LENGTH = 6
+
+interface InputOTPProps {
+  focus?: boolean
+  value: string[]
+  onChange: (value: string[]) => void
+  error?: string | null
+  disabled?: boolean
+}
+
+export const InputOTP = ({
+  focus,
+  value,
+  onChange,
+  error,
+  disabled
+}: InputOTPProps) => {
+  const inputsRef = useRef<(HTMLInputElement | null)[]>([])
+  const [isErrorVisible, setIsErrorVisible] = useState(false)
+
+  useEffect(() => {
+    if (error) {
+      // eslint-disable-next-line react-hooks/set-state-in-effect
+      setIsErrorVisible(true)
+    }
+  }, [error])
+
+  const handleChange = (index: number, val: string) => {
+    if (!/^\d*$/.test(val)) return
+    const next = [...value]
+    next[index] = val.slice(-1)
+    onChange(next)
+    setIsErrorVisible(false)
+
+    if (val && index < OTP_LENGTH - 1) {
+      inputsRef.current[index + 1]?.focus()
+    }
+  }
+
+  const handleKeyDown = (index: number, e: React.KeyboardEvent) => {
+    if (e.key === 'Backspace' && !value[index] && index > 0) {
+      inputsRef.current[index - 1]?.focus()
+    }
+  }
+
+  const handlePaste = (e: React.ClipboardEvent) => {
+    const pasted = e.clipboardData
+      .getData('text')
+      .replace(/\D/g, '')
+      .slice(0, OTP_LENGTH)
+    if (pasted.length === OTP_LENGTH) {
+      onChange(pasted.split(''))
+      setIsErrorVisible(false)
+      inputsRef.current[OTP_LENGTH - 1]?.focus()
+    }
+  }
+
+  return (
+    <div className='flex flex-col items-center gap-3'>
+      <div className='flex gap-2' onPaste={handlePaste}>
+        {value.map((digit, i) => (
+          <motion.input
+            key={i}
+            ref={(el) => {
+              inputsRef.current[i] = el
+              if (focus && i === 0) el?.focus()
+            }}
+            type='text'
+            inputMode='numeric'
+            maxLength={1}
+            value={digit}
+            onChange={(e) => handleChange(i, e.target.value)}
+            onKeyDown={(e) => handleKeyDown(i, e)}
+            animate={isErrorVisible ? { x: [0, -5, 5, -4, 4, 0] } : {}}
+            transition={{ duration: 0.35 }}
+            disabled={disabled}
+            className={cn(
+              'size-12 text-center text-xl font-bold rounded-xl border bg-muted/50 text-foreground outline-none transition-all focus:ring-2 focus:ring-ring focus:border-transparent focus:scale-105 disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 disabled:scale-100',
+              isErrorVisible
+                ? 'border-destructive text-destructive'
+                : digit
+                  ? 'border-border'
+                  : 'border-border/60'
+            )}
+          />
+        ))}
+      </div>
+
+      <AnimatePresence>
+        {isErrorVisible && (
+          <motion.p
+            initial={{ opacity: 0, y: -4 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0 }}
+            className='text-xs text-destructive'>
+            {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+    </div>
   )
 }

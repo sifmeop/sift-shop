@@ -81,9 +81,9 @@ export const UserMenu = () => {
             <UserIcon />
             Account Details
           </DropdownMenuItem>
-          <DropdownMenuItem onClick={handleRoute(ROUTES.PASSWORD)}>
+          <DropdownMenuItem onClick={handleRoute(ROUTES.TWO_FACTOR_AUTH)}>
             <KeyRoundIcon />
-            Password
+            2FA
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />

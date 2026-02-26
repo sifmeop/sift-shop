@@ -1,11 +1,11 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, ID, ObjectType } from '@nestjs/graphql'
 import { Filter } from '@sift-shop/database'
 
 import { FilterOptionEntity } from './filter-option.entity'
 
 @ObjectType()
 export class ProductFiltersEntity implements Partial<Filter> {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field()

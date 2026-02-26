@@ -23,6 +23,7 @@ const REMOVE_FROM_CART_GQL = gql(`
 			quantity
 			price
 			discountedPrice
+      isPriceChanged
 		}
   }
 `)

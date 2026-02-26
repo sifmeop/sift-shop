@@ -1,4 +1,8 @@
+import { useState } from 'react'
+
 import { cva, type VariantProps } from 'class-variance-authority'
+import { CheckIcon, CopyIcon } from 'lucide-react'
+import { AnimatePresence, HTMLMotionProps, motion } from 'motion/react'
 import { Slot } from 'radix-ui'
 
 import { cn } from '~/common/utils/cn'
@@ -104,4 +108,45 @@ export const Button = <T extends React.ElementType = 'button'>({
     </Comp>
   )
 }
-export type { ButtonProps }
+
+export const CopyButton = ({
+  data,
+  ...props
+}: HTMLMotionProps<'button'> & { data: string }) => {
+  const [copied, setCopied] = useState(false)
+
+  const handleCopy = () => {
+    navigator.clipboard.writeText(data)
+    setCopied(true)
+    setTimeout(() => setCopied(false), 2000)
+  }
+
+  return (
+    <motion.button
+      onClick={handleCopy}
+      whileTap={{ scale: 0.88 }}
+      className='shrink-0 size-8 rounded-lg bg-background border border-border grid place-items-center text-muted-foreground hover:text-foreground hover:border-foreground/30 transition-colors shadow-sm'
+      {...props}>
+      <AnimatePresence mode='wait'>
+        {copied ? (
+          <motion.div
+            key='check'
+            initial={{ scale: 0, rotate: -10 }}
+            animate={{ scale: 1, rotate: 0 }}
+            exit={{ scale: 0 }}
+            transition={{ type: 'spring', stiffness: 300, damping: 20 }}>
+            <CheckIcon className='size-3.5 text-emerald-500' />
+          </motion.div>
+        ) : (
+          <motion.div
+            key='copy'
+            initial={{ scale: 0 }}
+            animate={{ scale: 1 }}
+            exit={{ scale: 0 }}>
+            <CopyIcon className='size-3.5' />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </motion.button>
+  )
+}

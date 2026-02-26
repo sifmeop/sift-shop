@@ -1,11 +1,11 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql'
 import { Prisma, Product } from '@sift-shop/database'
 import Decimal from 'decimal.js'
 import { GraphQLJSON } from 'graphql-scalars'
 
 @ObjectType()
 export class ProductEntity implements Partial<Product> {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field()

@@ -112,3 +112,13 @@ export type OrderItem = Prisma.OrderItemModel
  * 
  */
 export type Notification = Prisma.NotificationModel
+/**
+ * Model Wishlist
+ * 
+ */
+export type Wishlist = Prisma.WishlistModel
+/**
+ * Model WishlistItem
+ * 
+ */
+export type WishlistItem = Prisma.WishlistItemModel

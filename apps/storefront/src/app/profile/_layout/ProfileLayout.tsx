@@ -13,7 +13,7 @@ const titles = {
   [ROUTES.ORDERS]: 'Orders',
   [ROUTES.WISHLIST]: 'Wishlist',
   [ROUTES.ACCOUNT_DETAIL]: 'Account Details',
-  [ROUTES.PASSWORD]: 'Password'
+  [ROUTES.TWO_FACTOR_AUTH]: 'Two-Factor Authentication'
 }
 
 export const ProfileLayout = ({ children }: React.PropsWithChildren) => {
@@ -34,7 +34,7 @@ export const ProfileLayout = ({ children }: React.PropsWithChildren) => {
             />
           </div>
           <div className='flex-1'>
-            <h3 className='font-semibold text-base mb-14'>{title}</h3>
+            <h3 className='font-semibold text-base mb-10'>{title}</h3>
             {children}
           </div>
         </div>

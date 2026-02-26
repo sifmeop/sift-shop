@@ -1,4 +1,4 @@
-import { useMutation } from '@apollo/client/react'
+import { useApolloClient, useMutation } from '@apollo/client/react'
 import { useRouter } from 'next/navigation'
 
 import { ROUTES } from '~/common/constants/routes'
@@ -20,11 +20,13 @@ const SIGN_OUT_GQL = gql(`
 export const useSignOutMutation = () => {
   const router = useRouter()
   const logout = useUserStore((state) => state.logout)
+  const apolloClient = useApolloClient()
 
   return useMutation<SignOutMutation, SignOutMutationVariables>(SIGN_OUT_GQL, {
-    onCompleted: () => {
+    onCompleted: async () => {
       router.push(ROUTES.HOME)
       setTimeout(logout, 500)
+      await apolloClient.clearStore()
     }
   })
 }

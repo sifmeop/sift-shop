@@ -36,8 +36,8 @@ const links: ProfileMenuItemProps[] = [
     icon: UserIcon
   },
   {
-    name: 'Password',
-    href: ROUTES.PASSWORD,
+    name: '2FA',
+    href: ROUTES.TWO_FACTOR_AUTH,
     icon: KeyRoundIcon
   }
 ]

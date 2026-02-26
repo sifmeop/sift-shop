@@ -1,4 +1,4 @@
-import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
+import { Field, Float, ID, Int, ObjectType } from '@nestjs/graphql'
 import { OrderItem } from '@sift-shop/database'
 import Decimal from 'decimal.js'
 
@@ -6,7 +6,7 @@ import { OrderItemProductEntity } from './order-item-product.entity'
 
 @ObjectType()
 export class OrderItemEntity implements Partial<OrderItem> {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field(() => OrderItemProductEntity)

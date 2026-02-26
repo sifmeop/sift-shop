@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client/react'
 
+import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
 import { gql } from '~/common/lib/graphql/generated'
 import {
   GetOrdersQuery,
@@ -49,12 +50,14 @@ export const GET_ORDERS_GQL = gql(`
 `)
 
 export const useGetOrdersQuery = (skip: number, take: number) => {
+  const isAuthenticated = useIsAuthenticated()
   return useQuery<GetOrdersQuery, GetOrdersQueryVariables>(GET_ORDERS_GQL, {
     variables: {
       input: {
         skip,
         take
       }
-    }
+    },
+    skip: !isAuthenticated
   })
 }

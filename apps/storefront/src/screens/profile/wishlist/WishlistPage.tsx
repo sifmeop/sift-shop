@@ -1,3 +1,5 @@
+import { WishlistList } from '~/modules/wishlist'
+
 export const WishlistPage = () => {
-  return <div>WishlistPage</div>
+  return <WishlistList />
 }

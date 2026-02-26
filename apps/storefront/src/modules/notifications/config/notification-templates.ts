@@ -62,7 +62,7 @@ const notificationTemplates: Record<
     iconClassName: 'text-yellow-500',
     iconContainerClassName: 'bg-yellow-500/10 border-yellow-500/20',
     title: 'Two-Factor Authentication Off',
-    body: 'Two-factor authentication has been disabled. Enable it again to keep your account secure'
+    body: 'Two-factor authentication has been disabled'
   })
 }
 

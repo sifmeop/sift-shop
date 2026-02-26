@@ -25,10 +25,18 @@ const LIMIT_PER_PAGE = 5
 export const OrdersList = () => {
   const [skip, setSkip] = useState(0)
   const [currentPage, setCurrentPage] = useState(1)
-  const { data, loading } = useGetOrdersQuery(skip, LIMIT_PER_PAGE)
+  const { data, loading, error } = useGetOrdersQuery(skip, LIMIT_PER_PAGE)
 
   const orders = data?.orders?.orders
   const total = data?.orders?.total ?? 0
+
+  if (error) {
+    return (
+      <p className='text-center font-medium'>
+        Something went wrong, please try again later
+      </p>
+    )
+  }
 
   if (!orders || loading) {
     return <CenterLoader />

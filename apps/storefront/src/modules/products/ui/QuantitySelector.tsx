@@ -20,7 +20,7 @@ export const QuantitySelector = ({ product }: QuantitySelectorProps) => {
     isAdding,
     isRemoving,
     quantity
-  } = useCart(product)
+  } = useCart(product.id, product.stock)
 
   return (
     <AnimatePresence mode='wait'>

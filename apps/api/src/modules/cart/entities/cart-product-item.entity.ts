@@ -1,9 +1,9 @@
-import { Field, Int, ObjectType } from '@nestjs/graphql'
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
 import { Product } from '@sift-shop/database'
 
 @ObjectType()
 export class CartProductItemEntity implements Partial<Product> {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field()

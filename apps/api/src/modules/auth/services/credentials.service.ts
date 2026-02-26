@@ -47,25 +47,19 @@ export class CredentialsService {
     const user = await this.userService.findByEmail(input.email)
 
     if (!user) {
-      throw new HttpException('User not found', 404, {
-        cause: 'USER_NOT_FOUND'
-      })
+      throw new HttpException('User not found', 404)
     }
 
     const isValidPassword = await verify(user.password, input.password)
 
     if (!isValidPassword) {
-      throw new HttpException('Invalid password', 401, {
-        cause: 'INVALID_PASSWORD'
-      })
+      throw new HttpException('Invalid password', 401)
     }
 
     if (!user.isVerified) {
       await this.emailConfirmationService.sendConfirmationLink(user.email)
 
-      throw new HttpException('User is not verified', 401, {
-        cause: 'USER_NOT_VERIFIED'
-      })
+      throw new HttpException('User is not verified', 401)
     }
 
     return this.sessionService.saveSession(req, user)

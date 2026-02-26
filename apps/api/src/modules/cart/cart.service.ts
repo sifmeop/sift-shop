@@ -17,15 +17,7 @@ export class CartService {
       select: {
         items: {
           include: {
-            product: {
-              select: {
-                id: true,
-                slug: true,
-                name: true,
-                stock: true,
-                images: true
-              }
-            }
+            product: true
           }
         }
       },
@@ -38,7 +30,49 @@ export class CartService {
       return []
     }
 
-    return cart.items
+    const cartItems = cart.items.map((item) => {
+      const isPriceChanged =
+        !item.price.equals(item.product.price) ||
+        (item.discountedPrice !== null && item.product.discountPercent !== null
+          ? !item.discountedPrice.equals(
+              calcDiscountedPrice(
+                item.product.price,
+                item.product.discountPercent
+              )
+            )
+          : item.discountedPrice !== null ||
+            item.product.discountPercent !== null)
+
+      return {
+        ...item,
+        isPriceChanged
+      }
+    })
+
+    const cartItemsWithPriceChanged = cartItems.filter(
+      (item) => item.isPriceChanged
+    )
+
+    if (cartItemsWithPriceChanged.length > 0) {
+      void Promise.all(
+        cartItemsWithPriceChanged.map((item) => {
+          const { price, discountPercent } = item.product
+          return prisma.cartItem.update({
+            where: {
+              id: item.id
+            },
+            data: {
+              price,
+              discountedPrice: discountPercent
+                ? calcDiscountedPrice(price, discountPercent)
+                : null
+            }
+          })
+        })
+      )
+    }
+
+    return cartItems
   }
 
   async addToCart(
@@ -111,15 +145,7 @@ export class CartService {
         id: true,
         items: {
           include: {
-            product: {
-              select: {
-                id: true,
-                slug: true,
-                name: true,
-                stock: true,
-                images: true
-              }
-            }
+            product: true
           }
         }
       }
@@ -140,15 +166,7 @@ export class CartService {
         }
       },
       include: {
-        product: {
-          select: {
-            id: true,
-            slug: true,
-            name: true,
-            stock: true,
-            images: true
-          }
-        }
+        product: true
       }
     })
 
@@ -165,15 +183,7 @@ export class CartService {
           quantity: { decrement: 1 }
         },
         include: {
-          product: {
-            select: {
-              id: true,
-              slug: true,
-              name: true,
-              stock: true,
-              images: true
-            }
-          }
+          product: true
         }
       })
     }
@@ -183,15 +193,7 @@ export class CartService {
         id: cartItem.id
       },
       include: {
-        product: {
-          select: {
-            id: true,
-            slug: true,
-            name: true,
-            stock: true,
-            images: true
-          }
-        }
+        product: true
       }
     })
 

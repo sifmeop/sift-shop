@@ -4,18 +4,16 @@ import { useState } from 'react'
 
 import { toast } from 'sonner'
 
-import {
-  CartProductItemEntity,
-  ProductEntity
-} from '~/common/lib/graphql/generated/graphql'
+import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
 
 import { useAddToCartMutation } from './useAddToCartMutation'
 import { useCartQuery } from './useCartQuery'
 import { useRemoveFromCartMutation } from './useRemoveFromCartMutation'
 
-export const useCart = (product: ProductEntity | CartProductItemEntity) => {
+export const useCart = (id: string, stock: number) => {
+  const isAuthenticated = useIsAuthenticated()
   const { data, loading } = useCartQuery()
-  const cartItem = data?.cart.find((item) => item.product.id === product.id)
+  const cartItem = data?.cart.find((item) => item.product.id === id)
 
   const [addToCart, { loading: addToCartLoading }] = useAddToCartMutation()
   const [removeFromCart, { loading: removeFromCartLoading }] =
@@ -28,9 +26,14 @@ export const useCart = (product: ProductEntity | CartProductItemEntity) => {
   const quantity = cartItem ? cartItem.quantity : 0
 
   const handleAddToCart = async () => {
+    if (!isAuthenticated) {
+      toast.error('You must be logged in to add items to your cart.')
+      return
+    }
+
     if (isLoading) return
 
-    const isAddingMoreThanStock = quantity + 1 > product.stock
+    const isAddingMoreThanStock = quantity + 1 > stock
 
     if (isAddingMoreThanStock) {
       toast.error('Cannot add more items than available in stock.')
@@ -40,7 +43,7 @@ export const useCart = (product: ProductEntity | CartProductItemEntity) => {
     try {
       await addToCart({
         variables: {
-          input: { productId: product.id }
+          input: { productId: id }
         }
       })
     } catch (error) {
@@ -49,6 +52,11 @@ export const useCart = (product: ProductEntity | CartProductItemEntity) => {
   }
 
   const handleRemoveFromCart = async (quantity: number = 1) => {
+    if (!isAuthenticated) {
+      toast.error('You must be logged in to remove items from your cart.')
+      return
+    }
+
     if (!cartItem || isLoading) return
 
     try {

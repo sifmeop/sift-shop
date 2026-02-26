@@ -1,5 +1,6 @@
 import NumberFlow from '@number-flow/react'
 import { MinusIcon, PlusIcon, XIcon } from 'lucide-react'
+import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -16,7 +17,7 @@ interface CartItemProps {
 }
 
 export const CartItem = ({ item }: CartItemProps) => {
-  const { price, discountedPrice, product } = item
+  const { price, discountedPrice, product, isPriceChanged } = item
   const {
     addToCart,
     removeFromCart,
@@ -25,7 +26,7 @@ export const CartItem = ({ item }: CartItemProps) => {
     isAdding,
     isRemoving,
     isRemovingAll
-  } = useCart(item.product)
+  } = useCart(product.id, product.stock)
 
   return (
     <div className='flex items-center gap-4 justify-between px-4 py-2'>
@@ -39,11 +40,22 @@ export const CartItem = ({ item }: CartItemProps) => {
             alt={product.name}
           />
         </div>
-        <Link
-          href={`/products/${product.slug}`}
-          className='font-medium hover:underline'>
-          {product.name}
-        </Link>
+        <div className='flex flex-col gap-1'>
+          <Link
+            href={`/products/${product.slug}`}
+            className='font-medium hover:underline'>
+            {product.name}
+          </Link>
+          {isPriceChanged && (
+            <motion.p
+              initial={{ opacity: 0, y: -4 }}
+              animate={{ opacity: 1, y: 0 }}
+              className='flex items-center gap-1.5 text-xs text-amber-600 dark:text-amber-400'>
+              <span className='size-1.5 rounded-full bg-amber-500 animate-pulse inline-block shrink-0' />
+              Price updated since added
+            </motion.p>
+          )}
+        </div>
       </div>
       <div className='flex items-center gap-4'>
         {discountedPrice ? (

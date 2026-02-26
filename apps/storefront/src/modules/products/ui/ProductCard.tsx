@@ -1,10 +1,9 @@
 import { useState } from 'react'
 
-import { Eye, Heart } from 'lucide-react'
+import { Eye } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 
 import type { ProductEntity } from '~/common/lib/graphql/generated/graphql'
 import { calcDiscountedPrice } from '~/common/utils/calcDiscountedPrice'
@@ -12,15 +11,14 @@ import { formatPrice } from '~/common/utils/formatPrice'
 import { getImageUrl } from '~/common/utils/getImageUrl'
 
 import { QuantitySelector } from './QuantitySelector'
+import { WishlistToggleButton } from './WishlistToggleButton'
 
 interface ProductCardProps {
   product: ProductEntity
 }
 
 export const ProductCard = ({ product }: ProductCardProps) => {
-  const router = useRouter()
   const [isHovered, setIsHovered] = useState(false)
-  const [isFavorite, setIsFavorite] = useState(false)
 
   const productLink = `/products/${product.slug}`
 
@@ -56,7 +54,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             </span>
           )}
           {product.discountPercent && (
-            <span className='rounded-full bg-green-500 px-3 py-1 text-xs font-medium text-white'>
+            <span className='rounded-full bg-red-500 px-3 py-1 text-xs font-medium text-white'>
               -{product.discountPercent}%
             </span>
           )}
@@ -67,27 +65,9 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 20 }}
           transition={{ duration: 0.2 }}>
-          <button
-            onClick={(e) => {
-              e.stopPropagation()
-              setIsFavorite(!isFavorite)
-            }}
-            aria-label='Add to favorites'
-            className='flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-colors hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700'>
-            <Heart
-              className={`h-5 w-5 transition-colors ${
-                isFavorite
-                  ? 'fill-red-500 text-red-500'
-                  : 'text-gray-600 dark:text-gray-400'
-              }`}
-            />
-          </button>
+          <WishlistToggleButton productId={product.id} />
 
           <button
-            onClick={(e) => {
-              e.stopPropagation()
-              router.push(`/products/${product.slug}`)
-            }}
             aria-label='Quick view'
             className='flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-colors hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700'>
             <Eye className='h-5 w-5 text-gray-600 dark:text-gray-400' />
@@ -108,9 +88,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           </span>
           {!!product.discountPercent && (
             <span className='text-lg text-gray-500 line-through dark:text-gray-400'>
-              {formatPrice(
-                calcDiscountedPrice(product.price, product.discountPercent)
-              )}
+              {calcDiscountedPrice(product.price, product.discountPercent)}
             </span>
           )}
         </div>

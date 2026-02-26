@@ -23,6 +23,7 @@ const ADD_TO_CART_GQL = gql(`
 			quantity
 			price
 			discountedPrice
+      isPriceChanged
 		}
 	}
 `)

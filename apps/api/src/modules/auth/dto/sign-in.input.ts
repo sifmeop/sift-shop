@@ -27,5 +27,5 @@ export class SignInInput implements Partial<User> {
 
   @Field(() => String, { nullable: true })
   @IsOptional()
-  code: string
+  code?: string
 }

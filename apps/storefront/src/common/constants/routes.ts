@@ -17,8 +17,8 @@ export const ROUTES = {
   // PROFILE
   ORDERS: '/profile/orders',
   WISHLIST: '/profile/wishlist',
-  PASSWORD: '/profile/password',
   ACCOUNT_DETAIL: '/profile/account-detail',
+  TWO_FACTOR_AUTH: '/profile/two-factor-auth',
 
   // CHECKOUT
   CHECKOUT: '/checkout',

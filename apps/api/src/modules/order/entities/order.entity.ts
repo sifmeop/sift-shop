@@ -1,6 +1,7 @@
 import {
   Field,
   Float,
+  ID,
   Int,
   ObjectType,
   registerEnumType
@@ -22,7 +23,7 @@ registerEnumType(PaymentMethod, {
 
 @ObjectType()
 export class OrderEntity implements Partial<Order> {
-  @Field()
+  @Field(() => ID)
   id: string
 
   @Field(() => Int)

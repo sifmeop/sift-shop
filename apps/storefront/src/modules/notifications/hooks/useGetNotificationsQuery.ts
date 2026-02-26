@@ -1,5 +1,6 @@
 import { useQuery } from '@apollo/client/react'
 
+import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
 import { gql } from '~/common/lib/graphql/generated'
 import { GetNotificationsQuery } from '~/common/lib/graphql/generated/graphql'
 
@@ -16,5 +17,8 @@ export const GET_NOTIFICATIONS_GQL = gql(`
 `)
 
 export const useGetNotificationsQuery = () => {
-  return useQuery<GetNotificationsQuery>(GET_NOTIFICATIONS_GQL)
+  const isAuthenticated = useIsAuthenticated()
+  return useQuery<GetNotificationsQuery>(GET_NOTIFICATIONS_GQL, {
+    skip: !isAuthenticated
+  })
 }
