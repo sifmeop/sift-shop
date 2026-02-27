@@ -23,7 +23,7 @@ export const Cart = () => {
 
   if (loading) {
     return (
-      <Container bgColor='white' className='py-12'>
+      <Container bgColor='white' className='py-12 flex-1'>
         <CenterLoader />
       </Container>
     )

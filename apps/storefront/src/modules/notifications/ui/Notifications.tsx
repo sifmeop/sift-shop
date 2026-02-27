@@ -2,7 +2,7 @@
 
 import { Fragment } from 'react/jsx-runtime'
 
-import { Bell, BellDotIcon, BellIcon, XIcon } from 'lucide-react'
+import { Bell, BellDotIcon, BellIcon, BellOffIcon, XIcon } from 'lucide-react'
 
 import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
 import { Button } from '~/common/ui/button'
@@ -32,7 +32,11 @@ export const Notifications = () => {
   const hasUnReadNotifications =
     notifications && notifications.some((n) => !n.readAt)
 
-  const Icon = hasUnReadNotifications ? BellDotIcon : BellIcon
+  const Icon = isAuthenticated
+    ? hasUnReadNotifications
+      ? BellDotIcon
+      : BellIcon
+    : BellOffIcon
 
   return (
     <Drawer direction='right'>

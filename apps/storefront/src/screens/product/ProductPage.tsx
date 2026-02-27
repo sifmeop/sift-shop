@@ -1,13 +1,8 @@
-import { Container } from '~/common/ui/container'
+import { ProductDetailEntity } from '~/common/lib/graphql/generated/graphql'
+import { ProductDetail } from '~/modules/products'
 
-interface ProductPageProps {
-  slug: string
-}
+type ProductPageProps = ProductDetailEntity
 
-export const ProductPage = ({ slug }: ProductPageProps) => {
-  return (
-    <Container main bgColor='white' className='py-4'>
-      <p>{slug}</p>
-    </Container>
-  )
+export const ProductPage = (product: ProductPageProps) => {
+  return <ProductDetail {...product} />
 }

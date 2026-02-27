@@ -51,6 +51,11 @@ type CategoryEntity {
   subcategories: [SubcategoryEntity!]!
 }
 
+type CategoryRefEntity {
+  name: String!
+  slug: String!
+}
+
 type CreateOrderEntity {
   url: String!
 }
@@ -211,6 +216,21 @@ enum PaymentMethod {
   CASH
 }
 
+type ProductDetailEntity {
+  category: CategoryRefEntity!
+  description: String
+  discountPercent: Int
+  id: ID!
+  images: [String!]!
+  isFeatured: Boolean!
+  name: String!
+  price: Float!
+  slug: String!
+  specifications: JSON!
+  stock: Int!
+  subcategory: SubcategoryRefEntity!
+}
+
 type ProductEntity {
   description: String
   discountPercent: Int
@@ -243,6 +263,7 @@ type Query {
   getOrderByPaymentId(input: GetOrderByPaymentIdInput!): OrderEntity!
   notifications: [NotificationEntity!]!
   orders(input: PaginationInput!): OrdersEntity!
+  product(slug: String!): ProductDetailEntity
   products(filters: JSON, input: GetProductsInput!): ProductResponseEntity!
   schema: String!
   verifySession: AuthEntity!
@@ -275,6 +296,11 @@ input SignUpInput {
 
 type SubcategoryEntity {
   image: String!
+  name: String!
+  slug: String!
+}
+
+type SubcategoryRefEntity {
   name: String!
   slug: String!
 }

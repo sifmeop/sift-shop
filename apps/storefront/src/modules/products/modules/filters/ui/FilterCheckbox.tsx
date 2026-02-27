@@ -4,7 +4,7 @@ import { FilterOptionEntity } from '~/common/lib/graphql/generated/graphql'
 import { Checkbox } from '~/common/ui/Checkbox'
 import { Field, FieldGroup, FieldLabel } from '~/common/ui/field'
 import { cn } from '~/common/utils/cn'
-import { useFilterParam } from '~/modules/products/hooks/useFilterParam'
+import { useFilterParam } from '~/modules/products'
 
 const SCROLL_THRESHOLD = 8
 

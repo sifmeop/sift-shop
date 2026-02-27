@@ -1,9 +1,12 @@
 'use client'
 
-import { AlertCircle, Home, Search } from 'lucide-react'
+import { AlertCircle, Home } from 'lucide-react'
 import { motion } from 'motion/react'
 import Link from 'next/link'
 
+import { ROUTES } from '../constants/routes'
+
+import { Button } from './button'
 import { Container } from './container'
 
 type NotFoundType = 'category' | 'subcategory' | 'products' | 'product'
@@ -13,7 +16,6 @@ interface NotFoundContentProps {
   title?: string
   description?: string
   showHomeButton?: boolean
-  showSearchButton?: boolean
 }
 
 const typeMessages: Record<
@@ -46,8 +48,7 @@ export const NotFoundContent = ({
   type,
   title,
   description,
-  showHomeButton = true,
-  showSearchButton = true
+  showHomeButton = true
 }: NotFoundContentProps) => {
   const messages = typeMessages[type]
   const finalTitle = title || messages.title
@@ -107,21 +108,10 @@ export const NotFoundContent = ({
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4 }}>
           {showHomeButton && (
-            <Link
-              href='/'
-              className='inline-flex items-center gap-2 rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white transition-colors hover:bg-blue-700'>
-              <Home className='h-4 w-4' />
-              На главную
-            </Link>
-          )}
-
-          {showSearchButton && (
-            <Link
-              href='/search'
-              className='inline-flex items-center gap-2 rounded-lg border border-gray-300 bg-white px-6 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700'>
-              <Search className='h-4 w-4' />
-              Поиск товаров
-            </Link>
+            <Button as={Link} href={ROUTES.HOME} className='px-10'>
+              <Home className='size-4' />
+              Home
+            </Button>
           )}
         </motion.div>
 

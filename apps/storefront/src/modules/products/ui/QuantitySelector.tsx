@@ -22,6 +22,19 @@ export const QuantitySelector = ({ product }: QuantitySelectorProps) => {
     quantity
   } = useCart(product.id, product.stock)
 
+  if (product.stock === 0) {
+    return (
+      <Button
+        fullWidth
+        aria-label='Add to cart'
+        className='rounded-none font-medium border-none h-11'
+        disabled={true}>
+        <ShoppingCart className='mr-2 inline size-5.5' />
+        Out of Stock
+      </Button>
+    )
+  }
+
   return (
     <AnimatePresence mode='wait'>
       {!isInitialLoading && quantity > 0 ? (

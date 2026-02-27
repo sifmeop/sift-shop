@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { prisma } from '@sift-shop/database'
 
+import { ProductDetailEntity } from './entities/product-detail.entity'
 import { ProductResponseEntity } from './entities/product-response.entity'
 import { GetProductsInput } from './inputs/get-products.input'
 
@@ -78,5 +79,38 @@ export class ProductService {
     const filtersResponse = filters
 
     return { products: productsResponse, filters: filtersResponse }
+  }
+
+  async getProductDetail(slug: string): Promise<ProductDetailEntity | null> {
+    const product = await prisma.product.findUnique({
+      where: {
+        slug
+      },
+      include: {
+        subcategory: {
+          include: {
+            category: true
+          }
+        }
+      }
+    })
+
+    if (!product) {
+      return null
+    }
+
+    const { subcategory, ...rest } = product
+
+    return {
+      ...rest,
+      category: {
+        slug: subcategory.category.slug,
+        name: subcategory.category.name
+      },
+      subcategory: {
+        slug: subcategory.slug,
+        name: subcategory.name
+      }
+    }
   }
 }

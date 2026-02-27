@@ -7,6 +7,7 @@ import Link from 'next/link'
 
 import type { ProductEntity } from '~/common/lib/graphql/generated/graphql'
 import { calcDiscountedPrice } from '~/common/utils/calcDiscountedPrice'
+import { cn } from '~/common/utils/cn'
 import { formatPrice } from '~/common/utils/formatPrice'
 import { getImageUrl } from '~/common/utils/getImageUrl'
 
@@ -24,7 +25,12 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <motion.div
-      className='group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 h-full'
+      className={cn(
+        'group relative flex flex-col overflow-hidden rounded-lg border border-gray-200 bg-white transition-all hover:shadow-xl dark:border-gray-800 dark:bg-gray-900 h-full',
+        {
+          'grayscale-100': product.stock === 0
+        }
+      )}
       onHoverStart={() => setIsHovered(true)}
       onHoverEnd={() => setIsHovered(false)}
       initial={{ opacity: 0, y: 20 }}
@@ -83,12 +89,18 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </Link>
 
         <div className='mt-1 flex items-baseline gap-2'>
-          <span className='text-xl font-bold text-gray-900 dark:text-white'>
-            {formatPrice(product.price)}
-          </span>
-          {!!product.discountPercent && (
-            <span className='text-lg text-gray-500 line-through dark:text-gray-400'>
-              {calcDiscountedPrice(product.price, product.discountPercent)}
+          {product.discountPercent ? (
+            <>
+              <span className='text-xl font-bold text-red-500'>
+                {calcDiscountedPrice(product.price, product.discountPercent)}
+              </span>
+              <span className='text-base text-gray-500 line-through dark:text-gray-400'>
+                {formatPrice(product.price)}
+              </span>
+            </>
+          ) : (
+            <span className='text-xl font-bold'>
+              {formatPrice(product.price)}
             </span>
           )}
         </div>

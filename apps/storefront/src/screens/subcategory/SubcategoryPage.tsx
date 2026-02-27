@@ -1,5 +1,5 @@
 import { CategoryPageHeader } from '~/common/ui/CategoryPageHeader'
-import { SubcategoryProducts } from '~/modules/products/ui/SubcategoryProducts'
+import { SubcategoryProducts } from '~/modules/products'
 
 interface SubcategoryPageProps {
   category: string
