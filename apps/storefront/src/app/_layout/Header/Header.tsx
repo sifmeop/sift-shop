@@ -10,7 +10,9 @@ import { UserMenu } from './UserMenu'
 
 export const Header = () => {
   return (
-    <header id={HEADER_ID} className='bg-white'>
+    <header
+      id={HEADER_ID}
+      className='bg-white border-b border-b-border sticky top-0 z-50'>
       <Container
         className='py-3'
         innerClassName='flex items-center justify-between gap-4'>

@@ -1,6 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common'
 import { prisma } from '@sift-shop/database'
 
+import { HomeProductsEntity } from './entities/home-products.entity'
 import { ProductDetailEntity } from './entities/product-detail.entity'
 import { ProductResponseEntity } from './entities/product-response.entity'
 import { ProductEntity } from './entities/product.entity'
@@ -8,7 +9,37 @@ import { GetProductsInput } from './inputs/get-products.input'
 
 @Injectable()
 export class ProductService {
-  constructor() {}
+  async getHomeProducts(): Promise<HomeProductsEntity> {
+    const bestSellingGroup = await prisma.orderItem.groupBy({
+      by: ['productId'],
+      _sum: {
+        quantity: true
+      },
+      orderBy: {
+        _sum: {
+          quantity: 'desc'
+        }
+      },
+      take: 4
+    })
+
+    const productIds = bestSellingGroup.map((i) => i.productId)
+
+    const bestSelling = await prisma.product.findMany({
+      where: {
+        id: { in: productIds }
+      }
+    })
+
+    const featured = await prisma.product.findMany({
+      where: {
+        isFeatured: true
+      },
+      take: 4
+    })
+
+    return { bestSelling, featured }
+  }
 
   async findAll(
     input: GetProductsInput,

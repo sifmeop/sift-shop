@@ -100,6 +100,11 @@ input GetProductsInput {
   subcategory: String!
 }
 
+type HomeProductsEntity {
+  bestSelling: [ProductEntity!]!
+  featured: [ProductEntity!]!
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -262,6 +267,7 @@ type Query {
   categories: [CategoryEntity!]!
   generateTwoFactorSecret: TwoFactorSetupOutputEntity!
   getOrderByPaymentId(input: GetOrderByPaymentIdInput!): OrderEntity!
+  homeProducts: HomeProductsEntity!
   notifications: [NotificationEntity!]!
   orders(input: PaginationInput!): OrdersEntity!
   product(slug: String!): ProductDetailEntity

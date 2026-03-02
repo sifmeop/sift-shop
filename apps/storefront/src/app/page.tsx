@@ -1,5 +1,7 @@
 import type { Metadata } from 'next'
 
+import { HomeProductsEntity } from '~/common/lib/graphql/generated/graphql'
+import { getHomeProducts } from '~/modules/products/api/getHomeProducts'
 import { HomePage } from '~/screens/home'
 
 export const metadata: Metadata = {
@@ -32,6 +34,8 @@ export const metadata: Metadata = {
   }
 }
 
-export default function Page() {
-  return <HomePage />
+export default async function Page() {
+  const { data } = await getHomeProducts()
+
+  return <HomePage data={data?.homeProducts as HomeProductsEntity} />
 }

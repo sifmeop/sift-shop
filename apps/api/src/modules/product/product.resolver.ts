@@ -5,6 +5,7 @@ import { Authorized } from '~/common/decorators/authorized.decorator'
 import { OptionalAuth } from '~/common/decorators/optional-auth.decorator'
 import { Public } from '~/common/decorators/public.decorator'
 
+import { HomeProductsEntity } from './entities/home-products.entity'
 import { ProductDetailEntity } from './entities/product-detail.entity'
 import { ProductResponseEntity } from './entities/product-response.entity'
 import { ProductEntity } from './entities/product.entity'
@@ -14,6 +15,12 @@ import { ProductService } from './product.service'
 @Resolver(() => ProductEntity)
 export class ProductResolver {
   constructor(private readonly productService: ProductService) {}
+
+  @Public()
+  @Query(() => HomeProductsEntity, { name: 'homeProducts' })
+  async getHomeProducts(): Promise<HomeProductsEntity> {
+    return this.productService.getHomeProducts()
+  }
 
   @Public()
   @Query(() => ProductResponseEntity, { name: 'products' })

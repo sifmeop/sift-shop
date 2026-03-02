@@ -2,11 +2,17 @@
 
 import { motion } from 'motion/react'
 
-import { bestSellingProducts } from '../data'
+import { ProductEntity } from '~/common/lib/graphql/generated/graphql'
 
 import { ProductCard } from './ProductCard'
 
-export const BestSelling = () => {
+interface BestSellingProps {
+  data?: ProductEntity[]
+}
+
+export const BestSelling = ({ data }: BestSellingProps) => {
+  if (!data || data.length === 0) return
+
   return (
     <section className='py-16 md:py-20'>
       <div className='app-container'>
@@ -25,7 +31,7 @@ export const BestSelling = () => {
         </motion.div>
 
         <div className='grid grid-cols-2 gap-4 md:gap-6 lg:grid-cols-4'>
-          {bestSellingProducts.map((product) => (
+          {data.map((product) => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>

@@ -41,7 +41,7 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
       transition={{ duration: 0.3 }}>
       <Link
         href={productLink}
-        className='relative aspect-square overflow-hidden bg-gray-100 dark:bg-gray-800'>
+        className='relative aspect-square overflow-hidden bg-gray-100'>
         <Image
           loading='eager'
           src={getImageUrl(product.images[0])}

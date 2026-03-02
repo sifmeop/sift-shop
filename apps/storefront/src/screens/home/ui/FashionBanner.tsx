@@ -1,12 +1,7 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import Link from 'next/link'
-
-import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
 
 export const FashionBanner = () => {
   return (
@@ -26,12 +21,6 @@ export const FashionBanner = () => {
               Step into a world of style and explore our diverse collection of
               clothing categories.
             </p>
-            <Button asChild className='mt-6 hover:bg-foreground/90'>
-              <Link href={ROUTES.CATEGORY}>
-                Start Browsing
-                <ArrowRight className='ml-2 size-4' />
-              </Link>
-            </Button>
           </motion.div>
 
           <motion.div

@@ -1,12 +1,7 @@
 'use client'
 
-import { ArrowRight } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import Link from 'next/link'
-
-import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
 
 export const Hero = () => {
   return (
@@ -29,19 +24,6 @@ export const Hero = () => {
               className='mt-4 text-base md:text-lg'>
               Discover Our Newest Collection Today.
             </motion.p>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.2 }}>
-              <Button
-                as={Link}
-                href={ROUTES.CATEGORY}
-                className='mt-8 bg-foreground hover:bg-foreground/90'>
-                View Collection
-                <ArrowRight className='ml-2 size-4' />
-              </Button>
-            </motion.div>
           </div>
 
           <motion.div

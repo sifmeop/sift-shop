@@ -61,9 +61,14 @@ export const Newsletter = () => {
                 placeholder='Your email address'
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                disabled={isLoading}
               />
             </div>
-            <Button type='submit' isLoading={isLoading}>
+            <Button
+              type='submit'
+              isLoading={isLoading}
+              loadingMode='spinner-only'
+              className='w-25'>
               Subscribe
             </Button>
           </form>

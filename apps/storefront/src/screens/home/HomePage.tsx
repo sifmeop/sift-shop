@@ -1,3 +1,5 @@
+import { HomeProductsEntity } from '~/common/lib/graphql/generated/graphql'
+
 import {
   BestSelling,
   FashionBanner,
@@ -5,16 +7,20 @@ import {
   Features,
   Hero,
   Newsletter
-} from './components'
+} from './ui'
 
-export const HomePage = () => {
+interface HomePageProps {
+  data?: HomeProductsEntity | null
+}
+
+export const HomePage = ({ data }: HomePageProps) => {
   return (
     <>
       <Hero />
       <Features />
-      <BestSelling />
+      <BestSelling data={data?.bestSelling} />
       <FashionBanner />
-      <FeaturedProducts />
+      <FeaturedProducts data={data?.featured} />
       <Newsletter />
     </>
   )
