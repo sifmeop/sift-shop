@@ -18,15 +18,10 @@ export class NotificationService {
 
     return notifications
   }
-  async markNotificationsAsRead(
-    userId: string,
-    ids: string[]
-  ): Promise<NotificationEntity[]> {
+  async markNotificationsAsRead(userId: string): Promise<NotificationEntity[]> {
     const notifications = await prisma.notification.updateManyAndReturn({
       where: {
-        id: {
-          in: ids
-        },
+        readAt: null,
         userId
       },
       data: {

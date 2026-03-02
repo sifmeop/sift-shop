@@ -46,7 +46,7 @@ export const Stepper = ({
                     ? 'bg-blue-500 text-white shadow-[0_0_0_4px_rgba(59,130,246,0.2)]'
                     : isCompleted
                       ? 'bg-green-500 text-white'
-                      : 'bg-gray-200 text-gray-500'
+                      : 'bg-gray-200 text-muted-foreground'
                 )}>
                 {isCompleted ? (
                   <motion.svg

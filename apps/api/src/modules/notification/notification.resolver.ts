@@ -1,9 +1,8 @@
-import { Args, Mutation, Query, Resolver } from '@nestjs/graphql'
+import { Mutation, Query, Resolver } from '@nestjs/graphql'
 
 import { Authorized } from '~/common/decorators/authorized.decorator'
 
 import { NotificationEntity } from './entities/notification.entity'
-import { MarkNotificationsAsReadInput } from './inputs/mark-notifications-as-read.input'
 import { NotificationService } from './notification.service'
 
 @Resolver(() => NotificationEntity)
@@ -19,13 +18,8 @@ export class NotificationResolver {
 
   @Mutation(() => [NotificationEntity])
   async markNotificationsAsRead(
-    @Authorized('id') userId: string,
-    @Args('input', { type: () => MarkNotificationsAsReadInput })
-    input: MarkNotificationsAsReadInput
+    @Authorized('id') userId: string
   ): Promise<NotificationEntity[]> {
-    return await this.notificationService.markNotificationsAsRead(
-      userId,
-      input.ids
-    )
+    return await this.notificationService.markNotificationsAsRead(userId)
   }
 }

@@ -5,13 +5,18 @@ import { AnimatePresence, motion } from 'motion/react'
 import { ProductEntity } from '~/common/lib/graphql/generated/graphql'
 import { Button } from '~/common/ui/button'
 import { Spinner } from '~/common/ui/spinner'
+import { cn } from '~/common/utils/cn'
 import { useCart } from '~/modules/cart'
 
 interface QuantitySelectorProps {
   product: ProductEntity
+  minimal?: boolean
 }
 
-export const QuantitySelector = ({ product }: QuantitySelectorProps) => {
+export const QuantitySelector = ({
+  product,
+  minimal
+}: QuantitySelectorProps) => {
   const {
     addToCart,
     removeFromCart,
@@ -22,14 +27,15 @@ export const QuantitySelector = ({ product }: QuantitySelectorProps) => {
     quantity
   } = useCart(product.id, product.stock)
 
-  if (product.stock === 0) {
+  if (!product.stock) {
     return (
       <Button
         fullWidth
         aria-label='Add to cart'
-        className='rounded-none font-medium border-none h-11'
-        disabled={true}>
-        <ShoppingCart className='mr-2 inline size-5.5' />
+        className={cn('rounded-none font-medium border-none h-11', {
+          'h-9': minimal
+        })}
+        disabled>
         Out of Stock
       </Button>
     )
@@ -44,7 +50,12 @@ export const QuantitySelector = ({ product }: QuantitySelectorProps) => {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 20 }}
           transition={{ duration: 0.3 }}
-          className='grid grid-cols-[2fr_3fr_2fr] gap-2 px-2 py-1 font-medium border-t border-t-border items-center h-11 bg-background'>
+          className={cn(
+            'grid grid-cols-[2fr_3fr_2fr] gap-2 px-2 py-1 font-medium border-t border-t-border items-center h-11 bg-background',
+            {
+              'h-9': minimal
+            }
+          )}>
           <Button
             variant='ghost'
             className='h-full'
@@ -71,13 +82,14 @@ export const QuantitySelector = ({ product }: QuantitySelectorProps) => {
           <Button
             fullWidth
             aria-label='Add to cart'
-            className='rounded-none font-medium border-none h-11'
+            className={cn('rounded-none font-medium border-none h-11', {
+              'h-9': minimal
+            })}
             onClick={addToCart}
             isLoading={isInitialLoading || isAdding}
-            loadingMode='spinner-only'
-            disabled={!product.stock}>
+            loadingMode='spinner-only'>
             <ShoppingCart className='mr-2 inline size-5.5' />
-            {product.stock ? 'Add to Cart' : 'Out of Stock'}
+            Add to Cart
           </Button>
         </motion.div>
       )}

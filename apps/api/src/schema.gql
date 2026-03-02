@@ -114,19 +114,16 @@ type LogoutEntity {
   success: Boolean!
 }
 
-input MarkNotificationsAsReadInput {
-  ids: [String!]!
-}
-
 type Mutation {
   addToCart(input: AddToCartInput!): CartItemEntity!
   addToWishlist(productId: String!): WishlistItemEntity!
   create(input: CreateOrderInput!): CreateOrderEntity!
+  deleteReview(id: ID!): Boolean!
   disableTwoFactorAuth(code: String!): Boolean!
   emailConfirmation(input: EmailConfirmationInput!): AuthEntity!
   enableTwoFactorAuth(code: String!): Boolean!
   forgotPassword(input: ForgotPasswordInput!): SuccessEntity!
-  markNotificationsAsRead(input: MarkNotificationsAsReadInput!): [NotificationEntity!]!
+  markNotificationsAsRead: [NotificationEntity!]!
   removeFromCart(input: RemoveFromCartInput!): CartItemEntity!
   removeFromWishlist(productId: String!): WishlistItemEntity!
   resetPassword(input: ResetPasswordInput!): SuccessEntity!
@@ -134,6 +131,7 @@ type Mutation {
   signOut: LogoutEntity!
   signUp(input: SignUpInput!): SuccessEntity!
   updateAccountDetails(input: UpdateAccountDetailsInput!): AccountDetailsEntity!
+  upsertReview(input: UpsertReviewInput!): ReviewEntity!
 }
 
 type NotificationEntity {
@@ -223,8 +221,11 @@ type ProductDetailEntity {
   id: ID!
   images: [String!]!
   isFeatured: Boolean!
+  isPurchased: Boolean!
   name: String!
   price: Float!
+  rating: Float!
+  reviewCount: Int!
   slug: String!
   specifications: JSON!
   stock: Int!
@@ -265,7 +266,10 @@ type Query {
   orders(input: PaginationInput!): OrdersEntity!
   product(slug: String!): ProductDetailEntity
   products(filters: JSON, input: GetProductsInput!): ProductResponseEntity!
+  relatedProducts(productId: String!, slug: String!): [ProductEntity!]!
+  reviews(productId: String!): [ReviewEntity!]!
   schema: String!
+  search(q: String!): [SearchEntity!]!
   verifySession: AuthEntity!
   wishlist: WishlistEntity!
 }
@@ -278,6 +282,25 @@ input RemoveFromCartInput {
 input ResetPasswordInput {
   password: String!
   token: String!
+}
+
+type ReviewEntity {
+  comment: String
+  createdAt: DateTime!
+  fullName: String!
+  id: ID!
+  rating: Int!
+  userId: String!
+}
+
+type SearchEntity {
+  discountPercent: Int
+  id: ID!
+  images: [String!]!
+  name: String!
+  price: Float!
+  slug: String!
+  stock: Int!
 }
 
 input SignInInput {
@@ -324,6 +347,12 @@ input UpdateAccountDetailsInput {
   phone: String!
   state: String
   zipCode: String!
+}
+
+input UpsertReviewInput {
+  comment: String
+  productId: String!
+  rating: Int!
 }
 
 type WishlistEntity {

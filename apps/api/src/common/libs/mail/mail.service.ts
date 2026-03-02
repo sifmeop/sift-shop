@@ -1,4 +1,4 @@
-import { HttpException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { render } from '@react-email/components'
 import { Resend } from 'resend'
@@ -43,6 +43,9 @@ export class MailService {
     })
 
     if (error) {
+      Logger.error(
+        `[Mail] Failed to send email: ${error.name}: ${error.message}`
+      )
       throw new HttpException('Failed to send email', 500)
     }
   }

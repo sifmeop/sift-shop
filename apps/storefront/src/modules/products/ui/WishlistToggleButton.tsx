@@ -1,14 +1,19 @@
 import { Heart } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
+import { cn } from '~/common/utils/cn'
 import { useWishlist } from '~/modules/wishlist'
 
 interface WishlistToggleButtonProps {
   productId: string
+  variant: 'rounded' | 'square'
+  className?: string
 }
 
 export const WishlistToggleButton = ({
-  productId
+  productId,
+  variant,
+  className
 }: WishlistToggleButtonProps) => {
   const { isLoading, isInWishlist, addToWishlist, removeFromWishlist } =
     useWishlist(productId)
@@ -30,8 +35,15 @@ export const WishlistToggleButton = ({
       onClick={handleClick}
       disabled={isLoading}
       aria-label='Add to favorites'
-      className='relative flex size-10 items-center justify-center rounded-full bg-white shadow-lg transition-colors hover:bg-gray-100 disabled:cursor-not-allowed dark:bg-gray-800 dark:hover:bg-gray-700'>
-      <AnimatePresence mode='wait'>
+      className={cn(
+        'relative flex size-10 items-center justify-center bg-white shadow-md transition-colors hover:bg-gray-100 disabled:cursor-not-allowed border border-border',
+        {
+          'rounded-full': variant === 'rounded',
+          'rounded-md': variant === 'square'
+        },
+        className
+      )}>
+      <AnimatePresence initial={false} mode='wait'>
         {isLoading ? (
           <motion.div
             key='loader'

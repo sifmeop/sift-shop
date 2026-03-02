@@ -149,7 +149,7 @@ export class OrderService {
 
     const discountAmount = cart.items.reduce((acc, item) => {
       if (item.discountedPrice) {
-        return acc.add(item.discountedPrice.mul(item.quantity))
+        return acc.add(item.price.sub(item.discountedPrice).mul(item.quantity))
       }
       return acc
     }, new Decimal(0))
@@ -164,15 +164,17 @@ export class OrderService {
       .sub(discountAmount)
       .add(taxAmount)
 
-    const orderData = {
+    const orderData: Omit<Prisma.OrderCreateInput, 'paymentId' | 'user'> & {
+      userId: string
+    } = {
       ...input,
-      userId,
       currency: 'USD',
       taxAmount,
       subtotalAmount,
       deliveryAmount,
       discountAmount,
       totalAmount,
+      userId,
       items: {
         createMany: {
           data: cart.items.map((item) => {

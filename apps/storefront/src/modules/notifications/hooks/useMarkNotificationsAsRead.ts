@@ -11,8 +11,8 @@ import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
 import { GET_NOTIFICATIONS_GQL } from './useGetNotificationsQuery'
 
 const MARK_NOTIFICATIONS_AS_READ_GQL = gql(`
-  mutation MarkNotificationsAsRead($input: MarkNotificationsAsReadInput!) {
-    markNotificationsAsRead(input: $input) {
+  mutation MarkNotificationsAsRead {
+    markNotificationsAsRead {
       id
       readAt
     }
@@ -48,13 +48,9 @@ export const useMarkNotificationsAsRead = () => {
     }
   })
 
-  const markNotificationsAsRead = async (ids: string[]) => {
+  const markNotificationsAsRead = async () => {
     try {
-      await mutate({
-        variables: {
-          input: { ids }
-        }
-      })
+      await mutate()
     } catch (error) {
       handleGraphQLError(error)
     }

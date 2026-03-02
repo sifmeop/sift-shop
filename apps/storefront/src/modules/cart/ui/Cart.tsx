@@ -45,7 +45,7 @@ export const Cart = () => {
             <h3 className='text-2xl font-semibold text-gray-700'>
               Sign in to view your cart
             </h3>
-            <p className='text-gray-500 max-w-xs'>
+            <p className='text-muted-foreground max-w-xs'>
               Your cart is waiting for you. Sign in or create an account to
               start shopping.
             </p>
@@ -91,7 +91,7 @@ export const Cart = () => {
             <h3 className='text-2xl font-semibold text-gray-700'>
               Your cart is empty
             </h3>
-            <p className='text-gray-500 max-w-xs'>
+            <p className='text-muted-foreground max-w-xs'>
               Looks like you haven’t added anything to your cart yet. Start
               shopping to fill it up!
             </p>

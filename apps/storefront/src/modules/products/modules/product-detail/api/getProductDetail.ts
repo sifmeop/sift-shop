@@ -1,4 +1,6 @@
-import { apolloClient } from '~/common/lib/graphql/apollo-client'
+import { ReadonlyRequestCookies } from 'next/dist/server/web/spec-extension/adapters/request-cookies'
+
+import { makeServerClient } from '~/common/lib/graphql/apollo-server-client'
 import { gql } from '~/common/lib/graphql/generated'
 import { GetProductDetailQuery } from '~/common/lib/graphql/generated/graphql'
 
@@ -15,6 +17,9 @@ const GET_PRODUCT_DETAIL_GQL = gql(`
   		isFeatured
   		images
   		specifications
+			isPurchased
+			rating
+			reviewCount
 			category {
 				slug
 				name
@@ -27,11 +32,17 @@ const GET_PRODUCT_DETAIL_GQL = gql(`
 	}	
 `)
 
-export const getProductDetail = async (slug: string) => {
+export const getProductDetail = async (
+  slug: string,
+  cookieStore: ReadonlyRequestCookies
+) => {
   try {
-    return await apolloClient.query<GetProductDetailQuery>({
+    const client = await makeServerClient(cookieStore)
+
+    return await client.query<GetProductDetailQuery>({
       query: GET_PRODUCT_DETAIL_GQL,
-      variables: { slug }
+      variables: { slug },
+      fetchPolicy: 'no-cache'
     })
   } catch {
     return {

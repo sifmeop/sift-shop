@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react'
 
 import { Eye } from 'lucide-react'
@@ -16,9 +18,10 @@ import { WishlistToggleButton } from './WishlistToggleButton'
 
 interface ProductCardProps {
   product: ProductEntity
+  minimal?: boolean
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export const ProductCard = ({ product, minimal }: ProductCardProps) => {
   const [isHovered, setIsHovered] = useState(false)
 
   const productLink = `/products/${product.slug}`
@@ -71,7 +74,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
           initial={{ opacity: 0, x: 20 }}
           animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 20 }}
           transition={{ duration: 0.2 }}>
-          <WishlistToggleButton productId={product.id} />
+          <WishlistToggleButton productId={product.id} variant='rounded' />
 
           <button
             aria-label='Quick view'
@@ -81,31 +84,48 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </motion.div>
       </Link>
 
-      <div className='flex flex-1 flex-col p-4'>
+      <div
+        className={cn('flex flex-1 flex-col p-4', {
+          'p-2': minimal
+        })}>
         <Link
           href={productLink}
-          className='line-clamp-2 text-base font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline mb-auto'>
+          className={cn(
+            'line-clamp-2 text-base font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline mb-auto',
+            {
+              'text-sm': minimal
+            }
+          )}>
           {product.name}
         </Link>
 
         <div className='mt-1 flex items-baseline gap-2'>
           {product.discountPercent ? (
             <>
-              <span className='text-xl font-bold text-red-500'>
+              <span
+                className={cn('text-xl font-bold text-red-500', {
+                  'text-base': minimal
+                })}>
                 {calcDiscountedPrice(product.price, product.discountPercent)}
               </span>
-              <span className='text-base text-gray-500 line-through dark:text-gray-400'>
+              <span
+                className={cn('text-base text-muted-foreground line-through', {
+                  'text-sm': minimal
+                })}>
                 {formatPrice(product.price)}
               </span>
             </>
           ) : (
-            <span className='text-xl font-bold'>
+            <span
+              className={cn('text-xl font-bold', {
+                'text-base': minimal
+              })}>
               {formatPrice(product.price)}
             </span>
           )}
         </div>
       </div>
-      <QuantitySelector product={product} />
+      <QuantitySelector product={product} minimal={minimal} />
     </motion.div>
   )
 }

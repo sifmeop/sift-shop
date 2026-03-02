@@ -19,7 +19,7 @@ export const MarkAllButton = () => {
         variant='destructive'
         isLoading={isMutating}
         loadingMode='spinner-only'
-        onClick={() => markNotificationsAsRead(unreadIds)}>
+        onClick={markNotificationsAsRead}>
         Mark all as read
       </Button>
     </DrawerFooter>

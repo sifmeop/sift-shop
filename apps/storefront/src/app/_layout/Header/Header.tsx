@@ -1,11 +1,11 @@
 import { HEADER_ID } from '~/common/constants/ids'
 import { Container } from '~/common/ui/container'
 import { Notifications } from '~/modules/notifications'
+import { SearchBar } from '~/modules/search'
 
 import { CartButton } from './CartButton'
 import { Logo } from './Logo'
 import { Navigation } from './Navigation'
-import { SearchBar } from './SearchBar'
 import { UserMenu } from './UserMenu'
 
 export const Header = () => {

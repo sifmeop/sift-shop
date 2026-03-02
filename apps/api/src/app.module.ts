@@ -10,6 +10,7 @@ import { GraphQLJSON, GraphQLJSONObject } from 'graphql-scalars'
 import { join } from 'path'
 
 import { AuthGuard } from './common/guards/auth.guard'
+import { GqlThrottlerGuard } from './common/guards/gql-throttler.guard'
 import { MailModule } from './common/libs/mail/mail.module'
 import { PusherModule } from './common/libs/pusher'
 import { StripeModule } from './common/libs/stripe/stripe.module'
@@ -20,9 +21,11 @@ import { CategoryModule } from './modules/category/category.module'
 import { NotificationModule } from './modules/notification/notification.module'
 import { OrderModule } from './modules/order/order.module'
 import { ProductModule } from './modules/product/product.module'
+import { ReviewModule } from './modules/review/review.module'
+import { TwoFactorAuthModule } from './modules/two-factor-auth/two-factor-auth.module'
 import { UserModule } from './modules/user/user.module'
-import { WishlistModule } from './modules/wishlist/wishlist.module';
-import { TwoFactorAuthModule } from './modules/two-factor-auth/two-factor-auth.module';
+import { WishlistModule } from './modules/wishlist/wishlist.module'
+import { SearchModule } from './modules/search/search.module';
 
 @Module({
   imports: [
@@ -77,10 +80,16 @@ import { TwoFactorAuthModule } from './modules/two-factor-auth/two-factor-auth.m
     NotificationModule,
     PusherModule,
     WishlistModule,
-    TwoFactorAuthModule
+    TwoFactorAuthModule,
+    ReviewModule,
+    SearchModule
   ],
   controllers: [],
   providers: [
+    {
+      provide: APP_GUARD,
+      useClass: GqlThrottlerGuard
+    },
     {
       provide: APP_GUARD,
       useClass: AuthGuard

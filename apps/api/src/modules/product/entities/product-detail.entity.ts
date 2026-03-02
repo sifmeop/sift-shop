@@ -1,4 +1,4 @@
-import { Field, ObjectType } from '@nestjs/graphql'
+import { Field, Float, Int, ObjectType } from '@nestjs/graphql'
 
 import { ProductEntity } from './product.entity'
 
@@ -27,4 +27,13 @@ export class ProductDetailEntity extends ProductEntity {
 
   @Field(() => SubcategoryRefEntity)
   declare subcategory: SubcategoryRefEntity
+
+  @Field(() => Boolean)
+  declare isPurchased: boolean
+
+  @Field(() => Float)
+  declare rating: number
+
+  @Field(() => Int)
+  declare reviewCount: number
 }

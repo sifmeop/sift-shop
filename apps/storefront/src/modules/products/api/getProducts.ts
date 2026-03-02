@@ -1,4 +1,4 @@
-import { apolloClient } from '~/common/lib/graphql/apollo-client'
+import { makeServerClient } from '~/common/lib/graphql/apollo-server-client'
 import { gql } from '~/common/lib/graphql/generated'
 import {
   GetProductsInput,
@@ -39,9 +39,12 @@ export const getProducts = async (
   filters?: Record<string, string>
 ) => {
   try {
-    return await apolloClient.query<GetProductsQuery>({
+    const client = await makeServerClient()
+
+    return await client.query<GetProductsQuery>({
       query: PRODUCTS_LIST,
-      variables: { input, filters }
+      variables: { input, filters },
+      fetchPolicy: 'no-cache'
     })
   } catch {
     return {

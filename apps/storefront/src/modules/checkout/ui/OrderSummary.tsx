@@ -24,7 +24,7 @@ export const OrderSummary = () => {
   const discountAmount =
     data?.cart.reduce((acc, item) => {
       if (item.discountedPrice) {
-        acc += item.discountedPrice * item.quantity
+        acc += (item.price - item.discountedPrice) * item.quantity
       }
       return acc
     }, 0) ?? 0
@@ -62,10 +62,12 @@ export const OrderSummary = () => {
                   </p>
                 </div>
                 <div className='text-right shrink-0'>
-                  <p className='font-medium'>{formatPrice(price)}</p>
-                  {discountedPrice && (
-                    <p className='text-xs text-muted-foreground line-through'>
-                      {formatPrice(price * quantity)}
+                  <p className='font-medium'>
+                    {formatPrice(discountedPrice ?? price)}
+                  </p>
+                  {quantity > 1 && (
+                    <p className='text-xs text-muted-foreground'>
+                      {formatPrice((discountedPrice ?? price) * quantity)}
                     </p>
                   )}
                 </div>
@@ -91,7 +93,7 @@ export const OrderSummary = () => {
           <p>{formatPrice(taxAmount)}</p>
         </div>
         <div className='flex items-center justify-between font-medium'>
-          <p className='text-gray-500'>Discount</p>
+          <p className='text-muted-foreground'>Discount</p>
           {discountAmount > 0 ? (
             <p className='text-red-500'>-{formatPrice(discountAmount)}</p>
           ) : (

@@ -13,7 +13,9 @@ export const Logo = () => {
         alt='Sift-Shop'
         className='size-10'
       />
-      <span className='font-extrabold text-xl tracking-[-3.5%]'>Sift-Shop</span>
+      <span className='font-extrabold text-xl tracking-[-3.5%] max-md:hidden'>
+        Sift-Shop
+      </span>
     </Link>
   )
 }

@@ -7,7 +7,8 @@ export const signUpSchema = z
     fullName: z
       .string('Full name is required')
       .min(2, 'Full name is too short')
-      .max(50, 'Full name is too long'),
+      .max(50, 'Full name is too long')
+      .trim(),
     email: z.email('Please enter a valid email address'),
     password: passwordValidation,
     confirmPassword: passwordValidation,

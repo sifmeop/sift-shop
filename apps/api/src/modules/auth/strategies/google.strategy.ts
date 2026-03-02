@@ -30,6 +30,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       avatar: photos?.[0].value
     }
 
-    done(null, user)
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    done(null, user as any)
   }
 }

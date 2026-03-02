@@ -3,6 +3,7 @@ import { prisma } from '@sift-shop/database'
 
 import { ProductDetailEntity } from './entities/product-detail.entity'
 import { ProductResponseEntity } from './entities/product-response.entity'
+import { ProductEntity } from './entities/product.entity'
 import { GetProductsInput } from './inputs/get-products.input'
 
 @Injectable()
@@ -81,7 +82,10 @@ export class ProductService {
     return { products: productsResponse, filters: filtersResponse }
   }
 
-  async getProductDetail(slug: string): Promise<ProductDetailEntity | null> {
+  async getProductDetail(
+    slug: string,
+    userId?: string
+  ): Promise<ProductDetailEntity | null> {
     const product = await prisma.product.findUnique({
       where: {
         slug
@@ -101,6 +105,35 @@ export class ProductService {
 
     const { subcategory, ...rest } = product
 
+    let isPurchased = false
+
+    if (userId) {
+      const order = await prisma.order.findFirst({
+        where: {
+          items: {
+            some: {
+              productId: product.id
+            }
+          },
+          userId
+        }
+      })
+
+      isPurchased = !!order
+    }
+
+    const reviews = await prisma.review.aggregate({
+      where: {
+        productId: product.id
+      },
+      _avg: {
+        rating: true
+      },
+      _count: {
+        id: true
+      }
+    })
+
     return {
       ...rest,
       category: {
@@ -110,7 +143,28 @@ export class ProductService {
       subcategory: {
         slug: subcategory.slug,
         name: subcategory.name
-      }
+      },
+      isPurchased,
+      rating: reviews._avg.rating ?? 0,
+      reviewCount: reviews._count.id
     }
+  }
+
+  async getRelatedProducts(
+    slug: string,
+    productId: string
+  ): Promise<ProductEntity[]> {
+    const products = await prisma.product.findMany({
+      where: {
+        id: { not: productId },
+        subcategory: {
+          slug
+        },
+        stock: { gt: 0 }
+      },
+      take: 50
+    })
+
+    return products.sort(() => Math.random() - 0.5).slice(0, 8)
   }
 }
