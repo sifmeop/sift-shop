@@ -1,39 +1,42 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Route } from '~/app/routes/_auth/filters/$slug'
 import { api } from '~/common/api/axiosInstance'
-import { MUTATIONS } from '~/common/constants/mutations'
-import { QUERIES } from '~/common/constants/quries'
 import type { Filter } from '../types/filters.types'
 
 const deleteFilter = async (id: string) => {
-	const { data } = await api.delete<Filter[]>(`/filters/${id}`)
+	const { data } = await api.delete<Filter>(`/filters/${id}`)
 	return data
 }
 
 export const useDeleteFilterMutation = (id: string) => {
-	const { slug } = Route.useParams()
 	const queryClient = useQueryClient()
 
 	return useMutation({
-		mutationKey: MUTATIONS.DELETE_FILTER(id),
+		mutationKey: ['delete-filter', id],
 		mutationFn: () => deleteFilter(id),
-		onSuccess: (data) => {
-			const prevFilters = queryClient.getQueryData<Filter[]>(
-				QUERIES.GET_FILTERS(slug)
-			)
-
-			if (!prevFilters) return
-
-			let updatedFilters = prevFilters.filter((filter) => filter.id !== id)
-
-			updatedFilters = updatedFilters.map((filter) => {
-				const upPosition = data.find((d) => d.id === filter.id)
-				if (!upPosition) return filter
-
-				return { ...filter, position: upPosition.position }
+		onMutate: async () => {
+			await queryClient.cancelQueries({ queryKey: ['get-filters-page'] })
+			const previous = queryClient.getQueriesData<Filter[]>({
+				queryKey: ['get-filters-page']
 			})
 
-			queryClient.setQueryData(QUERIES.GET_FILTERS(slug), updatedFilters)
+			for (const [key, value] of previous) {
+				queryClient.setQueryData<Filter[]>(
+					key,
+					(value ?? []).filter((item) => item.id !== id)
+				)
+			}
+
+			return { previous }
+		},
+		onError: (_err, _var, context) => {
+			if (!context?.previous) return
+			for (const [key, value] of context.previous) {
+				queryClient.setQueryData(key, value)
+			}
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: ['get-filters-page'] })
 		}
 	})
 }
+

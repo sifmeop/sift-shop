@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-
 import { Eye } from 'lucide-react'
 import { motion } from 'motion/react'
 import Image from 'next/image'
@@ -22,8 +20,6 @@ interface ProductCardProps {
 }
 
 export const ProductCard = ({ product, minimal }: ProductCardProps) => {
-  const [isHovered, setIsHovered] = useState(false)
-
   const productLink = `/products/${product.slug}`
 
   return (
@@ -34,8 +30,6 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
           'grayscale-100': product.stock === 0
         }
       )}
-      onHoverStart={() => setIsHovered(true)}
-      onHoverEnd={() => setIsHovered(false)}
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3 }}>
@@ -48,7 +42,7 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
           alt={product.name}
           fill
           className='object-cover transition-transform duration-500 group-hover:scale-110 p-4'
-          sizes='(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'
+          sizes='(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw'
         />
 
         <div className='absolute left-3 top-3 flex flex-col gap-2'>
@@ -70,15 +64,15 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
         </div>
 
         <motion.div
-          className='absolute right-3 top-3 flex flex-col gap-2'
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: isHovered ? 1 : 0, x: isHovered ? 0 : 20 }}
+          className='absolute right-3 top-3 flex flex-col gap-2 opacity-100 transition-opacity md:opacity-0 md:group-hover:opacity-100'
+          initial={false}
+          animate={{ x: 0 }}
           transition={{ duration: 0.2 }}>
           <WishlistToggleButton productId={product.id} variant='rounded' />
 
           <button
             aria-label='Quick view'
-            className='flex h-10 w-10 items-center justify-center rounded-full bg-white shadow-lg transition-colors hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700'>
+            className='flex h-9 w-9 items-center justify-center rounded-full bg-white shadow-lg transition-colors hover:bg-gray-100 dark:bg-gray-800 dark:hover:bg-gray-700 sm:h-10 sm:w-10'>
             <Eye className='h-5 w-5 text-gray-600 dark:text-gray-400' />
           </button>
         </motion.div>
@@ -91,7 +85,7 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
         <Link
           href={productLink}
           className={cn(
-            'line-clamp-2 text-base font-semibold text-gray-900 transition-colors hover:text-blue-600 dark:text-white dark:hover:text-blue-400 w-fit hover:underline mb-auto',
+            'mb-auto line-clamp-2 w-fit text-sm font-semibold text-gray-900 transition-colors hover:text-blue-600 hover:underline dark:text-white dark:hover:text-blue-400 sm:text-base',
             {
               'text-sm': minimal
             }
@@ -99,17 +93,17 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
           {product.name}
         </Link>
 
-        <div className='mt-1 flex items-baseline gap-2'>
+        <div className='mt-1 flex flex-wrap items-baseline gap-1.5 sm:gap-2'>
           {product.discountPercent ? (
             <>
               <span
-                className={cn('text-xl font-bold text-red-500', {
+                className={cn('text-lg font-bold text-red-500 sm:text-xl', {
                   'text-base': minimal
                 })}>
                 {calcDiscountedPrice(product.price, product.discountPercent)}
               </span>
               <span
-                className={cn('text-base text-muted-foreground line-through', {
+                className={cn('text-sm text-muted-foreground line-through sm:text-base', {
                   'text-sm': minimal
                 })}>
                 {formatPrice(product.price)}
@@ -117,7 +111,7 @@ export const ProductCard = ({ product, minimal }: ProductCardProps) => {
             </>
           ) : (
             <span
-              className={cn('text-xl font-bold', {
+              className={cn('text-lg font-bold sm:text-xl', {
                 'text-base': minimal
               })}>
               {formatPrice(product.price)}

@@ -1,10 +1,9 @@
-import { FiltersHeader, FiltersTable } from '~/modules/filters'
+import { FiltersScreen } from '~/modules/filters'
 
-export const FiltersPage = () => {
-	return (
-		<>
-			<FiltersHeader />
-			<FiltersTable />
-		</>
-	)
+interface FiltersPageProps {
+	initialSubcategorySlug?: string
+}
+
+export const FiltersPage = ({ initialSubcategorySlug }: FiltersPageProps) => {
+	return <FiltersScreen initialSubcategorySlug={initialSubcategorySlug} />
 }

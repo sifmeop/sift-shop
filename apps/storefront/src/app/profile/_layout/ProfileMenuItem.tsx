@@ -23,17 +23,17 @@ export const ProfileMenuItem = <T extends ElementType>({
   const Component = as as ElementType
 
   return (
-    <li role='menuitem' className='relative'>
+    <li role='menuitem' className='relative shrink-0'>
       <Component
         className={cn(
-          'inline-flex gap-2.5 w-53 py-2 px-6 text-muted-foreground rounded-lg hover:bg-background/50 relative z-10',
+          'relative z-10 inline-flex w-full items-center gap-2 whitespace-nowrap rounded-lg px-3 py-2 text-sm text-muted-foreground hover:bg-background/50 sm:px-4 lg:w-53 lg:gap-2.5 lg:px-6',
           {
             'text-foreground hover:bg-background': isActive
           },
           className
         )}
         {...props}>
-        <Icon />
+        <Icon className='size-4 shrink-0 lg:size-5' />
         <span className='font-medium leading-[175%]'>{name}</span>
       </Component>
       {isActive && (

@@ -46,7 +46,7 @@ export const ProductGallery = ({ images, name }: ProductGalleryProps) => {
   }
 
   return (
-    <div className='flex flex-col gap-2 overflow-hidden'>
+    <div className='flex flex-col gap-2 overflow-hidden md:gap-3'>
       <Container
         bgColor='white'
         className='rounded-lg overflow-hidden'
@@ -66,7 +66,7 @@ export const ProductGallery = ({ images, name }: ProductGalleryProps) => {
               src={getImageUrl(images[activeIndex])}
               alt={`${name} ${activeIndex + 1}`}
               fill
-              className='object-contain p-8 select-none'
+              className='object-contain p-4 select-none sm:p-6 md:p-8'
               priority
             />
           </motion.div>
@@ -77,14 +77,14 @@ export const ProductGallery = ({ images, name }: ProductGalleryProps) => {
             onClick={goPrev}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className='absolute left-3 top-1/2 -translate-y-1/2 size-9 rounded-full bg-white border border-border shadow-sm grid place-items-center text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed z-10'>
+            className='absolute left-2 top-1/2 z-10 grid size-8 -translate-y-1/2 place-items-center rounded-full border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 sm:left-3 sm:size-9'>
             <ChevronLeft className='size-4' />
           </motion.button>
           <motion.button
             onClick={goNext}
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className='absolute right-3 top-1/2 -translate-y-1/2 size-9 rounded-full bg-white border border-border shadow-sm grid place-items-center text-muted-foreground hover:text-foreground transition-colors disabled:opacity-30 disabled:cursor-not-allowed z-10'>
+            className='absolute right-2 top-1/2 z-10 grid size-8 -translate-y-1/2 place-items-center rounded-full border border-border bg-white text-muted-foreground shadow-sm transition-colors hover:text-foreground disabled:cursor-not-allowed disabled:opacity-30 sm:right-3 sm:size-9'>
             <ChevronRight className='size-4' />
           </motion.button>
         </Show>
@@ -105,7 +105,7 @@ export const ProductGallery = ({ images, name }: ProductGalleryProps) => {
             dragDirectionLock
             drag='x'
             dragConstraints={{ left: 0, right: 0 }}
-            className='flex gap-2 overflow-x-auto p-2 scrollbar-none'>
+            className='scrollbar-none flex gap-2 overflow-x-auto p-2'>
             {images.map((image, i) => (
               <motion.button
                 key={i}
@@ -113,7 +113,7 @@ export const ProductGallery = ({ images, name }: ProductGalleryProps) => {
                 whileHover={{ scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 className={cn(
-                  'shrink-0 size-16 rounded-lg border-2 overflow-hidden bg-muted transition-all',
+                  'size-14 shrink-0 overflow-hidden rounded-lg border-2 bg-muted transition-all sm:size-16',
                   activeIndex === i
                     ? 'border-primary'
                     : 'border-border opacity-60 hover:opacity-100'

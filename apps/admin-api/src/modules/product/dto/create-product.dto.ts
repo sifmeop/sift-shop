@@ -56,6 +56,21 @@ export class CreateProductDto {
   @IsUUID('4', { each: true })
   filterValues: string[]
 
+  @Transform(({ value }) => {
+    if (typeof value === 'string')
+      try {
+        return JSON.parse(value) as string[]
+      } catch {
+        return value
+      }
+
+    return value as string[]
+  })
+  @IsArray()
+  @IsString({ each: true })
+  @IsOptional()
+  images?: string[]
+
   @IsString()
   @IsNotEmpty()
   subcategorySlug: string

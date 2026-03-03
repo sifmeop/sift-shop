@@ -6,4 +6,6 @@ export interface Category {
 	subcategoriesCount: number
 	productsCount: number
 	createdAt: string
+	updatedAt: string
 }
+

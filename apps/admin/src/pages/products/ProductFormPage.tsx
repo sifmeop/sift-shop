@@ -1,5 +1,5 @@
-import { ProductForm } from '~/modules/products'
+import { ProductsScreen } from '~/modules/products'
 
 export const ProductFormPage = () => {
-	return <ProductForm mode='create' />
+	return <ProductsScreen />
 }

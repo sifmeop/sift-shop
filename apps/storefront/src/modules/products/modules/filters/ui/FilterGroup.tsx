@@ -24,7 +24,9 @@ export const FilterGroup = ({ filter }: FilterGroupProps) => {
 
   return (
     <div>
-      <p className='font-medium mb-4'>{filter.name}</p>
+      <p className='mb-3 text-sm font-medium sm:mb-4 sm:text-base'>
+        {filter.name}
+      </p>
       <Filter filterKey={filter.slug} options={filter.options} />
     </div>
   )

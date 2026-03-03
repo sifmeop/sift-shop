@@ -1,10 +1,5 @@
-import { ProductsHeader, ProductsTable } from '~/modules/products'
+import { ProductsScreen } from '~/modules/products'
 
 export const ProductsPage = () => {
-	return (
-		<>
-			<ProductsHeader />
-			<ProductsTable />
-		</>
-	)
+	return <ProductsScreen />
 }

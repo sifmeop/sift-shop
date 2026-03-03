@@ -3,9 +3,7 @@
 import { Package, ShieldCheck, ThumbsUp } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import type { Feature } from '../types'
-
-const features: Feature[] = [
+const features = [
   {
     id: 'free-shipping',
     icon: <Package className='size-6' />,
@@ -50,23 +48,23 @@ const itemVariants = {
 
 export const Features = () => {
   return (
-    <section className='bg-white py-16 md:py-20'>
+    <section className='bg-white py-12 md:py-16 lg:py-20'>
       <div className='app-container'>
         <motion.div
           variants={containerVariants}
           initial='hidden'
           whileInView='visible'
           viewport={{ once: true, margin: '-100px' }}
-          className='grid gap-8 md:grid-cols-3 md:gap-12'>
+          className='grid gap-8 sm:gap-10 md:grid-cols-3 md:gap-12'>
           {features.map((feature) => (
             <motion.article
               key={feature.id}
               variants={itemVariants}
               className='text-center'>
-              <div className='bg-muted mx-auto mb-4 flex size-12 items-center justify-center rounded-lg'>
+              <div className='bg-muted mx-auto mb-4 flex size-11 items-center justify-center rounded-lg sm:size-12'>
                 {feature.icon}
               </div>
-              <h3 className='text-foreground mb-2 text-lg font-semibold'>
+              <h3 className='text-foreground mb-2 text-base font-semibold sm:text-lg'>
                 {feature.title}
               </h3>
               <p className='text-muted-foreground text-sm leading-relaxed'>

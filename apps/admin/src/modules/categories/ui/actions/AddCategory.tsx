@@ -1,10 +1,15 @@
+import { PlusIcon } from 'lucide-react'
 import { Button } from '~/common/ui/Button'
-import { CategoryDialog } from '../CategoryFormDialog'
+import { CategoryFormDialog } from '../CategoryFormDialog'
 
 export const AddCategory = () => {
 	return (
-		<CategoryDialog mode='create'>
-			<Button variant='secondary'>Add</Button>
-		</CategoryDialog>
+		<CategoryFormDialog mode='create'>
+			<Button variant='secondary'>
+				<PlusIcon />
+				Add
+			</Button>
+		</CategoryFormDialog>
 	)
 }
+

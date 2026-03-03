@@ -6,19 +6,21 @@ import { UpdateFilterPositionDto } from './dto/update-filter-position.dto'
 
 @Injectable()
 export class FilterService {
-  async getFilters(slug: string) {
-    const result = await prisma.filter.findMany({
-      where: {
-        subcategory: {
-          slug
+  async getFilters(subcategorySlug?: string) {
+    const where = subcategorySlug
+      ? {
+          subcategory: {
+            slug: subcategorySlug
+          }
         }
-      },
+      : undefined
+
+    const result = await prisma.filter.findMany({
+      where,
       include: {
         options: true
       },
-      orderBy: {
-        position: 'asc'
-      }
+      orderBy: [{ subcategoryId: 'asc' }, { position: 'asc' }]
     })
 
     return result

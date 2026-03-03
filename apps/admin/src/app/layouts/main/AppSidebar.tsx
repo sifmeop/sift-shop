@@ -1,5 +1,6 @@
 import { Link, useLocation } from '@tanstack/react-router'
 import {
+	FilterIcon,
 	LayoutDashboardIcon,
 	ListIcon,
 	ShoppingBasketIcon,
@@ -38,6 +39,11 @@ const LINKS: Link[] = [
 		title: 'Categories',
 		href: '/categories',
 		icon: ListIcon
+	},
+	{
+		title: 'Filters',
+		href: '/filters',
+		icon: FilterIcon
 	},
 	{
 		title: 'Products',

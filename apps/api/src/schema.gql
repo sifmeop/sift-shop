@@ -85,6 +85,7 @@ input EmailConfirmationInput {
 type FilterOptionEntity {
   id: ID!
   label: String!
+  productCount: Int!
   value: String!
 }
 

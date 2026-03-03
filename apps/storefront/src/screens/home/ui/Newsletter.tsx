@@ -31,16 +31,16 @@ export const Newsletter = () => {
   }
 
   return (
-    <Container bgColor='white' className='py-15'>
+    <Container bgColor='white' className='py-12 md:py-16 lg:py-20'>
       <div className='app-container'>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className='flex flex-col items-center gap-8 md:flex-row md:justify-between'>
-          <div className='text-center md:text-left'>
-            <h2 className='text-xl font-bold md:text-2xl'>
+          className='flex flex-col items-center gap-6 md:flex-row md:justify-between md:gap-8'>
+          <div className='max-w-md text-center md:text-left'>
+            <h2 className='text-xl font-bold sm:text-2xl'>
               Join Our Newsletter
             </h2>
             <p className='mt-2 text-sm'>
@@ -50,7 +50,7 @@ export const Newsletter = () => {
 
           <form
             onSubmit={handleSubmit}
-            className='flex w-full max-w-md flex-col gap-3 sm:flex-row'>
+            className='flex w-full max-w-xl flex-col gap-3 sm:flex-row'>
             <div className='flex-1'>
               <label htmlFor='newsletter-email' className='sr-only'>
                 Email address
@@ -68,7 +68,7 @@ export const Newsletter = () => {
               type='submit'
               isLoading={isLoading}
               loadingMode='spinner-only'
-              className='w-25'>
+              className='w-full sm:w-auto sm:min-w-28'>
               Subscribe
             </Button>
           </form>

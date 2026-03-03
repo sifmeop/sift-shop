@@ -51,22 +51,22 @@ export const AppliedFilters = ({ filters }: AppliedFiltersProps) => {
   if (!appliedFilters.length) return
 
   return (
-    <div className='flex flex-wrap gap-3'>
+    <div className='flex flex-wrap gap-2 sm:gap-3'>
       <Link
         href={cleanUrl()}
-        className='rounded-3xl px-4 py-2 flex items-center gap-1 hover:border-black/40 transition-colors cursor-pointer duration-300 border border-border'>
-        <span className='font-medium text-xs'>Clear filters</span>
+        className='flex items-center gap-1 rounded-3xl border border-border px-3 py-1.5 text-xs transition-colors duration-300 hover:border-black/40 sm:px-4 sm:py-2'>
+        <span className='font-medium'>Clear filters</span>
       </Link>
       {appliedFilters.map(({ key, label, value }) => {
         const href = createFilterUrl(key, value)
 
         return (
           <Link
-            key={value}
+            key={`${key}-${value}`}
             href={href}
-            className='rounded-3xl px-4 py-2 flex items-center gap-1 hover:border-black/40 transition-colors cursor-pointer duration-300 border border-border'>
-            <span className='font-medium text-xs'>{label}</span>
-            <XIcon size={16} />
+            className='flex items-center gap-1 rounded-3xl border border-border px-3 py-1.5 text-xs transition-colors duration-300 hover:border-black/40 sm:px-4 sm:py-2'>
+            <span className='font-medium'>{label}</span>
+            <XIcon size={14} />
           </Link>
         )
       })}

@@ -39,7 +39,7 @@ export const WishlistList = () => {
           <HeartIcon className='size-10 text-muted-foreground/60' />
         </div>
 
-        <h2 className='text-2xl font-semibold tracking-tight'>
+        <h2 className='text-xl font-semibold tracking-tight sm:text-2xl'>
           Your wishlist is empty
         </h2>
         <p className='text-muted-foreground mt-2 max-w-75 mx-auto'>
@@ -50,7 +50,7 @@ export const WishlistList = () => {
         <Button
           as={Link}
           href={ROUTES.HOME}
-          className='mt-8 inline-flex items-center gap-2 px-6 py-3'>
+          className='mt-8 inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3'>
           Explore Collection
           <ArrowRight className='size-4' />
         </Button>
@@ -70,7 +70,9 @@ export const WishlistList = () => {
               exit={{ opacity: 0, x: 20 }}>
               <WishlistItem {...product} addedAt={addedAt} />
             </motion.div>
-            {index !== items.length - 1 && <Separator className='my-8' />}
+            {index !== items.length - 1 && (
+              <Separator className='my-5 sm:my-8' />
+            )}
           </Fragment>
         ))}
       </AnimatePresence>

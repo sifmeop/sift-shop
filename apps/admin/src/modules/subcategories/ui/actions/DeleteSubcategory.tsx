@@ -19,15 +19,23 @@ import { useDeleteSubcategoryMutation } from '../../hooks/useDeleteSubcategoryMu
 interface DeleteSubcategoryProps {
 	id: string
 	name: string
+	categorySlug: string
 }
 
-export const DeleteSubcategory = ({ id, name }: DeleteSubcategoryProps) => {
+export const DeleteSubcategory = ({
+	id,
+	name,
+	categorySlug
+}: DeleteSubcategoryProps) => {
 	const [isOpen, setIsOpen] = useState(false)
-	const { mutateAsync, isPending: isLoading } = useDeleteSubcategoryMutation(id)
+	const { mutateAsync, isPending: isLoading } = useDeleteSubcategoryMutation(
+		id,
+		categorySlug
+	)
 
-	const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
+	const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		event.stopPropagation()
 
 		if (isLoading) return
 
@@ -36,21 +44,17 @@ export const DeleteSubcategory = ({ id, name }: DeleteSubcategoryProps) => {
 			setIsOpen(false)
 			toast.success('Subcategory deleted successfully')
 		} catch (error) {
-			const message = handleApiError(error)
-			toast.error(message)
+			toast.error(handleApiError(error))
 		}
 	}
 
-	const onOpenChange = (open: boolean) => {
-		setIsOpen(open)
-	}
-
 	return (
-		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<form id='delete-subcategory-form' onSubmit={onSubmit}>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<form id={`delete-subcategory-form-${id}`} onSubmit={onSubmit}>
 				<DialogTrigger asChild>
-					<Button variant='destructive'>
+					<Button variant='destructive' size='sm'>
 						<TrashIcon />
+						Delete
 					</Button>
 				</DialogTrigger>
 				<DialogContent
@@ -70,7 +74,7 @@ export const DeleteSubcategory = ({ id, name }: DeleteSubcategoryProps) => {
 							</Button>
 						</DialogClose>
 						<Button
-							form='delete-subcategory-form'
+							form={`delete-subcategory-form-${id}`}
 							type='submit'
 							variant='destructive'
 							isLoading={isLoading}>
@@ -82,3 +86,4 @@ export const DeleteSubcategory = ({ id, name }: DeleteSubcategoryProps) => {
 		</Dialog>
 	)
 }
+

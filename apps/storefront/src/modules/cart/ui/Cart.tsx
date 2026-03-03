@@ -110,7 +110,7 @@ export const Cart = () => {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 20 }}
             transition={{ duration: 0.3 }}
-            className='grid grid-cols-[1fr_350px] gap-25 justify-between'>
+            className='grid grid-cols-[1fr_350px] gap-25 justify-between max-md:grid-cols-1'>
             <div>
               <h3 className='mb-4 font-semibold text-base'>Your cart</h3>
               <Separator className='mb-8' />

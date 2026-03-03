@@ -27,7 +27,7 @@ export const RelatedProducts = ({ slug, productId }: RelatedProductsProps) => {
 
   return (
     <ProductSection icon={TrendingUpIcon} name='Related Products'>
-      <div className='[&>div]:w-50 [&>div]:h-auto [&>div]:shrink-0 scrollbar-thin flex gap-3 overflow-x-auto'>
+      <div className='scrollbar-thin flex gap-3 overflow-x-auto [&>div]:h-auto [&>div]:w-40 [&>div]:shrink-0 sm:[&>div]:w-46 lg:[&>div]:w-50'>
         {products.map((product) => (
           <ProductCard minimal key={product.id} product={product} />
         ))}

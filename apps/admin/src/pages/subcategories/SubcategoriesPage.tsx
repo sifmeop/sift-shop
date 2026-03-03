@@ -1,13 +1,5 @@
-import {
-	SubcategoriesHeader,
-	SubcategoriesTable
-} from '~/modules/subcategories'
+import { SubcategoriesScreen } from '~/modules/subcategories'
 
 export const SubcategoriesPage = () => {
-	return (
-		<>
-			<SubcategoriesHeader />
-			<SubcategoriesTable />
-		</>
-	)
+	return <SubcategoriesScreen />
 }

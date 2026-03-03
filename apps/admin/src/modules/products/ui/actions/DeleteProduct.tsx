@@ -25,9 +25,9 @@ export const DeleteProduct = ({ id, name }: DeleteProductProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { mutateAsync, isPending: isLoading } = useDeleteProductMutation(id)
 
-	const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
+	const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		event.stopPropagation()
 
 		if (isLoading) return
 
@@ -40,16 +40,13 @@ export const DeleteProduct = ({ id, name }: DeleteProductProps) => {
 		}
 	}
 
-	const onOpenChange = (open: boolean) => {
-		setIsOpen(open)
-	}
-
 	return (
-		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<form id='delete-product-form' onSubmit={onSubmit}>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<form id={`delete-product-form-${id}`} onSubmit={onSubmit}>
 				<DialogTrigger asChild>
-					<Button variant='destructive'>
+					<Button variant='destructive' size='sm'>
 						<TrashIcon />
+						Delete
 					</Button>
 				</DialogTrigger>
 				<DialogContent
@@ -69,7 +66,7 @@ export const DeleteProduct = ({ id, name }: DeleteProductProps) => {
 							</Button>
 						</DialogClose>
 						<Button
-							form='delete-product-form'
+							form={`delete-product-form-${id}`}
 							type='submit'
 							variant='destructive'
 							isLoading={isLoading}>
@@ -81,3 +78,4 @@ export const DeleteProduct = ({ id, name }: DeleteProductProps) => {
 		</Dialog>
 	)
 }
+

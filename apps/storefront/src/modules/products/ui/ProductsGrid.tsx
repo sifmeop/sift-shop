@@ -11,12 +11,12 @@ interface ProductsGridProps {
 export const ProductsGrid = ({ products }: ProductsGridProps) => {
   if (!products.length) {
     return (
-      <div className='flex-1 flex flex-col items-center justify-center py-20'>
+      <div className='flex flex-1 flex-col items-center justify-center py-16 sm:py-20'>
         <div className='text-center'>
-          <h3 className='text-2xl font-semibold text-gray-900 dark:text-white'>
+          <h3 className='text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl'>
             No products found
           </h3>
-          <p className='mt-2 text-gray-600 dark:text-gray-400'>
+          <p className='mt-2 text-sm text-gray-600 dark:text-gray-400 sm:text-base'>
             Try adjusting your filters or search query
           </p>
         </div>
@@ -25,7 +25,7 @@ export const ProductsGrid = ({ products }: ProductsGridProps) => {
   }
 
   return (
-    <div className='grid gap-6 grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'>
+    <div className='grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6'>
       <AnimatePresence mode='popLayout'>
         {products.map((product) => (
           <motion.div

@@ -44,16 +44,18 @@ export const RatingBreakdown = ({
           return (
             <div
               key={rating}
-              className='text-muted-foreground flex items-center gap-2 font-medium'>
+              className='text-muted-foreground flex items-center gap-2 text-sm font-medium'>
               <span className='w-3 text-center'>{rating}</span>
-              <StarIcon className='shrink-0 size-5.5 stroke-2' />
+              <StarIcon className='size-5 shrink-0 stroke-2' />
               <div className='bg-muted/40 h-2 flex-1 overflow-hidden rounded-full'>
                 <div
                   className='bg-primary h-full rounded-full transition-all duration-500'
                   style={{ width: `${percentage}%` }}
                 />
               </div>
-              <span className='w-8 text-center'>{formattedCount}</span>
+              <span className='w-8 text-center text-xs sm:text-sm'>
+                {formattedCount}
+              </span>
             </div>
           )
         })}

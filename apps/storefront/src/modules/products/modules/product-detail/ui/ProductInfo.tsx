@@ -44,38 +44,43 @@ export const ProductInfo = ({
   }
 
   return (
-    <Container bgColor='white' className='rounded-lg' innerClassName='py-4'>
-      <h2 className='font-bold text-2xl mb-3 line-clamp-2'>{name}</h2>
-      <div className='flex gap-2 font-medium mb-6'>
-        <Badge variant='secondary' className='h-5.5'>
+    <Container
+      bgColor='white'
+      className='rounded-lg'
+      innerClassName='py-4 sm:py-5'>
+      <h2 className='mb-3 line-clamp-2 text-xl font-bold sm:text-2xl'>{name}</h2>
+      <div className='mb-5 flex flex-wrap gap-2 font-medium sm:mb-6'>
+        <Badge variant='secondary' className='h-6 max-w-full'>
           <StarIcon />
-          {rating} — {reviewCount} Reviews
+          {rating} - {reviewCount} Reviews
         </Badge>
-        <Badge variant={hasStock ? 'outline' : 'destructive'} className='h-5.5'>
+        <Badge variant={hasStock ? 'outline' : 'destructive'} className='h-6'>
           {hasStock ? 'IN STOCK' : 'OUT OF STOCK'}
         </Badge>
       </div>
-      <div className='flex items-baseline gap-2 mb-8'>
+      <div className='mb-6 flex flex-wrap items-baseline gap-2 sm:mb-8'>
         {discountPercent ? (
           <>
-            <span className='text-xl font-bold text-red-500'>
+            <span className='text-lg font-bold text-red-500 sm:text-xl'>
               {calcDiscountedPrice(price, discountPercent)}
             </span>
-            <span className='text-base text-muted-foreground line-through'>
+            <span className='text-sm text-muted-foreground line-through sm:text-base'>
               {formatPrice(price)}
             </span>
-            <span className='text-xs inline-flex text-green-500 bg-green-500/10 px-2 py-0.5 rounded-xl border border-green-500 -translate-y-px'>
+            <span className='inline-flex rounded-xl border border-green-500 bg-green-500/10 px-2 py-0.5 text-xs text-green-500'>
               Save {discountPercent}%
             </span>
           </>
         ) : (
-          <span className='text-2xl font-semibold'>{formatPrice(price)}</span>
+          <span className='text-xl font-semibold sm:text-2xl'>
+            {formatPrice(price)}
+          </span>
         )}
       </div>
-      <div className='mb-3 flex gap-3'>
+      <div className='mb-3 flex flex-col gap-2 sm:flex-row sm:gap-3'>
         <Button
           variant={inCart ? 'outline' : 'default'}
-          className='max-w-62.5 w-full'
+          className='w-full sm:max-w-62.5'
           onClick={handleAddToCart}
           disabled={isAdding || stock === 0 || quantity === stock}
           isLoading={isAdding || isInitialLoading}
@@ -85,10 +90,10 @@ export const ProductInfo = ({
         <WishlistToggleButton
           productId={id}
           variant='square'
-          className='h-11'
+          className='h-11 w-full sm:w-11'
         />
       </div>
-      <div className='grid grid-cols-2 gap-2 mt-4 pt-4 border-t border-border'>
+      <div className='mt-4 grid grid-cols-1 gap-2 border-t border-border pt-4 sm:grid-cols-2'>
         {[
           { icon: ShieldCheckIcon, text: '1 Year Warranty' },
           { icon: RotateCcwIcon, text: '30-Day Returns' },

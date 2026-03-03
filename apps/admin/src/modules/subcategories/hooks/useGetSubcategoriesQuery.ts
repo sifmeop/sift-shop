@@ -14,3 +14,4 @@ export const useGetSubcategoriesQuery = (slug: string) => {
 		queryFn: () => getSubcategories(slug)
 	})
 }
+

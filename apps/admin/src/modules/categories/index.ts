@@ -1,3 +1,4 @@
+export * from './types/category.types'
 export * from './hooks/useGetCategoriesQuery'
-export * from './ui/CategoriesHeader'
-export * from './ui/CategoriesTable'
+export * from './ui/CategoriesScreen'
+

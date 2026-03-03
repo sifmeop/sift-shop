@@ -1,9 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router'
+import { OrdersPage } from '~/pages/orders'
 
 export const Route = createFileRoute('/_auth/orders')({
-	component: RouteComponent
+	component: OrdersPage
 })
-
-function RouteComponent() {
-	return <div>Hello "/_auth/orders"!</div>
-}

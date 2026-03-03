@@ -1,17 +1,21 @@
-import { useNavigate } from '@tanstack/react-router'
 import { EditIcon } from 'lucide-react'
 import { Button } from '~/common/ui/Button'
+import { ProductFormDialog } from '../ProductFormDialog'
+import type { Product, ProductSubcategory } from '../../types/product.types'
 
-export const UpdateProduct = () => {
-	const navigate = useNavigate()
+interface UpdateProductProps {
+	product: Product
+	subcategories: ProductSubcategory[]
+}
 
+export const UpdateProduct = ({ product, subcategories }: UpdateProductProps) => {
 	return (
-		<Button
-			variant='default'
-			size='icon'
-			color='yellow'
-			onClick={() => navigate({ to: '/products/form' })}>
-			<EditIcon />
-		</Button>
+		<ProductFormDialog mode='edit' product={product} subcategories={subcategories}>
+			<Button variant='outline' size='sm'>
+				<EditIcon />
+				Edit
+			</Button>
+		</ProductFormDialog>
 	)
 }
+

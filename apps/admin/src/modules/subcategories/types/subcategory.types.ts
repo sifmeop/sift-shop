@@ -8,4 +8,6 @@ export interface Subcategory {
 	productsCount: number
 	categoryId: string
 	createdAt: string
+	updatedAt: string
 }
+

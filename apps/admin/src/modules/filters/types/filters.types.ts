@@ -16,3 +16,22 @@ export interface FilterOption {
 	position: number
 	filterId: string
 }
+
+export interface FilterOptionBody {
+	label: string
+	value: string
+	position: number
+}
+
+export interface FilterBody {
+	name: string
+	value: string
+	options: FilterOptionBody[]
+}
+
+export interface FilterSubcategory {
+	id: string
+	name: string
+	slug: string
+}
+

@@ -18,11 +18,11 @@ export const ProductSection = ({
     <Container
       bgColor='white'
       className='rounded-lg'
-      innerClassName='px-4! py-3 items-start grid grid-cols-[2fr_3fr] gap-4'>
+      innerClassName='grid items-start gap-4 px-4! py-3 md:grid-cols-[2fr_3fr] md:gap-6'>
       <div className='space-y-3'>
         <div className='flex items-center gap-2'>
-          <Icon size={24} />
-          <h3 className='font-medium text-base'>{name}</h3>
+          <Icon size={22} />
+          <h3 className='text-base font-medium'>{name}</h3>
         </div>
         {leftContent}
       </div>

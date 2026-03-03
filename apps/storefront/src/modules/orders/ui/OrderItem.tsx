@@ -60,8 +60,8 @@ export const OrderItem = ({
   const config = statusConfig[status]
 
   return (
-    <div className='rounded-2xl border bg-white shadow-xs hover:shadow-sm transition p-6 flex flex-col gap-6'>
-      <div className='flex items-start justify-between gap-4'>
+    <div className='flex flex-col gap-5 rounded-2xl border bg-white p-4 shadow-xs transition hover:shadow-sm sm:gap-6 sm:p-6'>
+      <div className='flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4'>
         <div>
           <p className='text-sm font-medium text-muted-foreground'>
             Order #{number}
@@ -71,17 +71,17 @@ export const OrderItem = ({
           </p>
         </div>
 
-        <div className='flex items-center gap-3'>
+        <div className='flex items-center justify-between gap-3 sm:justify-start'>
           <span
             className={cn(
-              'px-3 py-1 rounded-full text-xs font-medium',
+              'rounded-full px-3 py-1 text-xs font-medium',
               config.className
             )}>
             {config.label}
           </span>
           <button
             onClick={() => setOpen(!open)}
-            className='p-2 rounded-lg hover:bg-muted transition'>
+            className='rounded-lg p-2 transition hover:bg-muted'>
             <ChevronDown
               className={cn(
                 'size-4 transition-transform duration-300',
@@ -92,7 +92,7 @@ export const OrderItem = ({
         </div>
       </div>
 
-      <div className='grid grid-cols-1 md:grid-cols-2 gap-6'>
+      <div className='grid grid-cols-1 gap-5 md:grid-cols-2 md:gap-6'>
         <div className='space-y-4'>
           <div className='text-sm'>
             <p className='font-semibold text-base'>
@@ -102,7 +102,7 @@ export const OrderItem = ({
             <p className='text-muted-foreground'>{phone}</p>
           </div>
 
-          <div className='text-sm bg-muted/30 p-3 rounded-xl border border-border/50'>
+          <div className='rounded-xl border border-border/50 bg-muted/30 p-3 text-sm'>
             <p className='font-medium mb-1'>Delivery Address</p>
             <p className='text-muted-foreground leading-relaxed'>
               {country}, {city}, {state ? state + ', ' : ''} {address},{' '}
@@ -135,9 +135,9 @@ export const OrderItem = ({
             </p>
           </div>
 
-          <div className='pt-4 border-t border-dashed flex justify-between items-end'>
+          <div className='flex items-end justify-between border-t border-dashed pt-4'>
             <span className='text-sm font-medium'>Total</span>
-            <p className='text-xl font-bold tracking-tight'>
+            <p className='text-lg font-bold tracking-tight sm:text-xl'>
               {formatPrice(totalAmount)}
             </p>
           </div>
@@ -153,20 +153,22 @@ export const OrderItem = ({
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.3, ease: [0.4, 0, 0.2, 1] }}
             className='overflow-hidden'>
-            <div className='pt-6 border-t space-y-4'>
+            <div className='space-y-4 border-t pt-5 sm:pt-6'>
               <p className='text-xs font-semibold uppercase tracking-wider text-muted-foreground'>
                 Items in order
               </p>
               <div className='space-y-3'>
                 {items.map((item) => (
-                  <div key={item.id} className='flex items-center gap-4 group'>
+                  <div
+                    key={item.id}
+                    className='group flex items-center gap-3 sm:gap-4'>
                     {item.product.images?.[0] && (
                       <Image
                         width={56}
                         height={56}
                         src={getImageUrl(item.product.images[0])}
                         alt={item.product.name}
-                        className='rounded-lg object-cover border bg-muted/20'
+                        className='rounded-lg border bg-muted/20 object-cover'
                       />
                     )}
                     <div className='flex-1 min-w-0'>

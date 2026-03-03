@@ -10,6 +10,36 @@ import { CreateSubcategoryDto } from './dto/create-subcategory.dto'
 export class SubcategoryService {
   constructor(private readonly s3Service: S3Service) {}
 
+  async getSubcategoriesWithProducts() {
+    const subcategories = await prisma.subcategory.findMany({
+      where: {
+        products: {
+          some: {}
+        }
+      },
+      select: {
+        id: true,
+        name: true,
+        slug: true,
+        _count: {
+          select: {
+            products: true
+          }
+        }
+      },
+      orderBy: {
+        name: 'asc'
+      }
+    })
+
+    return subcategories.map((subcategory) => ({
+      id: subcategory.id,
+      name: subcategory.name,
+      slug: subcategory.slug,
+      productsCount: subcategory._count.products
+    }))
+  }
+
   async getSubcategories(slug: string) {
     const category = await prisma.category.findUnique({
       where: {

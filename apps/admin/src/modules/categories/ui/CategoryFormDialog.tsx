@@ -1,98 +1,146 @@
-import type { CoreRow } from '@tanstack/react-table'
-import { useState } from 'react'
-import { Controller } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import slugify from '@sindresorhus/slugify'
+import { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form'
+import { z } from 'zod'
+import { toast } from 'sonner'
+import { handleApiError } from '~/common/api/errorHandler'
 import { Button } from '~/common/ui/Button'
 import {
 	Dialog,
+	DialogClose,
 	DialogContent,
+	DialogDescription,
 	DialogFooter,
 	DialogHeader,
 	DialogTitle,
 	DialogTrigger
 } from '~/common/ui/Dialog'
-import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/Field'
 import { Input } from '~/common/ui/Input'
-import { capitalize } from '~/common/utils/capitalize'
-import { useCategoryForm } from '../hooks/useCategoryForm'
+import { cn } from '~/common/utils/cn'
+import { useCreateCategoryMutation } from '../hooks/useCreateCategoryMutation'
+import { useUpdateCategoryMutation } from '../hooks/useUpdateCategoryMutation'
 import type { Category } from '../types/category.types'
 
-interface CategoryDialogProps {
+const schema = z.object({
+	name: z.string().trim().min(1, 'Name is required'),
+	slug: z.string().trim().min(1, 'Slug is required')
+})
+
+type FormValues = z.infer<typeof schema>
+
+interface CategoryFormDialogProps {
 	mode: 'create' | 'edit'
-	defaultValues?: CoreRow<Category>['original']
+	defaultValues?: Pick<Category, 'id' | 'name' | 'slug'>
 	children: React.ReactNode
 }
 
-export const CategoryDialog = ({
+const EMPTY_VALUES: FormValues = {
+	name: '',
+	slug: ''
+}
+
+export const CategoryFormDialog = ({
 	mode,
 	defaultValues,
-	children: trigger
-}: CategoryDialogProps) => {
+	children
+}: CategoryFormDialogProps) => {
 	const [isOpen, setIsOpen] = useState(false)
-	const { form, onSubmit, isLoading } = useCategoryForm({
-		mode,
-		defaultValues,
-		onClose: () => setIsOpen(false)
+	const createMutation = useCreateCategoryMutation()
+	const updateMutation = useUpdateCategoryMutation(defaultValues?.id ?? '')
+	const form = useForm<FormValues>({
+		defaultValues: EMPTY_VALUES,
+		resolver: zodResolver(schema)
 	})
 
+	useEffect(() => {
+		if (!isOpen) return
+
+		if (mode === 'edit' && defaultValues) {
+			form.reset({
+				name: defaultValues.name,
+				slug: defaultValues.slug
+			})
+		} else {
+			form.reset(EMPTY_VALUES)
+		}
+	}, [isOpen, mode, defaultValues, form])
+
+	const isLoading = createMutation.isPending || updateMutation.isPending
 	const isEdit = mode === 'edit'
 
-	const formId = `${mode}-category-${defaultValues?.id}`
+	const onSubmit = form.handleSubmit(async (values) => {
+		try {
+			if (isEdit && defaultValues) {
+				await updateMutation.mutateAsync(values)
+				toast.success('Category updated successfully')
+			} else {
+				await createMutation.mutateAsync(values)
+				toast.success('Category created successfully')
+			}
+
+			setIsOpen(false)
+		} catch (error) {
+			toast.error(handleApiError(error))
+		}
+	})
 
 	return (
-		<Dialog
-			open={isOpen}
-			onOpenChange={(open) => {
-				if (!open) form.reset()
-				setIsOpen(open)
-			}}>
-			<form id={formId} onSubmit={onSubmit}>
-				<DialogTrigger asChild>{trigger}</DialogTrigger>
-				<DialogContent aria-describedby={undefined}>
-					<DialogHeader>
-						<DialogTitle>
-							{isEdit
-								? `Edit category: ${defaultValues?.name}`
-								: 'Create category'}
-						</DialogTitle>
-					</DialogHeader>
-					<FieldGroup>
-						<Controller
-							name='name'
-							control={form.control}
-							render={({ field, fieldState }) => {
-								const isInvalid = fieldState.invalid
-								return (
-									<Field className='space-x-2' data-invalid={isInvalid}>
-										<FieldLabel htmlFor={field.name}>Name</FieldLabel>
-										<Input
-											aria-invalid={isInvalid}
-											id={field.name}
-											name={field.name}
-											value={field.value}
-											onChange={(e) =>
-												field.onChange(capitalize(e.target.value))
-											}
-											onBlur={field.onBlur}
-										/>
-										<FieldError error={fieldState.error?.message} />
-									</Field>
-								)
-							}}
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<DialogTrigger asChild>{children}</DialogTrigger>
+			<DialogContent
+				className={cn('sm:max-w-md', {
+					'pointer-events-none opacity-80': isLoading
+				})}>
+				<DialogHeader>
+					<DialogTitle>{isEdit ? 'Edit category' : 'Create category'}</DialogTitle>
+					<DialogDescription>Set category name and slug.</DialogDescription>
+				</DialogHeader>
+
+				<form id='category-form' onSubmit={onSubmit} className='space-y-3'>
+					<div className='space-y-1'>
+						<Input
+							placeholder='Name'
+							{...form.register('name', {
+								onChange: (event) => {
+									if (!isEdit) {
+										form.setValue(
+											'slug',
+											slugify(String(event.target.value), { decamelize: false })
+										)
+									}
+								}
+							})}
 						/>
-					</FieldGroup>
-					<DialogFooter>
-						<Button
-							type='button'
-							variant='outline'
-							onClick={() => setIsOpen(false)}>
-							Close
+						{form.formState.errors.name?.message && (
+							<p className='text-sm text-destructive'>
+								{form.formState.errors.name.message}
+							</p>
+						)}
+					</div>
+
+					<div className='space-y-1'>
+						<Input placeholder='Slug' {...form.register('slug')} />
+						{form.formState.errors.slug?.message && (
+							<p className='text-sm text-destructive'>
+								{form.formState.errors.slug.message}
+							</p>
+						)}
+					</div>
+				</form>
+
+				<DialogFooter>
+					<DialogClose asChild>
+						<Button type='button' variant='outline'>
+							Cancel
 						</Button>
-						<Button form={formId} type='submit' isLoading={isLoading}>
-							{isEdit ? 'Save' : 'Create'}
-						</Button>
-					</DialogFooter>
-				</DialogContent>
-			</form>
+					</DialogClose>
+					<Button form='category-form' type='submit' isLoading={isLoading}>
+						{isEdit ? 'Update' : 'Create'}
+					</Button>
+				</DialogFooter>
+			</DialogContent>
 		</Dialog>
 	)
 }
+

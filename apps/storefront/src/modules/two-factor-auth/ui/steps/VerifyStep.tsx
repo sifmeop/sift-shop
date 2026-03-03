@@ -42,23 +42,25 @@ export const VerifyStep = ({ onNext }: VerifyStepProps) => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className='flex flex-col items-center gap-8'>
+      className='flex flex-col items-center gap-6 sm:gap-8'>
       <div className='flex flex-col items-center gap-2 text-center'>
         <div className='size-12 rounded-xl bg-muted border border-border grid place-items-center'>
           <ShieldCheck className='size-5 text-muted-foreground' />
         </div>
-        <p className='text-muted-foreground text-sm'>
+        <p className='max-w-xs text-sm text-muted-foreground'>
           Enter the 6-digit code from your authenticator app
         </p>
       </div>
 
-      <InputOTP
-        focus
-        value={otp}
-        onChange={setOtp}
-        error={error?.message}
-        disabled={loading}
-      />
+      <div className='w-full overflow-x-auto pb-1'>
+        <InputOTP
+          focus
+          value={otp}
+          onChange={setOtp}
+          error={error?.message}
+          disabled={loading}
+        />
+      </div>
 
       <Button
         className='w-full h-11 text-sm font-semibold gap-2'

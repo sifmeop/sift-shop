@@ -6,7 +6,8 @@ import {
   Param,
   Patch,
   Post,
-  Put
+  Put,
+  Query
 } from '@nestjs/common'
 
 import { FilterDto } from './dto/filter.dto'
@@ -16,6 +17,11 @@ import { FilterService } from './filter.service'
 @Controller('filters')
 export class FilterController {
   constructor(private readonly filterService: FilterService) {}
+
+  @Get()
+  async getAllFilters(@Query('subcategorySlug') subcategorySlug?: string) {
+    return this.filterService.getFilters(subcategorySlug)
+  }
 
   @Get(':slug')
   async getFilters(@Param('slug') slug: string) {

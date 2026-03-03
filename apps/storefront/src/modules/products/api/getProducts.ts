@@ -28,6 +28,7 @@ const PRODUCTS_LIST = gql(`
 					id
 					label
 					value
+					productCount
 				}
 			}
 		}

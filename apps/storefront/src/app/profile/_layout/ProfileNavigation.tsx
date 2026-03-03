@@ -46,7 +46,7 @@ export const ProfileNavigation = () => {
   const pathname = usePathname()
 
   return (
-    <ul className='space-y-4 mt-15'>
+    <ul className='mt-0 flex w-full gap-2 overflow-x-auto pb-1 lg:mt-15 lg:block lg:w-auto lg:space-y-4 lg:overflow-visible lg:pb-0'>
       {links.map((link) => (
         <ProfileMenuItem
           as={Link}

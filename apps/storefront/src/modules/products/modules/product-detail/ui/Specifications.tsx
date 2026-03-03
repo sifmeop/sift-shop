@@ -24,12 +24,12 @@ export const Specifications = ({ specifications }: SpecificationsProps) => {
           return (
             <Fragment key={key}>
               <div
-                className={cn('flex justify-between gap-2 py-2', {
+                className={cn('flex flex-col gap-1 py-2 text-sm sm:flex-row sm:justify-between sm:gap-2 sm:text-base', {
                   'pt-0': isFirst,
                   'pb-0': isLast
                 })}>
-                <p>{key}</p>
-                <p>{value}</p>
+                <p className='text-muted-foreground sm:text-foreground'>{key}</p>
+                <p className='break-words sm:text-right'>{value}</p>
               </div>
               {!isLast && <Separator />}
             </Fragment>

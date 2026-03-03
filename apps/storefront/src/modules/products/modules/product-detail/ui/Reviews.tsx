@@ -46,54 +46,57 @@ export const Reviews = ({ productId, isPurchased }: ReviewsProps) => {
         />
       }>
       {reviews.length > 0 ? (
-        <div className='flex gap-4 h-full'>
-          <Separator orientation='vertical' />
-          <div className='space-y-3 flex-1'>
+        <div className='flex h-full flex-col gap-4 lg:flex-row'>
+          <Separator orientation='vertical' className='hidden lg:block' />
+          <div className='flex-1 space-y-3'>
             {reviews.map((review) => (
               <div key={review.id}>
-                <div className='flex gap-6'>
-                  <div className='size-12 rounded-full grid place-items-center text-blue-500 bg-blue-500/20'>
+                <div className='flex flex-col gap-3 sm:flex-row sm:items-start sm:gap-4'>
+                  <div className='grid size-10 shrink-0 place-items-center rounded-full bg-blue-500/20 text-blue-500 sm:size-12'>
                     {review.fullName
                       .split(' ')
                       .map((name) => name[0])
                       .join('')}
                   </div>
-                  <div className='mr-auto flex flex-col justify-center gap-2'>
+                  <div className='mr-auto flex min-w-0 flex-col justify-center gap-1 sm:gap-2'>
                     <p className='font-medium'>{review.fullName}</p>
                     <span className='text-muted-foreground text-xs'>
                       {day(review.createdAt).format('MMM DD, YYYY')}
                     </span>
                   </div>
-                  <div className='flex gap-1'>
-                    {Array.from({ length: 5 }).map((_, index) => (
-                      <StarIcon
-                        key={index}
-                        className={cn(
-                          'size-4 fill-foreground stroke-foreground',
-                          {
-                            'fill-none': index >= review.rating
-                          }
-                        )}
-                        strokeWidth={1.5}
-                      />
-                    ))}
-                  </div>
-                  <Show when={review.userId === userId}>
-                    <div className='flex gap-2'>
-                      <UpdateReview
-                        productId={productId}
-                        rating={review.rating}
-                        comment={review.comment}
-                      />
-                      <DeleteReview
-                        reviewId={review.id}
-                        productId={productId}
-                      />
+
+                  <div className='flex flex-wrap items-center gap-2 sm:justify-end'>
+                    <div className='flex gap-1'>
+                      {Array.from({ length: 5 }).map((_, index) => (
+                        <StarIcon
+                          key={index}
+                          className={cn(
+                            'size-4 fill-foreground stroke-foreground',
+                            {
+                              'fill-none': index >= review.rating
+                            }
+                          )}
+                          strokeWidth={1.5}
+                        />
+                      ))}
                     </div>
-                  </Show>
+                    <Show when={review.userId === userId}>
+                      <div className='flex gap-2'>
+                        <UpdateReview
+                          productId={productId}
+                          rating={review.rating}
+                          comment={review.comment}
+                        />
+                        <DeleteReview
+                          reviewId={review.id}
+                          productId={productId}
+                        />
+                      </div>
+                    </Show>
+                  </div>
                 </div>
                 <Show when={!!review.comment}>
-                  <p className='text-muted-foreground mt-3 ml-18'>
+                  <p className='text-muted-foreground mt-2 text-sm sm:mt-3 sm:ml-14 sm:text-base lg:ml-18'>
                     {review.comment}
                   </p>
                 </Show>

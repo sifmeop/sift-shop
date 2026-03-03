@@ -32,9 +32,16 @@ export const FilterCheckbox = ({ filterKey, options }: FilterCheckboxProps) => {
             <Link
               href={href}
               scroll={false}
-              className='flex items-center gap-2'>
+              className={cn('flex items-start gap-2 text-sm', {
+                'pointer-events-none opacity-50': option.productCount === 0
+              })}>
               <Checkbox id={option.id} checked={checked} />
-              <FieldLabel htmlFor={option.id}>{option.label}</FieldLabel>
+              <FieldLabel htmlFor={option.id} className='gap-1 leading-tight'>
+                {option.label}
+                <span className='text-muted-foreground'>
+                  ({option.productCount})
+                </span>
+              </FieldLabel>
             </Link>
           </Field>
         )

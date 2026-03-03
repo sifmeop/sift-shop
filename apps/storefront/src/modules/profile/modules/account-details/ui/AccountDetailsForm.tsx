@@ -20,12 +20,12 @@ export const AccountDetailsForm = () => {
       <form
         onSubmit={onSubmit}
         className={cn(
-          'flex flex-col justify-between flex-1 gap-4 transition-opacity duration-300',
+          'flex flex-1 flex-col justify-between gap-4 transition-opacity duration-300',
           {
             'opacity-50 pointer-events-none': isLoading
           }
         )}>
-        <FieldGroup className='grid grid-cols-2 gap-4'>
+        <FieldGroup className='grid grid-cols-1 gap-4 sm:grid-cols-2'>
           {(
             [
               'firstName',

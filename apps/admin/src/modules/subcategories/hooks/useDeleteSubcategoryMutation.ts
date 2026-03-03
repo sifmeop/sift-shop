@@ -1,9 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { Route } from '~/app/routes/_auth/categories/$slug'
 import { api } from '~/common/api/axiosInstance'
 import { MUTATIONS } from '~/common/constants/mutations'
 import { QUERIES } from '~/common/constants/quries'
-import type { Category } from '~/modules/categories/types/category.types'
 import type { Subcategory } from '../types/subcategory.types'
 
 const deleteSubcategory = async (id: string) => {
@@ -11,39 +9,41 @@ const deleteSubcategory = async (id: string) => {
 	return data
 }
 
-export const useDeleteSubcategoryMutation = (id: string) => {
+export const useDeleteSubcategoryMutation = (id: string, slug: string) => {
 	const queryClient = useQueryClient()
-	const { slug } = Route.useParams()
 
 	return useMutation({
 		mutationKey: MUTATIONS.DELETE_SUBCATEGORY(id),
 		mutationFn: () => deleteSubcategory(id),
-		onSuccess: (data) => {
-			const prevSubcategories = queryClient.getQueryData<Subcategory[]>(
+		onMutate: async () => {
+			await queryClient.cancelQueries({
+				queryKey: QUERIES.GET_SUBCATEGORIES(slug)
+			})
+
+			const previousSubcategories = queryClient.getQueryData<Subcategory[]>(
 				QUERIES.GET_SUBCATEGORIES(slug)
 			)
 
-			queryClient.setQueryData(
+			queryClient.setQueryData<Subcategory[]>(
 				QUERIES.GET_SUBCATEGORIES(slug),
-				prevSubcategories?.filter((subcategory) => subcategory.id !== data.id)
+				(rows = []) => rows.filter((row) => row.id !== id)
 			)
 
-			const prevCategories = queryClient.getQueryData<Category[]>(
-				QUERIES.GET_CATEGORIES
-			)
-
-			queryClient.setQueryData(
-				QUERIES.GET_CATEGORIES,
-				prevCategories?.map((category) => {
-					if (category.id === data.categoryId) {
-						return {
-							...category,
-							subcategoriesCount: category.subcategoriesCount - 1
-						}
-					}
-					return category
-				})
-			)
+			return { previousSubcategories }
+		},
+		onError: (_error, _variables, context) => {
+			if (context?.previousSubcategories) {
+				queryClient.setQueryData(
+					QUERIES.GET_SUBCATEGORIES(slug),
+					context.previousSubcategories
+				)
+			}
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({
+				queryKey: QUERIES.GET_SUBCATEGORIES(slug)
+			})
 		}
 	})
 }
+

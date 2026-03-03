@@ -13,20 +13,20 @@ import {
 	DialogTitle,
 	DialogTrigger
 } from '~/common/ui/Dialog'
-import { cn } from '~/common/utils/cn'
 import { useDeleteFilterMutation } from '../../hooks/useDeleteFilterMutation'
-import type { Filter } from '../../types/filters.types'
 
-type DeleteFilterProps = Pick<Filter, 'id' | 'name'>
+interface DeleteFilterProps {
+	id: string
+	name: string
+}
 
 export const DeleteFilter = ({ id, name }: DeleteFilterProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { mutateAsync, isPending: isLoading } = useDeleteFilterMutation(id)
 
-	const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
-
+	const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		event.stopPropagation()
 		if (isLoading) return
 
 		try {
@@ -38,22 +38,18 @@ export const DeleteFilter = ({ id, name }: DeleteFilterProps) => {
 		}
 	}
 
-	const formId = `delete-filter-form-${id}`
-
 	return (
 		<Dialog open={isOpen} onOpenChange={setIsOpen}>
-			<form id={formId} onSubmit={onSubmit}>
+			<form id={`delete-filter-form-${id}`} onSubmit={onSubmit}>
 				<DialogTrigger asChild>
-					<Button variant='destructive'>
+					<Button variant='destructive' size='sm'>
 						<TrashIcon />
+						Delete
 					</Button>
 				</DialogTrigger>
-				<DialogContent
-					className={cn('sm:max-w-sm', {
-						'pointer-events-none opacity-80': isLoading
-					})}>
+				<DialogContent className='sm:max-w-sm'>
 					<DialogHeader>
-						<DialogTitle>Filter: {name}</DialogTitle>
+						<DialogTitle>{name}</DialogTitle>
 						<DialogDescription>
 							Are you sure you want to delete this filter?
 						</DialogDescription>
@@ -65,7 +61,7 @@ export const DeleteFilter = ({ id, name }: DeleteFilterProps) => {
 							</Button>
 						</DialogClose>
 						<Button
-							form={formId}
+							form={`delete-filter-form-${id}`}
 							type='submit'
 							variant='destructive'
 							isLoading={isLoading}>
@@ -77,3 +73,4 @@ export const DeleteFilter = ({ id, name }: DeleteFilterProps) => {
 		</Dialog>
 	)
 }
+

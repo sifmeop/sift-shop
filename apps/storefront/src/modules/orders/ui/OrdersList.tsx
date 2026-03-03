@@ -49,7 +49,9 @@ export const OrdersList = () => {
           <ShoppingBag className='size-10 text-muted-foreground/60' />
         </div>
 
-        <h2 className='text-2xl font-semibold tracking-tight'>No orders yet</h2>
+        <h2 className='text-xl font-semibold tracking-tight sm:text-2xl'>
+          No orders yet
+        </h2>
         <p className='text-muted-foreground mt-2 max-w-75 mx-auto'>
           It looks like you haven&apos;t placed any orders. Time to explore our
           collection!
@@ -58,7 +60,7 @@ export const OrdersList = () => {
         <Button
           as={Link}
           href={ROUTES.HOME}
-          className='mt-8 inline-flex items-center gap-2 px-6 py-3'>
+          className='mt-8 inline-flex items-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3'>
           Start Shopping
           <ArrowRight className='size-4' />
         </Button>
@@ -69,7 +71,7 @@ export const OrdersList = () => {
   const totalPages = Math.ceil(total / LIMIT_PER_PAGE)
 
   return (
-    <div className='space-y-4'>
+    <div className='space-y-3 sm:space-y-4'>
       {orders.map((order) => (
         <OrderItem key={order.id} {...order} />
       ))}

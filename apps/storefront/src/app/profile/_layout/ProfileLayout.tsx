@@ -24,17 +24,19 @@ export const ProfileLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <PageHeader title='My Account' breadcrumbs={[{ label: 'My Account' }]} />
-      <Container main bgColor='white' className='pt-15 pb-32.5'>
-        <div className='flex items-start'>
-          <div className='sticky top-4 flex'>
+      <Container main bgColor='white' className='pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-15 lg:pb-32.5'>
+        <div className='flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-0'>
+          <div className='lg:sticky lg:top-4 lg:flex'>
             <ProfileNavigation />
             <Separator
               orientation='vertical'
-              className='shrink-0 h-112 ml-9 mr-12'
+              className='mx-8 hidden h-112 shrink-0 lg:block'
             />
           </div>
           <div className='flex-1'>
-            <h3 className='font-semibold text-base mb-10'>{title}</h3>
+            <h3 className='mb-6 text-base font-semibold md:mb-8 lg:mb-10'>
+              {title}
+            </h3>
             {children}
           </div>
         </div>

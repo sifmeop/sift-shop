@@ -25,9 +25,9 @@ export const DeleteCategory = ({ id, name }: DeleteCategoryProps) => {
 	const [isOpen, setIsOpen] = useState(false)
 	const { mutateAsync, isPending: isLoading } = useDeleteCategoryMutation(id)
 
-	const onSubmit = async (e: React.SubmitEvent<HTMLFormElement>) => {
-		e.preventDefault()
-		e.stopPropagation()
+	const onSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+		event.preventDefault()
+		event.stopPropagation()
 
 		if (isLoading) return
 
@@ -36,21 +36,17 @@ export const DeleteCategory = ({ id, name }: DeleteCategoryProps) => {
 			setIsOpen(false)
 			toast.success('Category deleted successfully')
 		} catch (error) {
-			const message = handleApiError(error)
-			toast.error(message)
+			toast.error(handleApiError(error))
 		}
 	}
 
-	const onOpenChange = (open: boolean) => {
-		setIsOpen(open)
-	}
-
 	return (
-		<Dialog open={isOpen} onOpenChange={onOpenChange}>
-			<form id='delete-category-form' onSubmit={onSubmit}>
+		<Dialog open={isOpen} onOpenChange={setIsOpen}>
+			<form id={`delete-category-form-${id}`} onSubmit={onSubmit}>
 				<DialogTrigger asChild>
-					<Button variant='destructive'>
+					<Button variant='destructive' size='sm'>
 						<TrashIcon />
+						Delete
 					</Button>
 				</DialogTrigger>
 				<DialogContent
@@ -70,7 +66,7 @@ export const DeleteCategory = ({ id, name }: DeleteCategoryProps) => {
 							</Button>
 						</DialogClose>
 						<Button
-							form='delete-category-form'
+							form={`delete-category-form-${id}`}
 							type='submit'
 							variant='destructive'
 							isLoading={isLoading}>
@@ -82,3 +78,4 @@ export const DeleteCategory = ({ id, name }: DeleteCategoryProps) => {
 		</Dialog>
 	)
 }
+

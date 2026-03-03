@@ -36,8 +36,12 @@ export const TwoFactorAuthSetup = () => {
 
   return (
     <div>
-      <Stepper steps={steps} currentStep={currentStep} className='mb-6' />
-      <div className='max-w-xl mx-auto'>
+      <Stepper
+        steps={steps}
+        currentStep={currentStep}
+        className='mb-5 overflow-x-auto pb-1 pt-2 sm:mb-6'
+      />
+      <div className='mx-auto w-full max-w-xl'>
         <Content
           onNext={(step) => {
             setCurrentStep((prev) => {

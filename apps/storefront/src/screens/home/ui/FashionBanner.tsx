@@ -7,17 +7,17 @@ export const FashionBanner = () => {
   return (
     <section className='bg-white overflow-hidden'>
       <div className='app-container'>
-        <div className='flex flex-col items-center gap-8 py-16 md:flex-row md:justify-between md:py-20'>
+        <div className='flex flex-col items-center gap-8 py-12 md:flex-row md:justify-between md:gap-10 md:py-16 lg:py-20'>
           <motion.div
             initial={{ opacity: 0, x: -30 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.5 }}
             className='max-w-md text-center md:text-left'>
-            <h2 className='text-2xl font-bold md:text-3xl lg:text-4xl'>
+            <h2 className='text-2xl font-bold sm:text-3xl lg:text-4xl'>
               Browse Our Fashion Paradise!
             </h2>
-            <p className='mt-4 text-sm md:text-base'>
+            <p className='mt-3 text-sm md:mt-4 md:text-base'>
               Step into a world of style and explore our diverse collection of
               clothing categories.
             </p>
@@ -34,7 +34,7 @@ export const FashionBanner = () => {
               alt='Fashion collection on hanger'
               width={400}
               height={350}
-              className='h-auto w-64 rounded-lg object-cover md:w-80 lg:w-96'
+              className='h-auto w-full max-w-72 rounded-lg object-cover sm:max-w-80 lg:max-w-96'
             />
           </motion.div>
         </div>

@@ -1,10 +1,5 @@
-import { CategoriesHeader, CategoriesTable } from '~/modules/categories'
+import { CategoriesScreen } from '~/modules/categories'
 
 export const CategoriesPage = () => {
-	return (
-		<>
-			<CategoriesHeader />
-			<CategoriesTable />
-		</>
-	)
+	return <CategoriesScreen />
 }

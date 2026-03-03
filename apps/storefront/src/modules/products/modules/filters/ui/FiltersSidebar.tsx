@@ -16,7 +16,7 @@ export const FiltersSidebar = ({ filters }: FiltersSidebarProps) => {
   if (isEmpty) return
 
   return (
-    <div className='shrink-0 border w-62.5 border-border p-4 rounded-lg space-y-5 max-h-[70dvh] overflow-y-auto overscroll-contain scrollbar-thin'>
+    <div className='w-full shrink-0 space-y-5 rounded-lg border border-border p-4 lg:w-62.5 lg:max-h-[70dvh] lg:overflow-y-auto lg:overscroll-contain lg:scrollbar-thin'>
       {filters.map((filter, index) => (
         <Fragment key={filter.id}>
           <FilterGroup filter={filter} />

@@ -15,17 +15,27 @@ export const useDeleteCategoryMutation = (id: string) => {
 	return useMutation({
 		mutationKey: MUTATIONS.DELETE_CATEGORY(id),
 		mutationFn: () => deleteCategory(id),
-		onSuccess: (data) => {
-			const prevCategories = queryClient.getQueryData<Category[]>(
+		onMutate: async () => {
+			await queryClient.cancelQueries({ queryKey: QUERIES.GET_CATEGORIES })
+
+			const previousCategories = queryClient.getQueryData<Category[]>(
 				QUERIES.GET_CATEGORIES
 			)
 
-			queryClient.setQueryData(
-				QUERIES.GET_CATEGORIES,
-				prevCategories?.filter((category) => category.id !== data.id)
+			queryClient.setQueryData<Category[]>(QUERIES.GET_CATEGORIES, (rows = []) =>
+				rows.filter((row) => row.id !== id)
 			)
 
-			queryClient.setQueryData(QUERIES.GET_SUBCATEGORIES(data.id), [])
+			return { previousCategories }
+		},
+		onError: (_error, _variables, context) => {
+			if (context?.previousCategories) {
+				queryClient.setQueryData(QUERIES.GET_CATEGORIES, context.previousCategories)
+			}
+		},
+		onSettled: () => {
+			queryClient.invalidateQueries({ queryKey: QUERIES.GET_CATEGORIES })
 		}
 	})
 }
+

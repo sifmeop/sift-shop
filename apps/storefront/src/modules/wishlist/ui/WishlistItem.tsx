@@ -32,10 +32,10 @@ export const WishlistItem = ({
   const productLink = `/products/${slug}`
 
   return (
-    <div className='flex items-center gap-6'>
+    <div className='flex flex-col gap-4 sm:flex-row sm:items-center sm:gap-6'>
       <Link
         href={productLink}
-        className='size-20 bg-background rounded-md overflow-hidden relative p-3 grid place-items-center group'>
+        className='relative grid size-20 place-items-center overflow-hidden rounded-md bg-background p-3 group'>
         <Image
           width={64}
           height={64}
@@ -49,48 +49,50 @@ export const WishlistItem = ({
           </span>
         </Show>
       </Link>
-      <div className='flex flex-col gap-1 mr-auto'>
+      <div className='mr-auto flex w-full flex-col gap-1 sm:w-auto'>
         <Link href={productLink} className='font-medium hover:underline'>
           {name}
         </Link>
-        <span className='text-muted-foreground'>
+        <span className='text-sm text-muted-foreground'>
           Added on: {day(addedAt).format('MMM DD, YYYY')}
         </span>
         <Show when={stock < 10}>
-          <p className='text-xs font-medium text-amber-600 dark:text-amber-400 flex items-center gap-1'>
+          <p className='flex items-center gap-1 text-xs font-medium text-amber-600 dark:text-amber-400'>
             <span className='inline-block size-1.5 rounded-full bg-amber-500 animate-pulse' />
             Only {stock} left in stock
           </p>
         </Show>
         <Button
           variant='destructive'
-          className='py-0.5 px-2 h-7'
+          className='h-7 w-fit px-2 py-0.5'
           onClick={removeFromWishlist}
           isLoading={isLoading}
           loadingMode='spinner-only'>
           Remove from wishlist
         </Button>
       </div>
-      {discountPercent ? (
-        <div>
-          <p className='text-sm text-muted-foreground line-through'>
-            {formatPrice(price)}
-          </p>
-          <div className='flex items-center gap-2'>
-            <p className='font-semibold text-base text-red-500'>
-              {calcDiscountedPrice(price, discountPercent)}
+      <div className='flex w-full items-center justify-between gap-3 sm:w-auto sm:flex-col sm:items-end sm:justify-center'>
+        {discountPercent ? (
+          <div className='sm:text-right'>
+            <p className='text-sm text-muted-foreground line-through'>
+              {formatPrice(price)}
             </p>
-            <span className='text-xs font-medium bg-red-100 text-red-500 px-1.5 py-0.5 rounded-full'>
-              -{discountPercent}%
-            </span>
+            <div className='flex items-center gap-2 sm:justify-end'>
+              <p className='text-base font-semibold text-red-500'>
+                {calcDiscountedPrice(price, discountPercent)}
+              </p>
+              <span className='rounded-full bg-red-100 px-1.5 py-0.5 text-xs font-medium text-red-500'>
+                -{discountPercent}%
+              </span>
+            </div>
           </div>
-        </div>
-      ) : (
-        <p className='font-medium text-base'>{formatPrice(price)}</p>
-      )}
+        ) : (
+          <p className='text-base font-medium'>{formatPrice(price)}</p>
+        )}
+      </div>
       <Button
         variant='border'
-        className='w-30'
+        className='w-full sm:w-30'
         isLoading={isAdding}
         loadingMode='spinner-only'
         onClick={addToCart}>

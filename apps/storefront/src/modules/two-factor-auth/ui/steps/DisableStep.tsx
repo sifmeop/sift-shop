@@ -39,7 +39,7 @@ export const DisableStep = ({ onNext }: DisableStepProps) => {
       initial={{ opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: 'easeOut' }}
-      className='flex flex-col items-center gap-8'>
+      className='flex flex-col items-center gap-6 sm:gap-8'>
       <div className='flex flex-col items-center gap-2 text-center'>
         <div className='size-12 rounded-xl bg-destructive/10 border border-destructive/20 grid place-items-center'>
           <ShieldOff className='size-5 text-destructive' />
@@ -50,7 +50,9 @@ export const DisableStep = ({ onNext }: DisableStepProps) => {
         </p>
       </div>
 
-      <InputOTP focus value={otp} onChange={setOtp} error={error?.message} />
+      <div className='w-full overflow-x-auto pb-1'>
+        <InputOTP focus value={otp} onChange={setOtp} error={error?.message} />
+      </div>
 
       <Button
         variant='destructive'

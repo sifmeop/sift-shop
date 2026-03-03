@@ -14,3 +14,4 @@ export const useGetCategoriesQuery = () => {
 		queryFn: getCategories
 	})
 }
+

@@ -58,7 +58,7 @@ export const FilterRange = ({ filterKey, options }: FilterRangeProps) => {
     }
 
     router.push(`${pathname}?${searchParams.toString()}`)
-  }, [debouncedValue])
+  }, [debouncedValue, filterKey, max, min, pathname, router])
 
   const handleInputChange =
     (index: number) => (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -106,7 +106,7 @@ export const FilterRange = ({ filterKey, options }: FilterRangeProps) => {
 
   return (
     <div className='space-y-4'>
-      <div className='items-center gap-2 grid grid-cols-[1fr_10%_1fr]'>
+      <div className='grid grid-cols-[1fr_auto_1fr] items-center gap-2'>
         <Input
           value={inputValues[0]}
           className='text-xs p-2 h-auto'
@@ -114,7 +114,7 @@ export const FilterRange = ({ filterKey, options }: FilterRangeProps) => {
           onBlur={handleInputBlur(0)}
           inputMode='decimal'
         />
-        <Separator />
+        <Separator className='w-4' />
         <Input
           value={inputValues[1]}
           className='text-xs p-2 h-auto'

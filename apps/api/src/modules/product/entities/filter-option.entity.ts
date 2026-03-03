@@ -1,4 +1,4 @@
-import { Field, ID, ObjectType } from '@nestjs/graphql'
+import { Field, ID, Int, ObjectType } from '@nestjs/graphql'
 import { FilterOption } from '@sift-shop/database'
 
 @ObjectType()
@@ -11,4 +11,7 @@ export class FilterOptionEntity implements Partial<FilterOption> {
 
   @Field()
   label: string
+
+  @Field(() => Int)
+  productCount: number
 }

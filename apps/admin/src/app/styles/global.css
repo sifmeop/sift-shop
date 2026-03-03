@@ -131,6 +131,18 @@ button {
 	@apply cursor-pointer;
 }
 
+.product-quill .ql-toolbar {
+	@apply border-input rounded-t-md bg-muted/50;
+}
+
+.product-quill .ql-container {
+	@apply border-input rounded-b-md;
+}
+
+.product-quill .ql-editor {
+	@apply min-h-56 text-sm;
+}
+
 @layer base {
 	* {
 		@apply border-border outline-ring/50;

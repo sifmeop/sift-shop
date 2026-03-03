@@ -16,8 +16,10 @@ interface ProductDetail {
 
 export const ProductDetail = ({ data }: ProductDetail) => {
   return (
-    <Container className='pb-4' innerClassName='flex flex-col gap-2'>
-      <div className='grid grid-cols-[1.2fr_1fr] gap-2'>
+    <Container
+      className='pb-4 md:pb-6'
+      innerClassName='flex flex-col gap-3 md:gap-4'>
+      <div className='grid grid-cols-1 gap-3 lg:grid-cols-[1.2fr_1fr] lg:gap-4'>
         <ProductGallery {...data} />
         <ProductInfo {...data} />
       </div>

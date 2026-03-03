@@ -22,5 +22,9 @@ export const MUTATIONS = {
 
 	CREATE_PRODUCT: ['create-product'],
 	UPDATE_PRODUCT: (id: string) => ['update-product', id],
-	DELETE_PRODUCT: (id: string) => ['delete-product', id]
+	DELETE_PRODUCT: (id: string) => ['delete-product', id],
+
+	DELETE_REVIEW: (id: string) => ['delete-review', id],
+
+	DELETE_CUSTOMER: (id: string) => ['delete-customer', id]
 }

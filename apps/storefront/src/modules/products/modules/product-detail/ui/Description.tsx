@@ -11,7 +11,10 @@ export const Description = ({ description }: DescriptionProps) => {
 
   return (
     <ProductSection icon={EllipsisIcon} name='Description'>
-      <div dangerouslySetInnerHTML={{ __html: description }} />
+      <div
+        className='prose'
+        dangerouslySetInnerHTML={{ __html: description }}
+      />
     </ProductSection>
   )
 }

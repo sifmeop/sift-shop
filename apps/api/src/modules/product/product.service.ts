@@ -107,8 +107,40 @@ export class ProductService {
       }
     })
 
+    const filtersWithProductCount = await Promise.all(
+      filters.map(async (filter) => {
+        const options = await Promise.all(
+          filter.options.map(async (option) => {
+            const productCount = await prisma.product.count({
+              where: {
+                subcategoryId: subcategory.id,
+                filterValues: {
+                  some: {
+                    filterOption: {
+                      value: option.value,
+                      filter: { slug: filter.slug }
+                    }
+                  }
+                }
+              }
+            })
+
+            return {
+              ...option,
+              productCount
+            }
+          })
+        )
+
+        return {
+          ...filter,
+          options
+        }
+      })
+    )
+
     const productsResponse = products
-    const filtersResponse = filters
+    const filtersResponse = filtersWithProductCount
 
     return { products: productsResponse, filters: filtersResponse }
   }
