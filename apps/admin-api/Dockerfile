@@ -3,11 +3,11 @@ WORKDIR /app
 
 COPY package.json bun.lock ./
 COPY packages/ ./packages/
-COPY apps/api/ ./apps/api/
+COPY apps/admin-api/ ./apps/admin-api/
 
 RUN bun install --frozen-lockfile
 
-WORKDIR /app/apps/api
+WORKDIR /app/apps/admin-api
 
 RUN bun run build
 
