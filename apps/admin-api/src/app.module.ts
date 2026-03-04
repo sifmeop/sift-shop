@@ -2,6 +2,7 @@ import { Module } from '@nestjs/common'
 import { ConfigModule } from '@nestjs/config'
 import { APP_GUARD } from '@nestjs/core'
 
+import { AppController } from './app.controller'
 import { AuthGuard } from './common/guards/auth.guard'
 import { S3Module } from './infrastructure/s3/s3.module'
 import { AuthModule } from './modules/auth/auth.module'
@@ -30,7 +31,7 @@ import { UserModule } from './modules/user/user.module'
     S3Module,
     FilterModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,

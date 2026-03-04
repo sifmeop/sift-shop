@@ -9,6 +9,7 @@ import { ThrottlerModule } from '@nestjs/throttler'
 import { GraphQLJSON, GraphQLJSONObject } from 'graphql-scalars'
 import { join } from 'path'
 
+import { AppController } from './app.controller'
 import { AuthGuard } from './common/guards/auth.guard'
 import { GqlThrottlerGuard } from './common/guards/gql-throttler.guard'
 import { MailModule } from './common/libs/mail/mail.module'
@@ -22,10 +23,10 @@ import { NotificationModule } from './modules/notification/notification.module'
 import { OrderModule } from './modules/order/order.module'
 import { ProductModule } from './modules/product/product.module'
 import { ReviewModule } from './modules/review/review.module'
+import { SearchModule } from './modules/search/search.module'
 import { TwoFactorAuthModule } from './modules/two-factor-auth/two-factor-auth.module'
 import { UserModule } from './modules/user/user.module'
 import { WishlistModule } from './modules/wishlist/wishlist.module'
-import { SearchModule } from './modules/search/search.module';
 
 @Module({
   imports: [
@@ -84,7 +85,7 @@ import { SearchModule } from './modules/search/search.module';
     ReviewModule,
     SearchModule
   ],
-  controllers: [],
+  controllers: [AppController],
   providers: [
     {
       provide: APP_GUARD,
