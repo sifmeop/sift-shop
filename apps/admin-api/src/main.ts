@@ -1,6 +1,7 @@
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import { ExpressAdapter } from '@nestjs/platform-express'
 import { RedisStore } from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
@@ -12,7 +13,11 @@ import { GlobalHttpExceptionFilter } from './common/filters/http-exception.filte
 import { parseBoolean } from './common/utils/parse-boolean'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule)
+  const adapter = new ExpressAdapter()
+
+  adapter.set('trust proxy', 1)
+
+  const app = await NestFactory.create(AppModule, adapter)
 
   const config = app.get(ConfigService)
 
