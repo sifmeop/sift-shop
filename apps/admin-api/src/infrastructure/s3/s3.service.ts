@@ -13,7 +13,6 @@ import { optimizationImage } from '~/common/utils/optimizationImage'
 export class S3Service {
   private s3: S3Client
   private bucket: string
-  private cloudfrontUrl: string
   private region: string
 
   constructor(private readonly config: ConfigService) {
@@ -29,7 +28,6 @@ export class S3Service {
 
     this.region = region
     this.bucket = this.config.getOrThrow<string>('AWS_S3_BUCKET')
-    this.cloudfrontUrl = this.config.getOrThrow<string>('CLOUDFRONT_URL')
   }
 
   async uploadFile(
