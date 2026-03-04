@@ -9,6 +9,7 @@
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\"",
     "format:test": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
+    "mail:preview": "bun run src/common/libs/mail/templates/preview-mails.ts",
     "dev": "nest start --watch",
     "dev:debug": "nest start --debug --watch",
     "start": "node dist/main",

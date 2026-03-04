@@ -15,21 +15,19 @@ import {
   Text
 } from '@react-email/components'
 
-interface ResetPasswordTemplateProps {
-  domain: string
-  token: string
+interface TwoFactorDisabledTemplateProps {
+  securityUrl: string
+  signInUrl: string
 }
 
-export const ResetPasswordTemplate = ({
-  domain,
-  token
-}: ResetPasswordTemplateProps) => {
-  const resetPasswordLink = `${domain}/auth/reset-password?token=${token}`
-
+export const TwoFactorDisabledTemplate = ({
+  securityUrl,
+  signInUrl
+}: TwoFactorDisabledTemplateProps) => {
   return (
     <Html>
       <Head />
-      <Preview>Reset your Sift Shop password securely</Preview>
+      <Preview>Two-factor authentication has been disabled</Preview>
       <Tailwind>
         <Body className='bg-slate-100 py-10 font-sans'>
           <Container className='mx-auto max-w-[620px] overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm'>
@@ -41,40 +39,38 @@ export const ResetPasswordTemplate = ({
 
             <Section className='p-8 pt-7 text-center'>
               <Heading className='m-0 text-3xl font-bold leading-tight text-slate-900'>
-                Reset your password
+                2FA has been disabled
               </Heading>
               <Text className='mb-0 mt-4 text-base leading-7 text-slate-600'>
-                We received a request to reset your account password.
+                Two-factor authentication is no longer active for your account.
               </Text>
             </Section>
 
-            <Section className='mx-8 rounded-xl border border-slate-200 bg-slate-50 p-6 max-w-[calc(100%-4rem)]'>
+            <Section className='mx-8 rounded-xl border border-slate-200 bg-slate-50 p-6'>
               <Text className='m-0 text-sm leading-6 text-slate-700'>
-                Click the button below to set a new password:
+                If this was not you, secure your account now:
               </Text>
               <Section className='py-6 text-center'>
                 <Button
-                  href={resetPasswordLink}
+                  href={signInUrl}
                   className='rounded-lg bg-indigo-600 px-6 py-3 text-sm font-semibold text-white no-underline'>
-                  Reset Password
+                  Go to Sign In
                 </Button>
               </Section>
               <Text className='m-0 text-sm leading-6 text-slate-700'>
-                This link expires in <strong>1 hour</strong>. If the button does
-                not work, copy and paste this URL into your browser:
+                Then update your security settings:
               </Text>
               <Link
-                href={resetPasswordLink}
-                className='mt-3 block break-all text-sm leading-6 text-indigo-600 underline'>
-                {resetPasswordLink}
+                href={securityUrl}
+                className='mt-2 block break-all text-sm leading-6 text-indigo-600 underline'>
+                {securityUrl}
               </Link>
             </Section>
 
             <Hr className='mx-8 my-8 border-slate-200' />
 
             <Text className='mx-8 mb-8 mt-0 text-xs leading-6 text-slate-500'>
-              If you did not request a password reset, you can safely ignore
-              this message.
+              If you disabled 2FA intentionally, you can ignore this message.
             </Text>
           </Container>
         </Body>

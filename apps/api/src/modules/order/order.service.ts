@@ -15,6 +15,8 @@ import Stripe from 'stripe'
 import { v4 as uuidv4 } from 'uuid'
 
 import { PaginationInput } from '~/common/inputs/pagination.input'
+import { MailService } from '~/common/libs/mail/mail.service'
+import { OrderMailData } from '~/common/libs/mail/templates/order-mail.types'
 import { PusherService } from '~/common/libs/pusher'
 import { StripeService } from '~/common/libs/stripe/stripe.service'
 
@@ -31,7 +33,8 @@ export class OrderService {
   constructor(
     private readonly configService: ConfigService,
     private readonly stripeService: StripeService,
-    private readonly pusherService: PusherService
+    private readonly pusherService: PusherService,
+    private readonly mailService: MailService
   ) {}
 
   @Cron(CronExpression.EVERY_MINUTE)
@@ -230,6 +233,14 @@ export class OrderService {
 
       this.pusherService.trigger(`user-${userId}`, 'notification', notification)
       this.pusherService.trigger(`user-${userId}`, 'order', order)
+      await this.sendOrderEmailSafely(
+        () =>
+          this.mailService.sendCashOrderPlacedEmail(
+            order.email,
+            this.toOrderMailData(order)
+          ),
+        `cash order email for order #${order.number}`
+      )
 
       const origin = this.configService.getOrThrow<string>('ORIGIN')
 
@@ -296,11 +307,66 @@ export class OrderService {
     })
 
     this.pusherService.trigger(`user-${userId}`, 'order', order)
+    await this.sendOrderEmailSafely(
+      () =>
+        this.mailService.sendCardOrderPendingEmail(
+          order.email,
+          this.toOrderMailData(order),
+          session.url!
+        ),
+      `card pending email for order #${order.number}`
+    )
 
     return { url: session.url }
   }
 
   async createOrder(data: Prisma.OrderCreateInput): Promise<Order> {
     return await prisma.order.create({ data })
+  }
+
+  private toOrderMailData(
+    order: Prisma.OrderGetPayload<{
+      include: {
+        items: true
+      }
+    }>
+  ): OrderMailData {
+    return {
+      orderNumber: order.number,
+      paymentId: order.paymentId,
+      firstName: order.firstName,
+      lastName: order.lastName,
+      email: order.email,
+      phone: order.phone,
+      country: order.country,
+      city: order.city,
+      state: order.state,
+      address: order.address,
+      zipCode: order.zipCode,
+      currency: order.currency,
+      subtotalAmount: order.subtotalAmount.toString(),
+      discountAmount: order.discountAmount.toString(),
+      taxAmount: order.taxAmount.toString(),
+      deliveryAmount: order.deliveryAmount.toString(),
+      totalAmount: order.totalAmount.toString(),
+      items: order.items.map((item) => ({
+        productName: item.productName,
+        quantity: item.quantity,
+        unitPrice: item.price.toString(),
+        totalPrice: item.totalPrice.toString()
+      }))
+    }
+  }
+
+  private async sendOrderEmailSafely(
+    send: () => Promise<void>,
+    context: string
+  ): Promise<void> {
+    try {
+      await send()
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      Logger.error(`[Mail] Failed to send ${context}: ${message}`)
+    }
   }
 }

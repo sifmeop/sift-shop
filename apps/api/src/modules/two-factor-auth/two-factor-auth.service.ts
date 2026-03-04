@@ -1,9 +1,10 @@
-import { HttpException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NotificationType, prisma } from '@sift-shop/database'
 import crypto from 'node:crypto'
 import { generateSecret, generateURI, verify } from 'otplib'
 
+import { MailService } from '~/common/libs/mail/mail.service'
 import { PusherService } from '~/common/libs/pusher'
 
 import { UserService } from '../user/user.service'
@@ -18,7 +19,8 @@ export class TwoFactorAuthService {
   constructor(
     readonly configService: ConfigService,
     private readonly userService: UserService,
-    private readonly pusherService: PusherService
+    private readonly pusherService: PusherService,
+    private readonly mailService: MailService
   ) {
     const secretKey = this.configService.getOrThrow<string>('TWO_FA_SECRET_KEY')
 
@@ -80,6 +82,10 @@ export class TwoFactorAuthService {
     ])
 
     this.pusherService.trigger(`user-${userId}`, 'notification', notification)
+    await this.sendTwoFactorEmailSafely(
+      () => this.mailService.sendTwoFactorEnabledEmail(user.email),
+      `2FA enabled email for user ${user.id}`
+    )
 
     return true
   }
@@ -112,6 +118,10 @@ export class TwoFactorAuthService {
     ])
 
     this.pusherService.trigger(`user-${userId}`, 'notification', notification)
+    await this.sendTwoFactorEmailSafely(
+      () => this.mailService.sendTwoFactorDisabledEmail(user.email),
+      `2FA disabled email for user ${user.id}`
+    )
 
     return true
   }
@@ -143,5 +153,17 @@ export class TwoFactorAuthService {
     let decrypted = decipher.update(encrypted, 'hex', 'utf-8')
     decrypted += decipher.final('utf-8')
     return decrypted
+  }
+
+  private async sendTwoFactorEmailSafely(
+    send: () => Promise<void>,
+    context: string
+  ): Promise<void> {
+    try {
+      await send()
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      Logger.error(`[Mail] Failed to send ${context}: ${message}`)
+    }
   }
 }
