@@ -20,8 +20,8 @@ import {
   OrderEntity,
   OrderStatus
 } from '~/common/lib/graphql/generated/graphql'
-import { Button } from '~/common/ui/button'
-import { Container } from '~/common/ui/container'
+import { Button } from '~/common/ui/Button'
+import { Container } from '~/common/ui/Container'
 import { cn } from '~/common/utils/cn'
 import { formatPrice } from '~/common/utils/formatPrice'
 

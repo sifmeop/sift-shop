@@ -2,7 +2,7 @@ import { cookies } from 'next/headers'
 
 import { ROUTES } from '~/common/constants/routes'
 import { NotFoundContent } from '~/common/ui/NotFoundContent'
-import { PageHeader } from '~/common/ui/page-header'
+import { PageHeader } from '~/common/ui/PageHeader'
 import { getProductDetail, ProductDetail } from '~/modules/products'
 
 interface ProductPageProps {

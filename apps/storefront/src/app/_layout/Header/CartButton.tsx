@@ -6,8 +6,8 @@ import Link from 'next/link'
 
 import { CART_BUTTON_ID } from '~/common/constants/ids'
 import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
-import { Show } from '~/common/ui/show'
+import { Button } from '~/common/ui/Button'
+import { Show } from '~/common/ui/Show'
 import { useCartQuery } from '~/modules/cart'
 
 export const CartButton = () => {

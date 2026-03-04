@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { SlidersHorizontal, XIcon } from 'lucide-react'
 
 import { GetProductsQuery } from '~/common/lib/graphql/generated/graphql'
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 import { NotFoundContent } from '~/common/ui/NotFoundContent'
-import { Show } from '~/common/ui/show'
+import { Show } from '~/common/ui/Show'
 
 import { FiltersSidebar } from '../modules/filters/ui/FiltersSidebar'
 

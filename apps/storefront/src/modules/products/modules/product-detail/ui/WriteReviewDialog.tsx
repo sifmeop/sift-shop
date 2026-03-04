@@ -3,7 +3,7 @@ import { Controller } from 'react-hook-form'
 
 import { StarIcon } from 'lucide-react'
 
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import {
   Dialog,
   DialogClose,
@@ -18,9 +18,9 @@ import {
   FieldDescription,
   FieldError,
   FieldLabel
-} from '~/common/ui/field'
-import { Separator } from '~/common/ui/separator'
-import { Textarea } from '~/common/ui/textarea'
+} from '~/common/ui/Field'
+import { Separator } from '~/common/ui/Separator'
+import { Textarea } from '~/common/ui/Textarea'
 import { cn } from '~/common/utils/cn'
 
 import { useUpsertReview } from '../hooks/useUpsertReview'

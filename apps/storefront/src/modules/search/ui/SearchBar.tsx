@@ -8,7 +8,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { useDebounce } from '~/common/hooks/useDebounce'
-import { InputGroup, InputGroupInput } from '~/common/ui/input-group'
+import { InputGroup, InputGroupInput } from '~/common/ui/InputGroup'
 import { calcDiscountedPrice } from '~/common/utils/calcDiscountedPrice'
 import { cn } from '~/common/utils/cn'
 import { formatPrice } from '~/common/utils/formatPrice'

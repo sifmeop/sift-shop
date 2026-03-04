@@ -6,7 +6,7 @@ import { ArrowRight, ShoppingBag } from 'lucide-react'
 import Link from 'next/link'
 
 import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
 import {
   Pagination,
@@ -14,7 +14,7 @@ import {
   PaginationItem,
   PaginationLink
 } from '~/common/ui/Pagination'
-import { Show } from '~/common/ui/show'
+import { Show } from '~/common/ui/Show'
 
 import { useGetOrdersQuery } from '../hooks/useGetOrdersQuery'
 

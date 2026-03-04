@@ -1,5 +1,5 @@
 import { NotificationEntity } from '~/common/lib/graphql/generated/graphql'
-import { Show } from '~/common/ui/show'
+import { Show } from '~/common/ui/Show'
 import { cn } from '~/common/utils/cn'
 
 import { formatNotification } from '../config/notification-templates'

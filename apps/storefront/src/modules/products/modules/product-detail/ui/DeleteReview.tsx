@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { TrashIcon } from 'lucide-react'
 import { toast } from 'sonner'
 
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import {
   Dialog,
   DialogClose,

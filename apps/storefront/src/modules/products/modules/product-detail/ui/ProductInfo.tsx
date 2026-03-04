@@ -10,8 +10,8 @@ import { useRouter } from 'next/navigation'
 import { ROUTES } from '~/common/constants/routes'
 import { ProductDetailEntity } from '~/common/lib/graphql/generated/graphql'
 import { Badge } from '~/common/ui/Badge'
-import { Button } from '~/common/ui/button'
-import { Container } from '~/common/ui/container'
+import { Button } from '~/common/ui/Button'
+import { Container } from '~/common/ui/Container'
 import { calcDiscountedPrice } from '~/common/utils/calcDiscountedPrice'
 import { formatPrice } from '~/common/utils/formatPrice'
 import { useCart } from '~/modules/cart'
@@ -48,7 +48,9 @@ export const ProductInfo = ({
       bgColor='white'
       className='rounded-lg'
       innerClassName='py-4 sm:py-5'>
-      <h2 className='mb-3 line-clamp-2 text-xl font-bold sm:text-2xl'>{name}</h2>
+      <h2 className='mb-3 line-clamp-2 text-xl font-bold sm:text-2xl'>
+        {name}
+      </h2>
       <div className='mb-5 flex flex-wrap gap-2 font-medium sm:mb-6'>
         <Badge variant='secondary' className='h-6 max-w-full'>
           <StarIcon />

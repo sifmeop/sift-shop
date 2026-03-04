@@ -6,8 +6,8 @@ import Link from 'next/link'
 
 import { ROUTES } from '../constants/routes'
 
-import { Button } from './button'
-import { Container } from './container'
+import { Button } from './Button'
+import { Container } from './Container'
 
 type NotFoundType = 'category' | 'subcategory' | 'products' | 'product'
 

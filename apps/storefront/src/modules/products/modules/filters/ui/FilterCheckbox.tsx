@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 import { FilterOptionEntity } from '~/common/lib/graphql/generated/graphql'
 import { Checkbox } from '~/common/ui/Checkbox'
-import { Field, FieldGroup, FieldLabel } from '~/common/ui/field'
+import { Field, FieldGroup, FieldLabel } from '~/common/ui/Field'
 import { cn } from '~/common/utils/cn'
 import { useFilterParam } from '~/modules/products'
 

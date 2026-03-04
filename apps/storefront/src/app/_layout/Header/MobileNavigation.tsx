@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 import { ROUTES } from '~/common/constants/routes'
 import { GetCategoriesQuery } from '~/common/lib/graphql/generated/graphql'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import {
   Drawer,
   DrawerClose,
@@ -16,7 +16,7 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '~/common/ui/drawer'
+} from '~/common/ui/Drawer'
 import { cn } from '~/common/utils/cn'
 
 interface MobileNavigationProps {

@@ -10,9 +10,9 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator
-} from './breadcrumb'
-import { Container } from './container'
-import { Show } from './show'
+} from './Breadcrumb'
+import { Container } from './Container'
+import { Show } from './Show'
 
 export interface BreadcrumbProps {
   label: string

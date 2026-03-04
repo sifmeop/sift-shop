@@ -3,7 +3,7 @@
 import { motion } from 'motion/react'
 
 import { CategoryEntity } from '~/common/lib/graphql/generated/graphql'
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 
 import { SubcategoryItem } from './SubcategoryItem'
 

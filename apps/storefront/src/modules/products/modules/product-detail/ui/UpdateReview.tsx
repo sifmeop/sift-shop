@@ -1,6 +1,6 @@
 import { PencilIcon } from 'lucide-react'
 
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 
 import { WriteReviewDialog } from './WriteReviewDialog'
 

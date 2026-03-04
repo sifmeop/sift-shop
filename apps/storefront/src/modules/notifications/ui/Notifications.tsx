@@ -5,7 +5,7 @@ import { Fragment } from 'react/jsx-runtime'
 import { Bell, BellDotIcon, BellIcon, BellOffIcon, XIcon } from 'lucide-react'
 
 import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
 import {
   Drawer,
@@ -14,10 +14,10 @@ import {
   DrawerHeader,
   DrawerTitle,
   DrawerTrigger
-} from '~/common/ui/drawer'
-import { Separator } from '~/common/ui/separator'
-import { Show } from '~/common/ui/show'
-import { Spinner } from '~/common/ui/spinner'
+} from '~/common/ui/Drawer'
+import { Separator } from '~/common/ui/Separator'
+import { Show } from '~/common/ui/Show'
+import { Spinner } from '~/common/ui/Spinner'
 
 import { useGetNotificationsQuery } from '../hooks/useGetNotificationsQuery'
 

@@ -5,8 +5,8 @@ import { useForm } from 'react-hook-form'
 
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { Button } from '~/common/ui/button'
-import { EmailInput } from '~/common/ui/input'
+import { Button } from '~/common/ui/Button'
+import { EmailInput } from '~/common/ui/Input'
 import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
 import { FormContainer } from '~/modules/auth/ui/FormContainer'
 

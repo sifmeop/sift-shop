@@ -7,8 +7,8 @@ import { AnimatePresence, motion } from 'motion/react'
 
 import { cn } from '~/common/utils/cn'
 
-import { Field, FieldError, FieldLabel } from './field'
-import { InputGroup, InputGroupAddon, InputGroupInput } from './input-group'
+import { Field, FieldError, FieldLabel } from './Field'
+import { InputGroup, InputGroupAddon, InputGroupInput } from './InputGroup'
 
 export const Input = ({
   className,

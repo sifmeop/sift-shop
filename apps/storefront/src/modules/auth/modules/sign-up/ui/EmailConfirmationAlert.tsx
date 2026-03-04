@@ -6,7 +6,7 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle
-} from '~/common/ui/alert-dialog'
+} from '~/common/ui/AlertDialog'
 
 interface EmailConfirmationAlertProps {
   open: boolean

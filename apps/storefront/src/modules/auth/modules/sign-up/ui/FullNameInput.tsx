@@ -1,7 +1,7 @@
 import { useId } from 'react'
 
-import { Field, FieldError, FieldLabel } from '~/common/ui/field'
-import { Input } from '~/common/ui/input'
+import { Field, FieldError, FieldLabel } from '~/common/ui/Field'
+import { Input } from '~/common/ui/Input'
 
 interface FullNameInputProps extends React.ComponentProps<'input'> {
   errorMessage?: string

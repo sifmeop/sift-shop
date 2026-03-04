@@ -1,6 +1,6 @@
 import { getCategories } from '~/modules/categories'
 
-import { BreadcrumbProps, PageHeader } from './page-header'
+import { BreadcrumbProps, PageHeader } from './PageHeader'
 
 interface CategoryPageHeaderProps {
   category: string

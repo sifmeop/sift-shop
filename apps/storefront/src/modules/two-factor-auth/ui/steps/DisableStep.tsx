@@ -3,8 +3,8 @@ import { useState } from 'react'
 import { ShieldOff } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import { Button } from '~/common/ui/button'
-import { InputOTP } from '~/common/ui/input'
+import { Button } from '~/common/ui/Button'
+import { InputOTP } from '~/common/ui/Input'
 import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
 
 import { useDisableTwoFactorAuthMutation } from '../../hooks/useDisableTwoFactorAuthMutation'

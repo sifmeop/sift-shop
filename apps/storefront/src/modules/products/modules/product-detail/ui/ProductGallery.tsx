@@ -7,8 +7,8 @@ import { AnimatePresence, motion } from 'motion/react'
 import Image from 'next/image'
 
 import { ProductDetailEntity } from '~/common/lib/graphql/generated/graphql'
-import { Container } from '~/common/ui/container'
-import { Show } from '~/common/ui/show'
+import { Container } from '~/common/ui/Container'
+import { Show } from '~/common/ui/Show'
 import { cn } from '~/common/utils/cn'
 import { getImageUrl } from '~/common/utils/getImageUrl'
 

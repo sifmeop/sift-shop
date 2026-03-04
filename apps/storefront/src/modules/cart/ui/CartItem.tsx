@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 import { CartItemEntity } from '~/common/lib/graphql/generated/graphql'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { calcDiscountPercent } from '~/common/utils/calcDiscountPercent'
 import { cn } from '~/common/utils/cn'
 import { formatPrice } from '~/common/utils/formatPrice'

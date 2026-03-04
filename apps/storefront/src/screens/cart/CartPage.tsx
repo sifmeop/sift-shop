@@ -1,4 +1,4 @@
-import { PageHeader } from '~/common/ui/page-header'
+import { PageHeader } from '~/common/ui/PageHeader'
 import { Cart } from '~/modules/cart'
 
 export const CartPage = () => {

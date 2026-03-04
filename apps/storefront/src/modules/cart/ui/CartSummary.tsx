@@ -4,8 +4,8 @@ import { motion } from 'motion/react'
 import Link from 'next/link'
 
 import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
-import { Separator } from '~/common/ui/separator'
+import { Button } from '~/common/ui/Button'
+import { Separator } from '~/common/ui/Separator'
 import { cn } from '~/common/utils/cn'
 import { FORMAT_PRICE_OPTIONS } from '~/common/utils/formatPrice'
 

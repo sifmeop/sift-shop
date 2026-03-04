@@ -3,9 +3,9 @@
 import { usePathname } from 'next/navigation'
 
 import { ROUTES } from '~/common/constants/routes'
-import { Container } from '~/common/ui/container'
-import { PageHeader } from '~/common/ui/page-header'
-import { Separator } from '~/common/ui/separator'
+import { Container } from '~/common/ui/Container'
+import { PageHeader } from '~/common/ui/PageHeader'
+import { Separator } from '~/common/ui/Separator'
 
 import { ProfileNavigation } from './ProfileNavigation'
 
@@ -24,7 +24,10 @@ export const ProfileLayout = ({ children }: React.PropsWithChildren) => {
   return (
     <>
       <PageHeader title='My Account' breadcrumbs={[{ label: 'My Account' }]} />
-      <Container main bgColor='white' className='pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-15 lg:pb-32.5'>
+      <Container
+        main
+        bgColor='white'
+        className='pt-10 pb-16 md:pt-12 md:pb-24 lg:pt-15 lg:pb-32.5'>
         <div className='flex flex-col gap-8 lg:flex-row lg:items-start lg:gap-0'>
           <div className='lg:sticky lg:top-4 lg:flex'>
             <ProfileNavigation />

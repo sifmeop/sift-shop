@@ -1,7 +1,7 @@
 import Image from 'next/image'
 
 import { env } from '~/common/constants/env'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 
 export const GoogleButton = () => {
   const handleClick = async () => {

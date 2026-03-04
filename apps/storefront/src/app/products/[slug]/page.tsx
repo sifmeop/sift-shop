@@ -1,7 +1,7 @@
 import { Suspense } from 'react'
 
 import { CenterLoader } from '~/common/ui/CenterLoader'
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 import { ProductPage } from '~/screens/product'
 
 interface PageProps {

@@ -1,7 +1,7 @@
 'use client'
 
 import { ProductDetailEntity } from '~/common/lib/graphql/generated/graphql'
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 
 import { Description } from './Description'
 import { ProductGallery } from './ProductGallery'

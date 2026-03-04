@@ -4,8 +4,8 @@ import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 
 import { useDebounce } from '~/common/hooks/useDebounce'
 import { FilterOptionEntity } from '~/common/lib/graphql/generated/graphql'
-import { Input } from '~/common/ui/input'
-import { Separator } from '~/common/ui/separator'
+import { Input } from '~/common/ui/Input'
+import { Separator } from '~/common/ui/Separator'
 import { Slider } from '~/common/ui/Slider'
 import { parseNumericInput } from '~/common/utils/parseNumericInput'
 

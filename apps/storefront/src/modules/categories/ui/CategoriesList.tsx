@@ -1,4 +1,4 @@
-import { PageHeader } from '~/common/ui/page-header'
+import { PageHeader } from '~/common/ui/PageHeader'
 
 import { getCategories } from '../api/getCategories'
 

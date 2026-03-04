@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation'
 import { useSignOutMutation } from '~/app/auth/sign-out'
 import { Route, ROUTES } from '~/common/constants/routes'
 import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -23,7 +23,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger
-} from '~/common/ui/dropdown-menu'
+} from '~/common/ui/DropdownMenu'
 
 export const UserMenu = () => {
   const router = useRouter()

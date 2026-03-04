@@ -1,8 +1,8 @@
 import { Fragment } from 'react/jsx-runtime'
 
 import { ProductFiltersEntity } from '~/common/lib/graphql/generated/graphql'
-import { Separator } from '~/common/ui/separator'
-import { Show } from '~/common/ui/show'
+import { Separator } from '~/common/ui/Separator'
+import { Show } from '~/common/ui/Show'
 
 import { FilterGroup } from './FilterGroup'
 

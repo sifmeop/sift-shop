@@ -3,8 +3,8 @@ import { MinusIcon, PlusIcon, ShoppingCart } from 'lucide-react'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { ProductEntity } from '~/common/lib/graphql/generated/graphql'
-import { Button } from '~/common/ui/button'
-import { Spinner } from '~/common/ui/spinner'
+import { Button } from '~/common/ui/Button'
+import { Spinner } from '~/common/ui/Spinner'
 import { cn } from '~/common/utils/cn'
 import { useCart } from '~/modules/cart'
 

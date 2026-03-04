@@ -7,9 +7,9 @@ import { AnimatePresence, motion } from 'motion/react'
 import Link from 'next/link'
 
 import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
-import { Separator } from '~/common/ui/separator'
+import { Separator } from '~/common/ui/Separator'
 
 import { useGetWishlistQuery } from '../hooks/useGetWishlistQuery'
 

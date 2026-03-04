@@ -7,8 +7,8 @@ import { useRouter } from 'next/navigation'
 import { toast } from 'sonner'
 
 import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
-import { PasswordInput } from '~/common/ui/input'
+import { Button } from '~/common/ui/Button'
+import { PasswordInput } from '~/common/ui/Input'
 import { handleGraphQLError } from '~/common/utils/handleGraphQLError'
 import { FormContainer } from '~/modules/auth/ui/FormContainer'
 

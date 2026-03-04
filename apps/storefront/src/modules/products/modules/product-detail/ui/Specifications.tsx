@@ -2,7 +2,7 @@ import { Fragment } from 'react/jsx-runtime'
 
 import { FileSlidersIcon } from 'lucide-react'
 
-import { Separator } from '~/common/ui/separator'
+import { Separator } from '~/common/ui/Separator'
 import { cn } from '~/common/utils/cn'
 
 import { ProductSection } from './ProductSection'
@@ -24,11 +24,16 @@ export const Specifications = ({ specifications }: SpecificationsProps) => {
           return (
             <Fragment key={key}>
               <div
-                className={cn('flex flex-col gap-1 py-2 text-sm sm:flex-row sm:justify-between sm:gap-2 sm:text-base', {
-                  'pt-0': isFirst,
-                  'pb-0': isLast
-                })}>
-                <p className='text-muted-foreground sm:text-foreground'>{key}</p>
+                className={cn(
+                  'flex flex-col gap-1 py-2 text-sm sm:flex-row sm:justify-between sm:gap-2 sm:text-base',
+                  {
+                    'pt-0': isFirst,
+                    'pb-0': isLast
+                  }
+                )}>
+                <p className='text-muted-foreground sm:text-foreground'>
+                  {key}
+                </p>
                 <p className='break-words sm:text-right'>{value}</p>
               </div>
               {!isLast && <Separator />}

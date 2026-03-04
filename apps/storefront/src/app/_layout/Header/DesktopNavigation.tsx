@@ -18,7 +18,7 @@ import {
   NavigationMenuList,
   NavigationMenuTrigger,
   navigationMenuTriggerStyle
-} from '~/common/ui/navigation-menu'
+} from '~/common/ui/NavigationMenu'
 import { cn } from '~/common/utils/cn'
 
 interface DesktopNavigationProps {

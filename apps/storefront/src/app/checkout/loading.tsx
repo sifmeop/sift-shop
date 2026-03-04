@@ -1,5 +1,5 @@
 import { CenterLoader } from '~/common/ui/CenterLoader'
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 
 export default function Loading() {
   return (

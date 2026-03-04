@@ -6,7 +6,7 @@ import {
 
 import { cn } from '../utils/cn'
 
-import { Button } from './button'
+import { Button } from './Button'
 
 export const Pagination = ({
   className,

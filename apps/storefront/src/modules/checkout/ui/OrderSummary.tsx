@@ -3,10 +3,10 @@ import { Fragment } from 'react/jsx-runtime'
 import Link from 'next/link'
 
 import { ROUTES } from '~/common/constants/routes'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
-import { Separator } from '~/common/ui/separator'
-import { Show } from '~/common/ui/show'
+import { Separator } from '~/common/ui/Separator'
+import { Show } from '~/common/ui/Show'
 import { formatPrice } from '~/common/utils/formatPrice'
 import { useCartQuery } from '~/modules/cart'
 

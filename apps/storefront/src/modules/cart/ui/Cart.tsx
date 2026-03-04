@@ -6,10 +6,10 @@ import Link from 'next/link'
 
 import { ROUTES } from '~/common/constants/routes'
 import { useIsAuthenticated } from '~/common/hooks/useIsAuthenticated'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
-import { Container } from '~/common/ui/container'
-import { Separator } from '~/common/ui/separator'
+import { Container } from '~/common/ui/Container'
+import { Separator } from '~/common/ui/Separator'
 import { cn } from '~/common/utils/cn'
 
 import { useCartQuery } from '../hooks/useCartQuery'

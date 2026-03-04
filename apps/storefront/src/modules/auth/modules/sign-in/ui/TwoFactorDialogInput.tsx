@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { ShieldCheck } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import {
   Dialog,
   DialogContent,
@@ -13,7 +13,7 @@ import {
   DialogHeader,
   DialogTitle
 } from '~/common/ui/Dialog'
-import { InputOTP } from '~/common/ui/input'
+import { InputOTP } from '~/common/ui/Input'
 
 const OTP_LENGTH = 6
 

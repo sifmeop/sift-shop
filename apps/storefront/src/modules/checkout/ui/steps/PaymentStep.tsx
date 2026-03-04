@@ -3,8 +3,8 @@ import { Controller, useFormContext } from 'react-hook-form'
 import { AnimatePresence, motion } from 'motion/react'
 
 import { PaymentMethod } from '~/common/lib/graphql/generated/graphql'
-import { Button } from '~/common/ui/button'
-import { Label } from '~/common/ui/label'
+import { Button } from '~/common/ui/Button'
+import { Label } from '~/common/ui/Label'
 import { cn } from '~/common/utils/cn'
 
 import { CheckoutFormData } from '../../schemas/checkout.schema'

@@ -1,5 +1,5 @@
-import { Button } from '~/common/ui/button'
-import { DrawerFooter } from '~/common/ui/drawer'
+import { Button } from '~/common/ui/Button'
+import { DrawerFooter } from '~/common/ui/Drawer'
 
 import { useGetNotificationsQuery } from '../hooks/useGetNotificationsQuery'
 import { useMarkNotificationsAsRead } from '../hooks/useMarkNotificationsAsRead'

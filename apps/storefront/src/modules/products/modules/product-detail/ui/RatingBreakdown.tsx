@@ -2,8 +2,8 @@ import { StarIcon } from 'lucide-react'
 
 import { ReviewEntity } from '~/common/lib/graphql/generated/graphql'
 import { useUserStore } from '~/common/stores/user'
-import { Button } from '~/common/ui/button'
-import { Show } from '~/common/ui/show'
+import { Button } from '~/common/ui/Button'
+import { Show } from '~/common/ui/Show'
 
 import { WriteReviewDialog } from './WriteReviewDialog'
 

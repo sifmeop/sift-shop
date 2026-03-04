@@ -2,10 +2,10 @@ import { StarIcon } from 'lucide-react'
 
 import { day } from '~/common/lib/dayjs'
 import { useUserStore } from '~/common/stores/user'
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
-import { Separator } from '~/common/ui/separator'
-import { Show } from '~/common/ui/show'
+import { Separator } from '~/common/ui/Separator'
+import { Show } from '~/common/ui/Show'
 import { cn } from '~/common/utils/cn'
 
 import { useGetReviewsQuery } from '../hooks/useGetReviewsQuery'

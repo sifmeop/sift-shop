@@ -1,5 +1,5 @@
 import { HEADER_ID } from '~/common/constants/ids'
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 import { Notifications } from '~/modules/notifications'
 import { SearchBar } from '~/modules/search'
 

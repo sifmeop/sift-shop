@@ -2,8 +2,8 @@
 
 import { FormProvider } from 'react-hook-form'
 
-import { Container } from '~/common/ui/container'
-import { Separator } from '~/common/ui/separator'
+import { Container } from '~/common/ui/Container'
+import { Separator } from '~/common/ui/Separator'
 
 import { useCheckoutForm } from '../hooks/useCheckoutForm'
 

@@ -1,5 +1,5 @@
 import { ROUTES } from '~/common/constants/routes'
-import { PageHeader } from '~/common/ui/page-header'
+import { PageHeader } from '~/common/ui/PageHeader'
 
 export default function Layout({ children }: React.PropsWithChildren) {
   return (

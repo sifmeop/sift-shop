@@ -1,6 +1,6 @@
 import { LucideIcon } from 'lucide-react'
 
-import { Container } from '~/common/ui/container'
+import { Container } from '~/common/ui/Container'
 
 interface ProductSectionProps extends React.PropsWithChildren {
   icon: LucideIcon

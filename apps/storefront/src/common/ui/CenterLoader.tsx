@@ -1,6 +1,6 @@
 import { cn } from '../utils/cn'
 
-import { Spinner } from './spinner'
+import { Spinner } from './Spinner'
 
 interface CenterLoaderProps {
   className?: string

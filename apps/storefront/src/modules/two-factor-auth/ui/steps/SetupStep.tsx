@@ -2,7 +2,7 @@ import { SmartphoneIcon } from 'lucide-react'
 import { motion } from 'motion/react'
 import { QRCodeSVG } from 'qrcode.react'
 
-import { Button, CopyButton } from '~/common/ui/button'
+import { Button, CopyButton } from '~/common/ui/Button'
 import { CenterLoader } from '~/common/ui/CenterLoader'
 
 import { useGenerateTwoFactorSecretQuery } from '../../hooks/useGenerateTwoFactorSecretQuery'

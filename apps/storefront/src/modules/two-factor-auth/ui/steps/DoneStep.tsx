@@ -1,7 +1,7 @@
 import { ShieldCheck } from 'lucide-react'
 import { motion } from 'motion/react'
 
-import { Button } from '~/common/ui/button'
+import { Button } from '~/common/ui/Button'
 
 interface DoneStepProps {
   onNext: (step?: number) => void

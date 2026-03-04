@@ -5,9 +5,9 @@ import { useState } from 'react'
 import { motion } from 'motion/react'
 import { toast } from 'sonner'
 
-import { Button } from '~/common/ui/button'
-import { Container } from '~/common/ui/container'
-import { Input } from '~/common/ui/input'
+import { Button } from '~/common/ui/Button'
+import { Container } from '~/common/ui/Container'
+import { Input } from '~/common/ui/Input'
 
 export const Newsletter = () => {
   const [email, setEmail] = useState('')

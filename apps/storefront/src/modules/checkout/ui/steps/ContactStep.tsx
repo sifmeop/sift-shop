@@ -1,8 +1,8 @@
 import { useFormContext } from 'react-hook-form'
 
-import { Button } from '~/common/ui/button'
-import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/field'
-import { Input } from '~/common/ui/input'
+import { Button } from '~/common/ui/Button'
+import { Field, FieldError, FieldGroup, FieldLabel } from '~/common/ui/Field'
+import { Input } from '~/common/ui/Input'
 import { prettifyCamelCase } from '~/common/utils/prettifyCamelCase'
 
 import { CheckoutFormData } from '../../schemas/checkout.schema'
