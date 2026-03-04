@@ -1,6 +1,7 @@
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
+import { ExpressAdapter } from '@nestjs/platform-express'
 import { RedisStore } from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
@@ -11,7 +12,11 @@ import { AppModule } from './app.module'
 import { parseBoolean } from './common/utils/parse-boolean'
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule, {
+  const adapter = new ExpressAdapter()
+
+  adapter.set('trust proxy', 1)
+
+  const app = await NestFactory.create(AppModule, adapter, {
     rawBody: true
   })
 
@@ -35,14 +40,16 @@ async function bootstrap() {
     session({
       secret: config.getOrThrow('SESSION_SECRET'),
       name: config.getOrThrow('SESSION_NAME'),
-      resave: true,
+      resave: false,
       saveUninitialized: false,
       cookie: {
-        domain: config.getOrThrow('SESSION_DOMAIN'),
+        ...(config.get('SESSION_DOMAIN')
+          ? { domain: config.get('SESSION_DOMAIN') }
+          : {}),
         maxAge: parse(config.getOrThrow('SESSION_MAX_AGE'))!,
         httpOnly: parseBoolean(config.getOrThrow('SESSION_HTTP_ONLY')),
         secure: parseBoolean(config.getOrThrow('SESSION_SECURE')),
-        sameSite: 'lax'
+        sameSite: config.getOrThrow('SESSION_SAME_SITE')
       },
       store: new RedisStore({
         client: redis,
