@@ -39,10 +39,12 @@ async function bootstrap() {
     session({
       secret: config.getOrThrow('SESSION_SECRET'),
       name: config.getOrThrow('SESSION_NAME'),
-      resave: true,
+      resave: false,
       saveUninitialized: false,
       cookie: {
-        domain: config.getOrThrow('SESSION_DOMAIN'),
+        ...(config.get('SESSION_DOMAIN')
+          ? { domain: config.get('SESSION_DOMAIN') }
+          : {}),
         maxAge: parse(config.getOrThrow('SESSION_MAX_AGE'))!,
         httpOnly: parseBoolean(config.getOrThrow('SESSION_HTTP_ONLY')),
         secure: parseBoolean(config.getOrThrow('SESSION_SECURE')),
