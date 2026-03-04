@@ -8,7 +8,13 @@ import { GraphQLContext } from '../types/graphql-context'
 export class GqlThrottlerGuard extends ThrottlerGuard {
   getRequestResponse(context: ExecutionContext): GraphQLContext {
     const gqlCtx = GqlExecutionContext.create(context)
-    const { req, res } = gqlCtx.getContext<GraphQLContext>()
-    return { req, res }
+    const ctx = gqlCtx.getContext<GraphQLContext>()
+
+    if (!ctx?.req) {
+      const http = context.switchToHttp()
+      return { req: http.getRequest(), res: http.getResponse() }
+    }
+
+    return { req: ctx.req, res: ctx.res }
   }
 }
