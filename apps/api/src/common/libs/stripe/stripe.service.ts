@@ -1,8 +1,15 @@
-import { HttpException, Injectable } from '@nestjs/common'
+import { HttpException, Injectable, Logger } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
-import { NotificationType, OrderStatus, prisma } from '@sift-shop/database'
+import {
+  NotificationType,
+  OrderStatus,
+  Prisma,
+  prisma
+} from '@sift-shop/database'
 import Stripe from 'stripe'
 
+import { MailService } from '../mail/mail.service'
+import { OrderMailData } from '../mail/templates/order-mail.types'
 import { PusherService } from '../pusher'
 
 @Injectable()
@@ -11,7 +18,8 @@ export class StripeService {
 
   constructor(
     private configService: ConfigService,
-    private readonly pusherService: PusherService
+    private readonly pusherService: PusherService,
+    private readonly mailService: MailService
   ) {
     const secretKey = this.configService.getOrThrow<string>('STRIPE_SECRET_KEY')
     this.stripe = new Stripe(secretKey)
@@ -50,7 +58,10 @@ export class StripeService {
         if (session.payment_status !== 'paid') break
 
         const order = await prisma.order.findFirst({
-          where: { paymentId: session.id }
+          where: { paymentId: session.id },
+          include: {
+            items: true
+          }
         })
 
         if (!order) break
@@ -93,6 +104,18 @@ export class StripeService {
           'notification',
           notification
         )
+        await this.sendOrderEmailSafely(
+          () =>
+            this.mailService.sendPaymentSuccessEmail(
+              orderUpdate.email,
+              this.toOrderMailData({
+                ...order,
+                status: orderUpdate.status,
+                currency: orderUpdate.currency
+              })
+            ),
+          `payment success email for order #${order.number}`
+        )
 
         break
       }
@@ -100,7 +123,10 @@ export class StripeService {
         const session = event.data.object
 
         const order = await prisma.order.findFirst({
-          where: { paymentId: session.id }
+          where: { paymentId: session.id },
+          include: {
+            items: true
+          }
         })
 
         if (!order) break
@@ -129,6 +155,14 @@ export class StripeService {
           'notification',
           notification
         )
+        await this.sendOrderEmailSafely(
+          () =>
+            this.mailService.sendPaymentFailedEmail(
+              order.email,
+              this.toOrderMailData(order)
+            ),
+          `payment failed email for order #${order.number}`
+        )
 
         break
       }
@@ -141,5 +175,51 @@ export class StripeService {
       signature,
       this.configService.getOrThrow<string>('STRIPE_WEBHOOK_SECRET')
     )
+  }
+
+  private toOrderMailData(
+    order: Prisma.OrderGetPayload<{
+      include: {
+        items: true
+      }
+    }>
+  ): OrderMailData {
+    return {
+      orderNumber: order.number,
+      paymentId: order.paymentId,
+      firstName: order.firstName,
+      lastName: order.lastName,
+      email: order.email,
+      phone: order.phone,
+      country: order.country,
+      city: order.city,
+      state: order.state,
+      address: order.address,
+      zipCode: order.zipCode,
+      currency: order.currency,
+      subtotalAmount: order.subtotalAmount.toString(),
+      discountAmount: order.discountAmount.toString(),
+      taxAmount: order.taxAmount.toString(),
+      deliveryAmount: order.deliveryAmount.toString(),
+      totalAmount: order.totalAmount.toString(),
+      items: order.items.map((item) => ({
+        productName: item.productName,
+        quantity: item.quantity,
+        unitPrice: item.price.toString(),
+        totalPrice: item.totalPrice.toString()
+      }))
+    }
+  }
+
+  private async sendOrderEmailSafely(
+    send: () => Promise<void>,
+    context: string
+  ): Promise<void> {
+    try {
+      await send()
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error)
+      Logger.error(`[Mail] Failed to send ${context}: ${message}`)
+    }
   }
 }
