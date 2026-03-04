@@ -13,6 +13,8 @@ export class GlobalHttpExceptionFilter implements ExceptionFilter {
     const ctx = host.switchToHttp()
     const res = ctx.getResponse<Response>()
 
+    if (res.headersSent) return
+
     let status = HttpStatus.INTERNAL_SERVER_ERROR
     let code = 'INTERNAL_SERVER_ERROR'
     let message = 'Internal server error'
