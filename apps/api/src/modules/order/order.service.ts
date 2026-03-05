@@ -252,7 +252,7 @@ export class OrderService {
         price_data: {
           currency: 'usd',
           product_data: { name: item.product.name },
-          unit_amount: item.product.price.mul(100).toNumber()
+          unit_amount: Math.round(item.product.price.mul(100).toNumber())
         },
         quantity: item.quantity
       }))
@@ -262,7 +262,7 @@ export class OrderService {
         price_data: {
           currency: 'usd',
           product_data: { name: 'Tax' },
-          unit_amount: taxAmount.mul(100).toNumber()
+          unit_amount: Math.round(taxAmount.mul(100).toNumber())
         },
         quantity: 1
       })
@@ -274,7 +274,7 @@ export class OrderService {
         shipping_rate_data: {
           type: 'fixed_amount',
           fixed_amount: {
-            amount: deliveryAmount.mul(100).toNumber(),
+            amount: Math.round(deliveryAmount.mul(100).toNumber()),
             currency: 'usd'
           },
           display_name: 'Delivery'

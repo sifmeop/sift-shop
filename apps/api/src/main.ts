@@ -1,7 +1,7 @@
 import { Logger, ValidationPipe } from '@nestjs/common'
 import { ConfigService } from '@nestjs/config'
 import { NestFactory } from '@nestjs/core'
-import { ExpressAdapter } from '@nestjs/platform-express'
+import { NestExpressApplication } from '@nestjs/platform-express'
 import { RedisStore } from 'connect-redis'
 import cookieParser from 'cookie-parser'
 import session from 'express-session'
@@ -9,16 +9,15 @@ import parse from 'parse-duration'
 import { createClient } from 'redis'
 
 import { AppModule } from './app.module'
+import { isDev } from './common/utils/is-dev'
 import { parseBoolean } from './common/utils/parse-boolean'
 
 async function bootstrap() {
-  const adapter = new ExpressAdapter()
-
-  adapter.set('trust proxy', 1)
-
-  const app = await NestFactory.create(AppModule, adapter, {
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
     rawBody: true
   })
+
+  app.set('trust proxy', 1)
 
   const config = app.get(ConfigService)
 
@@ -31,7 +30,7 @@ async function bootstrap() {
   app.enableCors({
     origin: config.getOrThrow<string>('ORIGIN'),
     credentials: true,
-    exposedHeaders: ['Set-Cookie']
+    exposedHeaders: isDev(config) ? ['Set-Cookie'] : []
   })
 
   app.use(cookieParser(config.getOrThrow('COOKIE_SECRET')))
@@ -43,9 +42,6 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
-        ...(config.get('SESSION_DOMAIN')
-          ? { domain: config.get('SESSION_DOMAIN') }
-          : {}),
         maxAge: parse(config.getOrThrow('SESSION_MAX_AGE'))!,
         httpOnly: parseBoolean(config.getOrThrow('SESSION_HTTP_ONLY')),
         secure: parseBoolean(config.getOrThrow('SESSION_SECURE')),
