@@ -46,6 +46,17 @@ export const SignUpForm = () => {
 
   // eslint-disable-next-line react-hooks/refs
   const onSubmit = handleSubmit(async (data) => {
+    if (
+      !recaptchaRef.current ||
+      !recaptchaRef.current.getValue() ||
+      !data.recaptha.length
+    ) {
+      setError('recaptha', {
+        message: 'Recaptcha token is required'
+      })
+      return
+    }
+
     try {
       await signUp({
         variables: { input: data }
