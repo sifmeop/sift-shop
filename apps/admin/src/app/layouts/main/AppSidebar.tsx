@@ -10,6 +10,7 @@ import {
 	UsersIcon,
 	type LucideIcon
 } from 'lucide-react'
+import { useUser } from '~/common/hooks/useUser'
 import {
 	Sidebar,
 	SidebarContent,
@@ -69,6 +70,7 @@ const LINKS: Link[] = [
 
 export const AppSidebar = () => {
 	const { pathname } = useLocation()
+	const { email } = useUser()
 
 	return (
 		<Sidebar collapsible='icon'>
@@ -107,7 +109,7 @@ export const AppSidebar = () => {
 				<SidebarMenu>
 					<SidebarMenuItem>
 						<SidebarMenuButton>
-							<User2 /> {'sifmeop@gmail.com'}
+							<User2 /> {email}
 						</SidebarMenuButton>
 					</SidebarMenuItem>
 				</SidebarMenu>

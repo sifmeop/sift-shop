@@ -33,7 +33,7 @@ export const ProductCard = ({ product }: ProductCardProps) => {
         </div>
 
         <div className='mt-3 sm:mt-4'>
-          <h3 className='text-foreground line-clamp-2 min-h-10 text-sm font-medium transition-colors group-hover:text-blue-500 group-hover:underline sm:min-h-12 sm:text-base'>
+          <h3 className='text-foreground line-clamp-2 text-sm font-medium transition-colors group-hover:text-blue-500 group-hover:underline sm:text-base'>
             {product.name}
           </h3>
 
