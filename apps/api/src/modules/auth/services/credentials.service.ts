@@ -3,7 +3,9 @@ import { ConfigService } from '@nestjs/config'
 import { AuthMethod } from '@sift-shop/database'
 import { verify } from 'argon2'
 import { Request, Response } from 'express'
+import parse from 'parse-duration'
 
+import { parseBoolean } from '~/common/utils/parse-boolean'
 import { UserService } from '~/modules/user/user.service'
 
 import { SignInInput } from '../dto/sign-in.input'
@@ -73,7 +75,19 @@ export class CredentialsService {
           return reject(new HttpException('Failed to sign out', 500))
         }
 
-        res.clearCookie(this.configService.getOrThrow<string>('SESSION_NAME'))
+        const domain = this.configService.get<string | undefined>(
+          'SESSION_DOMAIN'
+        )
+
+        res.clearCookie(this.configService.getOrThrow<string>('SESSION_NAME'), {
+          ...(domain ? { domain } : {}),
+          maxAge: parse(this.configService.getOrThrow('SESSION_MAX_AGE'))!,
+          httpOnly: parseBoolean(
+            this.configService.getOrThrow('SESSION_HTTP_ONLY')
+          ),
+          secure: parseBoolean(this.configService.getOrThrow('SESSION_SECURE')),
+          sameSite: this.configService.getOrThrow('SESSION_SAME_SITE')
+        })
         resolve({ success: true })
       })
     })
