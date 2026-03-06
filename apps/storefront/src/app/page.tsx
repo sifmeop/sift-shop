@@ -1,13 +1,15 @@
 import type { Metadata } from 'next'
 
 import { HomeProductsEntity } from '~/common/lib/graphql/generated/graphql'
+import { createPageMetadata } from '~/common/seo'
 import { getHomeProducts } from '~/modules/products/api/getHomeProducts'
 import { HomePage } from '~/screens/home'
 
-export const metadata: Metadata = {
+export const metadata: Metadata = createPageMetadata({
   title: 'Sift Shop - Fresh Arrivals Online | Quality Fashion & Clothing',
   description:
     'Discover our newest collection of high-quality fashion and clothing. Free shipping on all orders, satisfaction guaranteed. Shop the best selling tees, hoodies, and more.',
+  path: '/',
   keywords: [
     'fashion',
     'clothing',
@@ -17,22 +19,8 @@ export const metadata: Metadata = {
     'streetwear',
     'best selling',
     'fresh arrivals'
-  ],
-  openGraph: {
-    title: 'Sift Shop - Fresh Arrivals Online',
-    description:
-      'Discover our newest collection of high-quality fashion and clothing. Free shipping on all orders.',
-    type: 'website',
-    locale: 'en_US',
-    siteName: 'Sift Shop'
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'Sift Shop - Fresh Arrivals Online',
-    description:
-      'Discover our newest collection of high-quality fashion and clothing.'
-  }
-}
+  ]
+})
 
 export default async function Page() {
   const { data } = await getHomeProducts()

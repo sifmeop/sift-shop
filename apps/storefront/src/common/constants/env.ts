@@ -2,7 +2,9 @@ import { createEnv } from '@t3-oss/env-nextjs'
 import { z } from 'zod'
 
 export const env = createEnv({
-  server: {},
+  server: {
+    SITE_URL: z.url()
+  },
 
   client: {
     NEXT_PUBLIC_API_URL: z.url(),
@@ -16,6 +18,7 @@ export const env = createEnv({
   },
 
   runtimeEnv: {
+    SITE_URL: process.env.SITE_URL,
     NEXT_PUBLIC_API_URL: process.env.NEXT_PUBLIC_API_URL,
     NEXT_PUBLIC_RECAPTCHA_SITE_KEY: process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY,
     NEXT_PUBLIC_IMAGE_BASE_URL: process.env.NEXT_PUBLIC_IMAGE_BASE_URL,
