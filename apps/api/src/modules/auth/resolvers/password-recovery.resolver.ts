@@ -20,7 +20,6 @@ export class PasswordRecoveryResolver {
 
   @Public()
   @Mutation(() => SuccessEntity)
-  // @Recaptcha()
   async forgotPassword(
     @Args('input', { type: () => ForgotPasswordInput })
     input: ForgotPasswordInput

@@ -30,15 +30,15 @@ export class CredentialsService {
       throw new HttpException('User already exists', 400)
     }
 
-    await this.userService.create(
+    const newUser = await this.userService.create(
       input.email,
       input.password,
       input.fullName,
       AuthMethod.CREDENTIALS,
-      true // false
+      false
     )
 
-    // await this.emailConfirmationService.sendConfirmationLink(newUser.email)
+    await this.emailConfirmationService.sendConfirmationLink(newUser.email)
 
     return { success: true }
   }

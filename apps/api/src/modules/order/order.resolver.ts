@@ -18,7 +18,6 @@ export class OrderResolver {
   @Public()
   @Query(() => OrderEntity)
   async getOrderByPaymentId(
-    // @Authorized('id') userId: string,
     @Args('input', { type: () => GetOrderByPaymentIdInput })
     input: GetOrderByPaymentIdInput
   ): Promise<OrderEntity> {
