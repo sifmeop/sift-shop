@@ -149,7 +149,7 @@ export class MailService {
     html: string
   ): Promise<void> {
     const { error } = await this.resend.emails.send({
-      from: 'Sift-Shop@sift-shop.xyz',
+      from: `Sift-Shop@${this.configService.getOrThrow<string>('MAIL_HOST')}`,
       to: [to],
       subject,
       html
