@@ -1,16 +1,24 @@
+import { cookies } from 'next/headers'
 import { NextRequest, NextResponse } from 'next/server'
 
 import { env } from './common/constants/env'
 import { ROUTES } from './common/constants/routes'
 
-export function proxy(request: NextRequest) {
-  const cookie = request.cookies.get(env.NEXT_PUBLIC_SESSION_COOKIE_NAME)
+export async function proxy(req: NextRequest) {
+  const cookieStore = await cookies()
+  const session = cookieStore.get(env.NEXT_PUBLIC_SESSION_COOKIE_NAME)
 
-  if (!cookie) {
-    return NextResponse.redirect(new URL(ROUTES.SIGN_IN, request.url))
+  if (!session && req.nextUrl.pathname.startsWith('/profile')) {
+    return NextResponse.redirect(new URL(ROUTES.SIGN_IN, req.url))
   }
+
+  if (session && req.nextUrl.pathname.startsWith('/auth')) {
+    return NextResponse.redirect(new URL(ROUTES.ORDERS, req.url))
+  }
+
+  return NextResponse.next()
 }
 
 export const config = {
-  matcher: '/profile/:path*'
+  matcher: ['/profile/:path*', '/auth/:path*']
 }

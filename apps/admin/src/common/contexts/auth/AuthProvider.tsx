@@ -36,24 +36,13 @@ export const AuthProvider = ({ children }: React.PropsWithChildren) => {
 	useEffect(() => {
 		const initAuth = async () => {
 			try {
-				const session = await cookieStore.get('session')
-
-				if (!session) return
-
 				const { data, error } = await refetch()
 
-				if (error) {
-					await cookieStore.delete('session')
-					return
-				}
+				if (error || !data) return
 
-				if (data) {
-					setUser(data)
-				}
+				setUser(data)
 			} catch (error) {
-				cookieStore.delete('session')
 				console.error('Auth initialization failed:', error)
-				setUser(null)
 			} finally {
 				setIsLoading(false)
 			}

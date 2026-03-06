@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect } from 'react'
 
 import { useApolloClient } from '@apollo/client/react'

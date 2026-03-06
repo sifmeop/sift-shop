@@ -1,1 +1,1 @@
-export * from './ui/VerifySessionProvider'
+export * from './api/verifySession'

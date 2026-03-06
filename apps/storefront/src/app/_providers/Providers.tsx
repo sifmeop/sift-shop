@@ -1,21 +1,17 @@
-'use client'
-
-import { ApolloProvider } from '@apollo/client/react'
-
-import { VerifySessionProvider } from '~/app/auth/verify-session'
-import { apolloClient } from '~/common/lib/graphql/apollo-client'
 import { Toaster } from '~/common/ui/Sonner'
 
+import { ApolloClientProvider } from './ApolloClientProvider'
 import { PusherProvider } from './PusherProvider'
+import { SessionProvider } from './SessionProvider'
 
 export const Providers = ({ children }: React.PropsWithChildren) => {
   return (
     <>
-      <ApolloProvider client={apolloClient}>
-        <VerifySessionProvider>
+      <ApolloClientProvider>
+        <SessionProvider>
           <PusherProvider>{children}</PusherProvider>
-        </VerifySessionProvider>
-      </ApolloProvider>
+        </SessionProvider>
+      </ApolloClientProvider>
       <Toaster closeButton position='top-right' duration={5000} />
     </>
   )

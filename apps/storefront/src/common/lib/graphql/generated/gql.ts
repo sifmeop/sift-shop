@@ -15,7 +15,7 @@ import { TypedDocumentNode as DocumentNode } from '@graphql-typed-document-node/
  */
 type Documents = {
     "\n\tmutation SignOut {\n\t\tsignOut{\n\t\t\tsuccess\n\t\t}\n\t}\n": typeof types.SignOutDocument,
-    "\n  query VerifySession {\n    verifySession {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n      accountDetails {\n        firstName\n        lastName\n        email\n        phone\n        city\n        country\n        state\n        address\n        zipCode\n      }\n    }\n  }\n": typeof types.VerifySessionDocument,
+    "\n\tquery VerifySession {\n\t\tverifySession {\n\t\t\tid\n\t\t\temail\n\t\t\tfullName\n\t\t\tavatar\n\t\t\tisTwoFactorEnabled\n\t\t\tcreatedAt\n\t\t\taccountDetails {\n\t\t\t\tfirstName\n\t\t\t\tlastName\n\t\t\t\temail\n\t\t\t\tphone\n\t\t\t\tcity\n\t\t\t\tcountry\n\t\t\t\tstate\n\t\t\t\taddress\n\t\t\t\tzipCode\n\t\t\t}\n\t\t}\n\t}\n": typeof types.VerifySessionDocument,
     "\n  mutation EmailConfirmation($input: EmailConfirmationInput!) {\n    emailConfirmation(input: $input) {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n      accountDetails {\n        firstName\n        lastName\n        email\n        phone\n        city\n        country\n        state\n        address\n        zipCode\n      }\n    }\n  }\n": typeof types.EmailConfirmationDocument,
     "\n  mutation ForgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input) {\n      success\n    }\n  }\n": typeof types.ForgotPasswordDocument,
     "\n  mutation ResetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input) {\n      success\n    }\n  }\n": typeof types.ResetPasswordDocument,
@@ -48,7 +48,7 @@ type Documents = {
 };
 const documents: Documents = {
     "\n\tmutation SignOut {\n\t\tsignOut{\n\t\t\tsuccess\n\t\t}\n\t}\n": types.SignOutDocument,
-    "\n  query VerifySession {\n    verifySession {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n      accountDetails {\n        firstName\n        lastName\n        email\n        phone\n        city\n        country\n        state\n        address\n        zipCode\n      }\n    }\n  }\n": types.VerifySessionDocument,
+    "\n\tquery VerifySession {\n\t\tverifySession {\n\t\t\tid\n\t\t\temail\n\t\t\tfullName\n\t\t\tavatar\n\t\t\tisTwoFactorEnabled\n\t\t\tcreatedAt\n\t\t\taccountDetails {\n\t\t\t\tfirstName\n\t\t\t\tlastName\n\t\t\t\temail\n\t\t\t\tphone\n\t\t\t\tcity\n\t\t\t\tcountry\n\t\t\t\tstate\n\t\t\t\taddress\n\t\t\t\tzipCode\n\t\t\t}\n\t\t}\n\t}\n": types.VerifySessionDocument,
     "\n  mutation EmailConfirmation($input: EmailConfirmationInput!) {\n    emailConfirmation(input: $input) {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n      accountDetails {\n        firstName\n        lastName\n        email\n        phone\n        city\n        country\n        state\n        address\n        zipCode\n      }\n    }\n  }\n": types.EmailConfirmationDocument,
     "\n  mutation ForgotPassword($input: ForgotPasswordInput!) {\n    forgotPassword(input: $input) {\n      success\n    }\n  }\n": types.ForgotPasswordDocument,
     "\n  mutation ResetPassword($input: ResetPasswordInput!) {\n    resetPassword(input: $input) {\n      success\n    }\n  }\n": types.ResetPasswordDocument,
@@ -101,7 +101,7 @@ export function gql(source: "\n\tmutation SignOut {\n\t\tsignOut{\n\t\t\tsuccess
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
-export function gql(source: "\n  query VerifySession {\n    verifySession {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n      accountDetails {\n        firstName\n        lastName\n        email\n        phone\n        city\n        country\n        state\n        address\n        zipCode\n      }\n    }\n  }\n"): (typeof documents)["\n  query VerifySession {\n    verifySession {\n      id\n      email\n      fullName\n      avatar\n      isTwoFactorEnabled\n      createdAt\n      accountDetails {\n        firstName\n        lastName\n        email\n        phone\n        city\n        country\n        state\n        address\n        zipCode\n      }\n    }\n  }\n"];
+export function gql(source: "\n\tquery VerifySession {\n\t\tverifySession {\n\t\t\tid\n\t\t\temail\n\t\t\tfullName\n\t\t\tavatar\n\t\t\tisTwoFactorEnabled\n\t\t\tcreatedAt\n\t\t\taccountDetails {\n\t\t\t\tfirstName\n\t\t\t\tlastName\n\t\t\t\temail\n\t\t\t\tphone\n\t\t\t\tcity\n\t\t\t\tcountry\n\t\t\t\tstate\n\t\t\t\taddress\n\t\t\t\tzipCode\n\t\t\t}\n\t\t}\n\t}\n"): (typeof documents)["\n\tquery VerifySession {\n\t\tverifySession {\n\t\t\tid\n\t\t\temail\n\t\t\tfullName\n\t\t\tavatar\n\t\t\tisTwoFactorEnabled\n\t\t\tcreatedAt\n\t\t\taccountDetails {\n\t\t\t\tfirstName\n\t\t\t\tlastName\n\t\t\t\temail\n\t\t\t\tphone\n\t\t\t\tcity\n\t\t\t\tcountry\n\t\t\t\tstate\n\t\t\t\taddress\n\t\t\t\tzipCode\n\t\t\t}\n\t\t}\n\t}\n"];
 /**
  * The gql function is used to parse GraphQL queries into a document that can be used by GraphQL clients.
  */
