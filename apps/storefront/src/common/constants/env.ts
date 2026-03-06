@@ -11,7 +11,8 @@ export const env = createEnv({
     NEXT_PUBLIC_SESSION_COOKIE_NAME: z.string(),
     NEXT_PUBLIC_NOVA_POST_API_KEY: z.string(),
     NEXT_PUBLIC_PUSHER_KEY: z.string(),
-    NEXT_PUBLIC_PUSHER_CLUSTER: z.string()
+    NEXT_PUBLIC_PUSHER_CLUSTER: z.string(),
+    NEXT_PUBLIC_NODE_ENV: z.enum(['development', 'production'])
   },
 
   runtimeEnv: {
@@ -22,6 +23,7 @@ export const env = createEnv({
       process.env.NEXT_PUBLIC_SESSION_COOKIE_NAME,
     NEXT_PUBLIC_NOVA_POST_API_KEY: process.env.NEXT_PUBLIC_NOVA_POST_API_KEY,
     NEXT_PUBLIC_PUSHER_KEY: process.env.NEXT_PUBLIC_PUSHER_KEY,
-    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER
+    NEXT_PUBLIC_PUSHER_CLUSTER: process.env.NEXT_PUBLIC_PUSHER_CLUSTER,
+    NEXT_PUBLIC_NODE_ENV: process.env.NEXT_PUBLIC_NODE_ENV
   }
 })
