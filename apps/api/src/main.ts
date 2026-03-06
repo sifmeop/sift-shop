@@ -35,6 +35,8 @@ async function bootstrap() {
 
   app.use(cookieParser(config.getOrThrow('COOKIE_SECRET')))
 
+  const domain = config.get<string | undefined>('SESSION_DOMAIN')
+
   app.use(
     session({
       secret: config.getOrThrow('SESSION_SECRET'),
@@ -42,6 +44,7 @@ async function bootstrap() {
       resave: false,
       saveUninitialized: false,
       cookie: {
+        ...(domain ? { domain } : {}),
         maxAge: parse(config.getOrThrow('SESSION_MAX_AGE'))!,
         httpOnly: parseBoolean(config.getOrThrow('SESSION_HTTP_ONLY')),
         secure: parseBoolean(config.getOrThrow('SESSION_SECURE')),
